@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2041
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGC", "SGC\SGC.csproj", "{9BFCA823-C2D1-4356-AE55-3816863B6912}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entidad", "Entidad\Entidad.csproj", "{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Notacion", "1. Notacion", "{5FD8F568-A2E2-4B19-8BEB-4B1872108348}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Solucion", "3. Solucion", "{5E3D6C7C-7336-47EA-9A9D-9937F67065E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BFCA823-C2D1-4356-AE55-3816863B6912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BFCA823-C2D1-4356-AE55-3816863B6912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BFCA823-C2D1-4356-AE55-3816863B6912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BFCA823-C2D1-4356-AE55-3816863B6912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9BFCA823-C2D1-4356-AE55-3816863B6912} = {5E3D6C7C-7336-47EA-9A9D-9937F67065E8}
+		{CB1D3632-AEC5-45E0-89FF-ACCCEF9887C9} = {5FD8F568-A2E2-4B19-8BEB-4B1872108348}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9FFAF7B0-3BBE-4E23-8A63-6E2F77427E5D}
+	EndGlobalSection
+EndGlobal
