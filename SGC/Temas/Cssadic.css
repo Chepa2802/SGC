@@ -1,0 +1,357 @@
+﻿.panelsln {
+    padding:10px;
+}
+
+.panelsln:focus {
+    padding:10px;
+    background: silver;
+}
+
+.Logo {
+    width: 70%;
+    border-radius:8px;
+}
+
+.LogoMarca {
+    width: 80%;
+    border-radius:8px;
+    min-width:180px;
+}
+
+.TituloAcceso {
+    font-size: 30px;
+    color:#0E6395;
+}
+
+.mayusculas {
+    text-transform: uppercase;
+}
+
+.cuadro {
+    padding:2%;
+    background:White;
+    border:4px #a7d4f0 solid;
+    margin:1%;
+    border-radius:12px;
+}
+
+/*.fondo-acceso {
+    background-image:url('/Recursos/Img/FondoInicioSesion.png');
+    background-size:cover;
+}*/
+
+.ulti li:before {
+    background: #065178;
+    bottom: auto;
+    content: "";
+    height: 8px;
+    left: 23px;
+    margin-top: 11px;
+    position: absolute;
+    right: auto;
+    width: 8px;
+    z-index: 1;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.ulti li:after {
+    border-left: 1px solid #425668;
+    bottom: 0;
+    content: "";
+    left: 27px;
+    position: absolute;
+    top: 0;
+}
+
+.activo {
+    color:#0f3d61 !important;
+    font-weight:600;
+    font-size:13px !important;
+}
+
+.activo:hover {
+    font-weight:bold !important;
+}
+
+
+.DescProd {
+    font-size:13px;
+    margin:0px;
+}
+.DescSub {
+    font-size:12px;
+    margin:0px;
+}
+.Precio {
+    font-size:13px;
+    font-weight:500;
+    margin:0px;
+}
+.DetalleFooterA {
+    font-size:12px;
+    margin:0px;
+    padding:0px;
+}
+.DetalleFooterB {
+    font-size:12px;
+    margin:0px;
+    padding:0px;
+    color:#ca1616;
+}
+
+.DetalleFooterAb {
+    font-size:15px;
+    font-weight:bold;
+    margin:0px;
+    padding:0px;
+}
+.DetalleFooterBb {
+    font-size:15px;
+    font-weight:bold;
+    margin:0px;
+    padding:0px;
+    color:#ca1616;
+}
+
+.DetallePadding {
+    padding:2px 8px 2px 8px !important;
+    border:0px !important;
+    background:#f9f9f9 !important;
+}
+.MontoA {
+    margin:0px;
+    font-size:14px;
+}
+
+.MontoB {
+    margin:0px;
+    font-size:14px;
+    color:#ca1616;
+}
+
+.MontoAb {
+    margin:0px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.MontoBb {
+    margin:0px;
+    font-size:18px;
+    font-weight:bold;
+    color:#ca1616;
+}
+
+.NoPadding {
+    padding:2px !important;
+}
+.NoMargin {
+    margin:0px !important;
+}
+
+.btnNumero {
+    background:White;
+    font-size:28px;
+    font-weight:300;
+    color:black;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btnNumero:hover {
+    color:White;
+    background:#3d5974 !important;
+    cursor:pointer;
+}
+
+.btnNumeroIcon {
+    background:#f4f4f4;
+    font-size:19px;
+    font-weight:bold;
+    vertical-align:middle !important;
+}
+
+.btnNumeroIcon:hover {
+    color:White;
+    background:#3d5974 !important;
+    cursor:pointer;
+}
+
+.btnNumeroBold {
+    background:rgb(250, 249, 249);
+    color:#0f4356;
+    font-size:25px;
+    font-weight:bold;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btnNumeroBold:hover {
+    color:White;
+    background:#0f4356 !important;
+    cursor:pointer;
+}
+
+.valignMidle {
+    vertical-align:middle !important;
+}
+
+.detalleActivo {
+    background:#225e97 !important;
+    color:White !important;
+    cursor:pointer;
+}
+
+.detalle:hover {
+    background:#3d5974 !important;
+    color:White !important;
+    cursor:pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.NoPaddingTop {
+    padding-top:0px;
+}
+
+.floatLeft {
+    float:left;
+}
+
+.SinPadding {
+    padding:0px 0px 0px 0px !important;
+}
+
+.ActiveTipo {
+    border-color:#225e97 !important;
+    color:White !important;
+    border-width:3px;
+}
+
+.imgProducto {
+    width:250px;
+    height:250px;
+}
+
+.vscroll {
+    overflow-y:scroll;
+}
+
+.NoPaddingRight {
+    padding-right:0px;
+}
+
+.cursorMano {
+    cursor:pointer;
+}
+
+.sel:hover {
+    border:1px solid #68b4e6;
+}
+
+.desc {
+    height:46px;
+}
+
+.actOpcion {
+    background:#0f4356 !important;
+    color:White !important;
+    cursor:pointer;
+}
+
+.btnPago:hover {
+    cursor:pointer;
+    background:silver;
+}
+
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #154963;
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+/*::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}*/
+::-webkit-scrollbar-thumb:active {
+  background: #333333;
+}
+::-webkit-scrollbar-track {
+  background: rgba(212, 237, 247, 0.74);
+  border: 0px none #ffffff;
+  border-radius: 50px;
+}
+/*::-webkit-scrollbar-track:hover {
+  background: #666666;
+}*/
+/*::-webkit-scrollbar-track:active {
+  background: #000000;
+}*/
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.label-margin {
+    margin:6px;
+}
+
+.titulo-margin {
+    margin-left:10px;
+}
+
+select:disabled {
+    background:#fafafa  !important;
+}
+input:disabled {
+    background:#fafafa  !important;
+}
+textarea:disabled {
+    background:#fafafa  !important;
+}
+
+.contenido-info {
+    padding:12px;
+    background:White
+}
+
+.noselect {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select:none;
+}
+
+.promocion {
+    background-color:#10425f;
+    color:White;
+    padding:13px;
+    border-radius:8px;
+    margin-top:5px;
+    font-size:13px;
+}
+
+.promocion:hover {
+    background-color:#4599ca;
+}

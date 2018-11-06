@@ -1,0 +1,11 @@
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\MultiEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\MultiEntidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\MacroEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\Entidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\bin\Debug\MacroEntidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\obj\Debug\MultiEntidad.csprojAssemblyReference.cache
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\obj\Debug\MultiEntidad.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\obj\Debug\MultiEntidad.csproj.CopyComplete
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\obj\Debug\MultiEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MultiEntidad\obj\Debug\MultiEntidad.pdb
