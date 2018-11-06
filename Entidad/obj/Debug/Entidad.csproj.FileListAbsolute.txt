@@ -1,0 +1,5 @@
+D:\TISI\SGC\Aplicacion\SGC\Entidad\bin\Debug\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Entidad\bin\Debug\Entidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Debug\Entidad.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Debug\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Debug\Entidad.pdb
