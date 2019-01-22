@@ -1,0 +1,169 @@
+﻿@model SGC.Areas.Sistema.Models.UsuarioModel
+@{
+    ViewBag.Title = "SGC";
+    Layout = "~/Areas/Sistema/Views/MP_Acceso.cshtml";
+}
+
+
+<form id="login-form" class="smart-form client-form">
+    <header style="background:White;">
+        <img src="/Recursos/Img/llave.gif" style="max-width:60px;" /> &nbsp&nbsp&nbsp<a style="color:#114a7a;font-size:18px;">Accede para continuar...</a>
+    </header>
+
+    <fieldset>
+
+        <section>
+            <label class="label">Usuario</label>
+            <label class="input">
+                <i class="icon-append fa fa-user"></i>
+                <input id="vc_usuario" atributo="mme.me_usuario.e_usuario.vc_usuario" type="text" name="usuario">
+                <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Ingrese su usuario</b>
+            </label>
+        </section>
+
+        <section>
+            <label class="label">Proyecto</label>
+            <label id="cb_proyecto" class="select">
+                @Html.Partial("Cb_Proyecto", Model)
+            </label>
+        </section>
+
+        <section>
+            <label class="label">Contraseña</label>
+            <label class="input">
+                <i id="show" class="icon-append fa fa-eye"></i>
+                <input id="vc_contraseña" atributo="mme.me_usuario.e_usuario.vc_contraseña" type="password" name="password">
+                <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Ingrese su contraseña</b>
+            </label>
+        </section>
+
+    </fieldset>
+    <footer class="text-center">
+        <button class="btn btn-primary" style="float:none" onclick="Acceder();return false;">
+            Acceder
+        </button>
+    </footer>
+</form>
+
+<script type="text/javascript" src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="~/Scripts/Validacion.js"></script>
+
+<script type="text/javascript">
+
+    var Peticion = false;
+    var Area = "Sistema";
+    var Msg = "";
+
+    $(document).ready(function () {
+
+        $('#vc_usuario').keypress(EnterUsuario);
+        $('#vc_contraseña').keypress(EnterContraseña);
+        $('#vc_usuario').focus();
+
+        $('#show').mousedown(function () {
+            $('#vc_contraseña').removeAttr('type');
+        });
+        $('#show').mouseup(function () {
+            $('#vc_contraseña').attr('type', 'password');
+        });
+
+    });
+
+    $(document).on('blur', '#vc_usuario', function () {
+        Cb_Proyecto();
+        $('#nu_id_proyecto').focus();
+    })
+
+    function EnterUsuario(evt) {
+
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode == 13) {
+            Cb_Proyecto();
+            $('#nu_id_proyecto').focus();
+            return false;
+        }
+        return true;
+    }
+
+    function EnterContraseña(evt) {
+        var charCode = (evt.which) ? evt.which : event.keyCode;
+        if (charCode == 13)
+            Acceder();
+    }
+
+
+    function Cb_Proyecto() {
+        var modelo = {
+            vc_usuario : $('#vc_usuario').val()
+        }
+        
+        $.ajax({
+            async: false,
+            url: "@Url.RouteUrl("Cb_Proyecto")",
+            type: "POST",
+            data: JSON.stringify(modelo),
+            contentType: "application/json; charset=utf-8",
+            success: function (r) {
+                $('#cb_proyecto').html(r);
+            },
+            error: function (r) {
+            }
+        });
+    }
+
+    function Acceder()
+    {
+        Msg = "Validando la información...";
+        
+        if (Peticion) { EnProceso(Msg); return false; }
+        
+        if ($('#vc_usuario').val().trim() == '') {
+            Mensaje('Por favor ingresar el usuario.');
+            return false;
+        }
+        
+        if (typeof ($('#nu_id_proyecto').val()) == 'undefined' || $('#nu_id_proyecto').val() == null) {
+            Mensaje('El usuario que ha ingresado no tiene acceso a ningún proyecto');
+            return false;
+        }
+
+        if ($('#vc_contraseña').val().trim() == '') {
+            Mensaje('Por favor ingresar la contraseña.');
+            return false;
+        }
+
+        Smodel();
+        
+        NuevaPeticion(Msg)
+        Peticion = true;
+        
+        $.ajax({
+            async: false,
+            url: "@Url.RouteUrl("AC_Acceder")",
+            type: "POST",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            success: function (r) {
+                console.log(r)
+                if (r.std)
+                {
+                    if (parseInt(r.trans.e_tran.nu_tran_stdo) == 1) {
+                        location.href = "@Url.RouteUrl("V_Sitio")";
+                    }
+                    else {
+                        Mensaje(r.trans.e_tran.tx_tran_mnsg)
+                    }
+                }
+                else
+                {
+                    ErrorApp(r.msg)
+                }
+                Peticion = false;
+            },
+            error: function (r) {
+                ErrorApp(r.msg)
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,9 @@
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Release\Conexiones.dll
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Release\Conexiones.pdb
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Release\Conexiones.csprojAssemblyReference.cache
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Release\Conexiones.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Release\Conexiones.csproj.CopyComplete
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Release\Conexiones.dll
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Release\Conexiones.pdb

@@ -11,6 +11,6 @@ namespace Entidad
         [DataMember]public string  vc_cod_empresa_trans { get; set; }
         [DataMember]public string  vc_desc_empresa_trans { get; set; }
         [DataMember]public string  vc_ruc { get; set; }
-        [DataMember]public string  ch_status { get; set; }
+        
     }
 }

@@ -1,0 +1,9 @@
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\bin\Release\MacroEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\bin\Release\MacroEntidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\bin\Release\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\bin\Release\Entidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\obj\Release\MacroEntidad.csprojAssemblyReference.cache
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\obj\Release\MacroEntidad.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\obj\Release\MacroEntidad.csproj.CopyComplete
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\obj\Release\MacroEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\MacroEntidad\obj\Release\MacroEntidad.pdb

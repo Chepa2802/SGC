@@ -1,0 +1,6 @@
+D:\TISI\SGC\Aplicacion\SGC\Entidad\bin\Release\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Entidad\bin\Release\Entidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Release\Entidad.csprojAssemblyReference.cache
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Release\Entidad.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Release\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Entidad\obj\Release\Entidad.pdb

@@ -48,7 +48,7 @@
 
 
         </div>
-        <div class="project-context hidden-xs">
+        <div class="project-context ">
             <a><h1><b>@Sol.vc_desc_proyecto</b></h1></a>
         </div>
 
@@ -130,21 +130,50 @@
 
         <nav id="menu-general" style="margin-top:56px;">
             <ul>
+                @*CONSULTAS*@
                 <li class="menu-nivel-2">
                     <a href="#" title="Consultas"><i class="fa fa-lg fa-fw fa-taxi"></i> <span class="menu-item-parent">CONSULTAS</span></a>
                     <ul>
                         <li class="menu-nivel-1">
-                            <a href="#" title="Carnés"><span class="menu-item-parent">Carnés</span></a>
+                            <a href="#" title="Carnés"><span class="menu-item-parent">CARNÉS</span></a>
                             <ul>
                                 <li>
                                     <a href="@Url.RouteUrl("V_Sel_ConsultaCarne")">CONSULTAR</a>
                                 </li>
+                                <li>
+                                    <a href="@Url.RouteUrl("V_Sel_ImpresionCarne")">IMPRIMIR</a>
+                                </li>
                             </ul>
                         </li>
-
-                        @*<li class="idns no-item">
-                                <a href="@Url.RouteUrl("V_Sel_ConsultaCarne")">CONSULTAR CARNÉ</a>
-                            </li>*@
+                    </ul>
+                </li>
+                
+                @*CONFIGURACIONES*@
+                <li class="menu-nivel-2">
+                    <a href="#" title="Consultas"><i class="fa fa-lg fa-fw fa-gears"></i> <span class="menu-item-parent">CONFIGURACIÓN</span></a>
+                    <ul>
+                        <li class="menu-nivel-1">
+                            <a href="#" title="Empresa de Transporte"><span class="menu-item-parent">EMPRESA DE TRANSPORTE</span></a>
+                            <ul>
+                                <li>
+                                    <a href="@Url.RouteUrl("V_Sel_ConsultaEmpresaTrans")">CONSULTAR</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.RouteUrl("V_Ins_EmpresaTrans")">REGISTRAR</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="menu-nivel-1">
+                            <a href="#" title="Conductores"><span class="menu-item-parent">CONDUCTORES</span></a>
+                            <ul>
+                                <li>
+                                    <a href="@Url.RouteUrl("V_Sel_Conductor")">CONSULTAR</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.RouteUrl("V_Ins_Conductor")">REGISTRAR</a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

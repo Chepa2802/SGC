@@ -1,0 +1,47 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+
+<table id="Tabla_Conductor" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="50px">Estado</th>
+            <th class="text-center">Empresa</th>
+            <th class="text-center">Código</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Tipo documento</th>
+            <th class="text-center">Nro. documento</th>
+            <th class="text-center">Nro. Licencia</th>
+            <th class="text-center">Fecha registro</th>
+            <th class="text-center">Usuario registro</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ls_mme)
+        {
+        <tr id="@item.me_conductor.e_conductor.nu_id_conductor"
+            class="reg cursorMano"
+            onclick="AC_Opciones(@item.me_conductor.e_conductor.nu_id_conductor, '@item.me_conductor.e_conductor.vc_nombre_completo', '@item.e_tran.ch_tran_stdo_regi');">
+            <td class="text-center">
+                @if (item.e_tran.ch_tran_stdo_regi == "A")
+                {
+                    <button id="btnstdo_@item.me_conductor.e_conductor.nu_id_conductor" title="Habilitado" class="btn btn-success btn-mini"><strong><i class="fa fa-check"></i></strong></button>
+                }
+                else
+                {
+                    <button id="btnstdo_@item.me_conductor.e_conductor.nu_id_conductor" title="Deshabilitado" class="btn btn-danger btn-mini"><strong><i class="fa fa-remove"></i></strong></button>
+                }
+            </td>
+            <td>@item.me_conductor.e_empresa_trans.vc_desc_empresa_trans</td>
+            <td class="text-center">@item.me_conductor.e_conductor.vc_cod_conductor</td>
+            <td>@item.me_conductor.e_conductor.vc_nombre_completo</td>
+            <td>@item.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad</td>
+            <td>@item.me_conductor.e_conductor.vc_nro_doc_identidad</td>
+            <td>@item.me_conductor.e_conductor.vc_nro_licencia</td>
+            <td>@item.e_tran.dt_tran_fech_regi.Value.ToString("dd/MM/yyyy HH:mm:ss")</td>
+            <td>@item.e_tran.vc_tran_usua_regi</td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+

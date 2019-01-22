@@ -20,7 +20,7 @@ namespace Entidad
         [DataMember]public DateTime?    dt_fec_final            { get; set; }
         [DataMember]public string       vc_nro_licencia         { get; set; }
         [DataMember]public string       vc_ruta_foto            { get; set; }
-        [DataMember]public DateTime     dt_fec_nacimiento       { get; set; }
+        [DataMember]public DateTime?    dt_fec_nacimiento       { get; set; }
         [DataMember]public string       vc_nro_padron           { get; set; }
         [DataMember]public string       vc_nro_placa            { get; set; }
         [DataMember]public string       vc_nombre_propietario   { get; set; }

@@ -31,5 +31,61 @@ namespace Procedimiento
             finally { cmd.Connection.Close(); }
             return ls;
         }
+
+        public static MME_Empresa_Trans Get(MME_Empresa_Trans M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Empresa_Trans.Get(M);
+                return M;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static MME_Empresa_Trans Ins(MME_Empresa_Trans M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Empresa_Trans.Ins(M);
+                return M;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static MME_Empresa_Trans Upd(MME_Empresa_Trans M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Empresa_Trans.Upd(M);
+                return M;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static MME_Empresa_Trans Upd_Estado(MME_Empresa_Trans M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Empresa_Trans.Upd_Estado(M);
+                return M;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

@@ -73,5 +73,145 @@ namespace SGC.Recursos.Metodos
             }
             return cb_empresa_trans;
         }
+
+        public static List<SelectListItem> Tipo_Doc_Identidad(string cn, int? nu_tran_ruta, string vc_usuario)
+        {
+            MME_Tipo_Doc_Identidad mme = new MME_Tipo_Doc_Identidad();
+            mme.e_tran                      = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen   = cn;
+            mme.e_tran.vc_tran_usua_ptcn    = vc_usuario;
+            mme.e_tran.nu_tran_ruta         = nu_tran_ruta;
+
+            List<MME_Tipo_Doc_Identidad> ls_mme = P_Tipo_Doc_Identidad.Sel(mme);
+            var cb_tipo_doc_identidad = new List<SelectListItem>();
+
+            cb_tipo_doc_identidad.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = null
+            });
+
+            foreach (var item in ls_mme)
+            {
+                cb_tipo_doc_identidad.Add(new SelectListItem()
+                {
+                    Text = item.me_tipo_doc_identidad.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad,
+                    Value = item.me_tipo_doc_identidad.e_tipo_doc_identidad.nu_id_tipo_doc_identidad.ToString()
+                });
+            }
+            return cb_tipo_doc_identidad;
+        }
+
+        public static List<SelectListItem> Grupo_Sanguineo(string cn, int? nu_tran_ruta, string vc_usuario)
+        {
+            MME_Grupo_Sanguineo mme = new MME_Grupo_Sanguineo();
+            mme.e_tran                      = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen   = cn;
+            mme.e_tran.vc_tran_usua_ptcn    = vc_usuario;
+            mme.e_tran.nu_tran_ruta         = nu_tran_ruta;
+
+            List<MME_Grupo_Sanguineo> ls_mme = P_Grupo_Sanguineo.Sel(mme);
+            var cb_grupo_sanguineo = new List<SelectListItem>();
+
+            cb_grupo_sanguineo.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = null
+            });
+
+            foreach (var item in ls_mme)
+            {
+                cb_grupo_sanguineo.Add(new SelectListItem()
+                {
+                    Text = item.me_grupo_sanguineo.e_grupo_sanguineo.vc_desc_grupo_sanguineo,
+                    Value = item.me_grupo_sanguineo.e_grupo_sanguineo.nu_id_grupo_sanguineo.ToString()
+                });
+            }
+            return cb_grupo_sanguineo;
+        }
+
+        public static List<SelectListItem> Clase_Licencia(string cn, int? nu_tran_ruta, string vc_usuario)
+        {
+            MME_Clase_Licencia mme = new MME_Clase_Licencia();
+            mme.e_tran                      = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen   = cn;
+            mme.e_tran.vc_tran_usua_ptcn    = vc_usuario;
+            mme.e_tran.nu_tran_ruta         = nu_tran_ruta;
+
+            List<MME_Clase_Licencia> ls_mme = P_Clase_Licencia.Sel(mme);
+            var cb_clase_licencia = new List<SelectListItem>();
+
+            cb_clase_licencia.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = null
+            });
+
+            foreach (var item in ls_mme)
+            {
+                cb_clase_licencia.Add(new SelectListItem()
+                {
+                    Text = item.me_clase_licencia.e_clase_licencia.vc_desc_clase_licencia,
+                    Value = item.me_clase_licencia.e_clase_licencia.nu_id_clase_licencia.ToString()
+                });
+            }
+            return cb_clase_licencia;
+        }
+
+        public static List<SelectListItem> Categoria_Licencia(string cn, int? nu_tran_ruta, string vc_usuario)
+        {
+            MME_Categoria_Licencia mme = new MME_Categoria_Licencia();
+            mme.e_tran                      = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen   = cn;
+            mme.e_tran.vc_tran_usua_ptcn    = vc_usuario;
+            mme.e_tran.nu_tran_ruta         = nu_tran_ruta;
+
+            List<MME_Categoria_Licencia> ls_mme = P_Categoria_Licencia.Sel(mme);
+            var cb_categoria_licencia = new List<SelectListItem>();
+
+            cb_categoria_licencia.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = null
+            });
+
+            foreach (var item in ls_mme)
+            {
+                cb_categoria_licencia.Add(new SelectListItem()
+                {
+                    Text = item.me_categoria_licencia.e_categoria_licencia.vc_desc_categoria_licencia,
+                    Value = item.me_categoria_licencia.e_categoria_licencia.nu_id_categoria_licencia.ToString()
+                });
+            }
+            return cb_categoria_licencia;
+        }
+
+        public static List<SelectListItem> Tipo_Servicio(string cn, int? nu_tran_ruta, string vc_usuario)
+        {
+            MME_Tipo_Servicio mme = new MME_Tipo_Servicio();
+            mme.e_tran                      = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen   = cn;
+            mme.e_tran.vc_tran_usua_ptcn    = vc_usuario;
+            mme.e_tran.nu_tran_ruta         = nu_tran_ruta;
+
+            List<MME_Tipo_Servicio> ls_mme = P_Tipo_Servicio.Sel(mme);
+            var cb_tipo_servicio = new List<SelectListItem>();
+
+            cb_tipo_servicio.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = null
+            });
+
+            foreach (var item in ls_mme)
+            {
+                cb_tipo_servicio.Add(new SelectListItem()
+                {
+                    Text = item.me_tipo_servicio.e_tipo_servicio.vc_desc_tipo_servicio,
+                    Value = item.me_tipo_servicio.e_tipo_servicio.nu_id_tipo_servicio.ToString()
+                });
+            }
+            return cb_tipo_servicio;
+        }
     }
 }

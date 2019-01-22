@@ -33,7 +33,7 @@ namespace SGC.Recursos.Metodos
             Celda.BorderRight = CellBorderType.THIN;
 
             Celda.SetFont(Fuente);
-
+            
             return Celda;
         }
 
@@ -76,6 +76,23 @@ namespace SGC.Recursos.Metodos
             else
             {
                 Celda.SetCellValue(Dato.ToString());
+            }
+            return Celda;
+        }
+
+        public static Cell CeldaDate(Row Fila, Int32 NroCelda, CellStyle CssCelda, DateTime? Dato)
+        {
+            Cell Celda;
+            Celda = Fila.CreateCell(NroCelda);
+            Celda.CellStyle = CssCelda;
+
+            if (Dato == null)
+            {
+                Celda.SetCellValue("");
+            }
+            else
+            {
+                Celda.SetCellValue(Dato.Value.ToString("dd/MM/yyyy"));
             }
             return Celda;
         }

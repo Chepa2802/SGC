@@ -14,5 +14,6 @@ namespace Entidad.Sistema
         [DataMember] public int         nu_id_usuasrio      { get; set; }
         [DataMember] public string      vc_usuario          { get; set; }
         [DataMember] public string      vc_contraseña       { get; set; }
+        [DataMember] public string      vc_hora_sesion      { get; set; }
     }
 }
