@@ -81,6 +81,24 @@ namespace SGC.Areas.Global
                 defaults: new { controller = "Conductor", action = "AC_Conductor_Eliminar_Imagen_Temp" }
             );
 
+            context.MapRoute(
+                name: "V_Imp_Conductor",
+                url: "ImportarConductor",
+                defaults: new { controller = "Conductor_Importar", action = "V_Imp_Conductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_Descargar_Plantilla_Importacion_Conductor",
+                url: "DescargarPlantillaImportacionConductor",
+                defaults: new { controller = "Conductor_Importar", action = "AC_Descargar_Plantilla_Importacion_Conductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_Leer_Excel_Importar_Conductores",
+                url: "LeerExcelImportarConductores",
+                defaults: new { controller = "Conductor_Importar", action = "AC_Leer_Excel_Importar_Conductores" }
+            );
+
             #endregion
 
             #region Consulta de Carné

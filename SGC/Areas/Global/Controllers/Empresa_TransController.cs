@@ -205,15 +205,15 @@ namespace SGC.Areas.Global.Controllers
                                             "Estado"
                                         };
 
-                    Cell Celda;
+                    ICell Celda;
 
-                    Sheet Hoja = hssfworkbook.CreateSheet("Empresa de Transporte");
+                    ISheet Hoja = hssfworkbook.CreateSheet("Empresa de Transporte");
 
                     //-|> TÍTULO DE DOCUMENTO
-                    Font FuenteTitulo = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.NORMAL, IndexedColors.GREEN.Index, 12);
-                    CellStyle CssCeldaTitulo = Excel.CssCelda(hssfworkbook, FuenteTitulo, HorizontalAlignment.CENTER, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
+                    IFont FuenteTitulo = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Normal, IndexedColors.Green.Index, 12);
+                    ICellStyle CssCeldaTitulo = Excel.CssCelda(hssfworkbook, FuenteTitulo, HorizontalAlignment.Center, VerticalAlignment.Center, IndexedColors.White.Index);
 
-                    Row FilaTitulo = Hoja.CreateRow(0);
+                    IRow FilaTitulo = Hoja.CreateRow(0);
                     FilaTitulo.HeightInPoints = 25;
                     FilaTitulo.Sheet.AddMergedRegion((new CellRangeAddress(0, 0, 0, 3)));
 
@@ -221,13 +221,13 @@ namespace SGC.Areas.Global.Controllers
 
 
                     //-|> CABECERA DE DOCUMENTO
-                    Font FuenteEtiqueta = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.BOLD, IndexedColors.BLACK.Index, 8);
-                    CellStyle CssCeldaEtiqueta = Excel.CssCelda(hssfworkbook, FuenteEtiqueta, HorizontalAlignment.LEFT, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
+                    IFont FuenteEtiqueta = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Bold, IndexedColors.Black.Index, 8);
+                    ICellStyle CssCeldaEtiqueta = Excel.CssCelda(hssfworkbook, FuenteEtiqueta, HorizontalAlignment.Left, VerticalAlignment.Center, IndexedColors.White.Index);
 
-                    Font FuenteValor = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.NORMAL, IndexedColors.BLACK.Index, 8);
-                    CellStyle CssCeldaValor = Excel.CssCelda(hssfworkbook, FuenteValor, HorizontalAlignment.LEFT, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
+                    IFont FuenteValor = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Normal, IndexedColors.Black.Index, 8);
+                    ICellStyle CssCeldaValor = Excel.CssCelda(hssfworkbook, FuenteValor, HorizontalAlignment.Left, VerticalAlignment.Center, IndexedColors.White.Index);
 
-                    Row FilaEncabezado = Hoja.CreateRow(1);
+                    IRow FilaEncabezado = Hoja.CreateRow(1);
                     FilaEncabezado.HeightInPoints = 20;
 
                     Celda = Excel.CeldaText(FilaEncabezado, 0, CssCeldaEtiqueta, "Usuario");
@@ -235,10 +235,10 @@ namespace SGC.Areas.Global.Controllers
 
 
                     //-|> CABECERA DE TABLA
-                    Font FuenteCabeceraTabla = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.BOLD, IndexedColors.WHITE.Index, 8);
-                    CellStyle CssCeldaCabeceraTabla = Excel.CssCelda(hssfworkbook, FuenteCabeceraTabla, HorizontalAlignment.CENTER, VerticalAlignment.CENTER, IndexedColors.BLUE.Index);
+                    IFont FuenteCabeceraTabla = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Bold, IndexedColors.White.Index, 8);
+                    ICellStyle CssCeldaCabeceraTabla = Excel.CssCelda(hssfworkbook, FuenteCabeceraTabla, HorizontalAlignment.Center, VerticalAlignment.Center, IndexedColors.Blue.Index);
 
-                    Row FilaCabeceraTabla = Hoja.CreateRow(2);
+                    IRow FilaCabeceraTabla = Hoja.CreateRow(2);
                     FilaCabeceraTabla.HeightInPoints = 20;
 
                     for (int c = 0; c < Cabecera.Length; c++)
@@ -248,18 +248,18 @@ namespace SGC.Areas.Global.Controllers
 
 
                     //-|> DATA
-                    Font FuenteTexto = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.NORMAL, IndexedColors.BLACK.Index, 8);
-                    CellStyle CssCeldaTexto = Excel.CssCelda(hssfworkbook, FuenteTexto, HorizontalAlignment.LEFT, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
-                    CellStyle CssCeldaTexto2 = Excel.CssCelda(hssfworkbook, FuenteTexto, HorizontalAlignment.CENTER, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
+                    IFont FuenteTexto = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Normal, IndexedColors.Black.Index, 8);
+                    ICellStyle CssCeldaTexto = Excel.CssCelda(hssfworkbook, FuenteTexto, HorizontalAlignment.Left, VerticalAlignment.Center, IndexedColors.White.Index);
+                    ICellStyle CssCeldaTexto2 = Excel.CssCelda(hssfworkbook, FuenteTexto, HorizontalAlignment.Center, VerticalAlignment.Center, IndexedColors.White.Index);
 
-                    Font FuenteNumero = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.NORMAL, IndexedColors.BLACK.Index, 8);
-                    CellStyle CssCeldaNumero = Excel.CssCelda(hssfworkbook, FuenteNumero, HorizontalAlignment.RIGHT, VerticalAlignment.CENTER, IndexedColors.WHITE.Index);
+                    IFont FuenteNumero = Excel.Fuente(hssfworkbook, "Arial", FontBoldWeight.Normal, IndexedColors.Black.Index, 8);
+                    ICellStyle CssCeldaNumero = Excel.CssCelda(hssfworkbook, FuenteNumero, HorizontalAlignment.Right, VerticalAlignment.Center, IndexedColors.White.Index);
 
                     for (int i = 0; i < M.ls_mme.Count; i++)
                     {
                         var item = M.ls_mme[i];
 
-                        Row FilaData = Hoja.CreateRow(i + 3);
+                        IRow FilaData = Hoja.CreateRow(i + 3);
                         FilaData.HeightInPoints = 20;
 
                         Celda = Excel.CeldaText(FilaData, 0, CssCeldaTexto2, item.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans);
