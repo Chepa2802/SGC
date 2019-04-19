@@ -12,6 +12,7 @@ namespace MultiEntidad.Solucion
     {
         public ME_Conductor         me_conductor    { get; set; }
         public List<ME_Conductor>   ls_me_conductor { get; set; }
+        public List<ME_Conductor>   ls_me_exito     { get; set; }
         public List<ME_Conductor>   ls_me_errores   { get; set; }
         
 
@@ -19,6 +20,7 @@ namespace MultiEntidad.Solucion
         {
             me_conductor    = new ME_Conductor();
             ls_me_conductor = new List<ME_Conductor>();
+            ls_me_exito     = new List<ME_Conductor>();
             ls_me_errores   = new List<ME_Conductor>();
         }
     }

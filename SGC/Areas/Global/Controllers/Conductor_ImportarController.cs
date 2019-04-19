@@ -19,7 +19,7 @@ using NPOI.HSSF.Util;
 using OfficeOpenXml;
 
 using SGC.Recursos.Metodos;
-using MultiEntidad.Solucion;
+using MacroEntidad;
 
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
@@ -60,6 +60,10 @@ namespace SGC.Areas.Global.Controllers
                 M.mme_tipo_doc_identidad.e_tran = e_tran;
                 M.ls_mme_tipo_doc_identidad = P_Tipo_Doc_Identidad.Sel(M.mme_tipo_doc_identidad);
 
+                M.mme_empresa_trans.e_tran = e_tran;
+                M.mme_empresa_trans.me_empresa_trans.e_proyecto.nu_id_proyecto = Ssn.nu_id_proyecto;
+                M.ls_mme_empresa_trans = P_Empresa_Trans.Sel(M.mme_empresa_trans);
+
                 M.mme_clase_licencia.e_tran = e_tran;
                 M.ls_mme_clase_licencia = P_Clase_Licencia.Sel(M.mme_clase_licencia);
 
@@ -81,26 +85,27 @@ namespace SGC.Areas.Global.Controllers
                 //Nombre de la cabecera - Descripción - Obligatorio
                 String[,] Cabecera = { {"Tipo de Importación", "C = Crear, A = Actualizar", "1"  },
                                        {"Código", "Sólo llenar cuando el tipo de importación es 'A'", "0" },
-                                       {"Apellido Paterno", "", "1" },
-                                       {"Apellido Materno", "", "1" },
-                                       {"Nombres", "", "1" },
+                                       {"Apellido Paterno", "Máximo 50 caracteres.", "1" },
+                                       {"Apellido Materno", "Máximo 50 caracteres.", "1" },
+                                       {"Nombres", "Máximo 150 caracteres.", "1" },
                                        {"Tipo Doc. Identidad", "Según pestaña TDI; indicar la descripción.", "1" },
-                                       {"Nro. Doc. Identidad", "", "1" },
-                                       {"Fecha Inicio", "Fecha de Inicio del carné", "1" },
-                                       {"Fecha Final", "Fecha de caducidad del carné", "1" },
-                                       {"Nro. Licencia", "", "1" },
-                                       {"Fecha Nacimiento", "", "0" },
-                                       {"Nro. Padron", "Nro. padrón según empresa de transporte.", "0" },
-                                       {"Nro. Placa", "", "0" },
-                                       {"Nombre Propietario", "", "0" },
-                                       {"Telefóno", "", "0" },
+                                       {"Nro. Doc. Identidad", "Máximo 20 caracteres.", "1" },
+                                       {"Empresa de Transporte", "Según pestaña de Empresas de Transporte; indicar la descripción.", "1" },
+                                       {"Fecha Inicio", "Fecha de Inicio del carné; formato DD-MM-AAAA.", "1" },
+                                       {"Fecha Final", "Fecha de caducidad del carné; formato DD-MM-AAAA.", "1" },
+                                       {"Nro. Licencia", "Máximo 20 caracteres.", "1" },
+                                       {"Fecha Nacimiento", "Formato DD-MM-AAAA.", "0" },
+                                       {"Nro. Padron", "Nro. padrón según empresa de transporte; máximo de 5 caracteres.", "0" },
+                                       {"Nro. Placa", "Máximo 25 caracteres.", "0" },
+                                       {"Nombre Propietario", "Máximo 200 caracteres.", "0" },
+                                       {"Telefóno", "Máximo 15 caracteres.", "0" },
                                        {"Clase Licencia", "Según pestaña Clase Licencia; indicar la descripción.", "0" },
                                        {"Categoria Licencia", "Según pestaña Categoria Licencia; indicar la descripción.", "0" },
                                        {"Tipo Servicio", "Según pestaña Tipo Servicio; indicar la descripción.", "0" },
-                                       {"Dirección", "", "0" },
+                                       {"Dirección", "Máximo 500 caracteres.", "0" },
                                        {"Grupo Sanguíneo", "Según pestaña Grupo Sanguíneo; indicar la descripción.", "0" },
                                        {"Donación de Organo", "Indicar: 'SI' o 'NO'", "0" },
-                                       { "Restricciones", "", "0" }
+                                       { "Restricciones", "Máximo 500 caracteres.", "0" }
                                     };
 
                 ICell Celda;
@@ -176,6 +181,29 @@ namespace SGC.Areas.Global.Controllers
                 }
                 Hoja.AutoSizeColumn(0);
                 Hoja.AutoSizeColumn(1);
+
+
+
+                Hoja = hssfworkbook.CreateSheet("Empresas de Transporte");
+                int_fila = 0;
+                Fila = Hoja.CreateRow(int_fila);
+                Celda = Excel.CeldaText(Fila, 0, CssCeldaEtiqueta, "Código");
+                Celda = Excel.CeldaText(Fila, 1, CssCeldaEtiqueta, "Descripción");
+
+                if (M.ls_mme_empresa_trans.Count > 0)
+                {
+                    for (int i = 0; i < M.ls_mme_empresa_trans.Count; i++)
+                    {
+                        int_fila++;
+                        Fila = Hoja.CreateRow(int_fila);
+                        var item = M.ls_mme_empresa_trans[i];
+                        Celda = Excel.CeldaText(Fila, 0, CssCeldaValor, item.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans);
+                        Celda = Excel.CeldaText(Fila, 1, CssCeldaValor, item.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans);
+                    }
+                }
+                Hoja.AutoSizeColumn(0);
+                Hoja.AutoSizeColumn(1);
+
 
 
 
@@ -305,27 +333,30 @@ namespace SGC.Areas.Global.Controllers
                         string accion;
                         string observacion;
                         DateTime fecha;
+
+                        M.mme_conductor.e_tran.nu_cant_error = 0;
+                        M.mme_conductor.e_tran.nu_cant_procesados = 0;
                         for (int fila = 2; hoja.Cells[fila, 1] != null; fila++)
                         {
-                            var conductor = new MME_Conductor();
-                            conductor.e_tran.nu_nro_fila_excel = fila;
+                            var conductor = new ME_Conductor();
+                            conductor.nu_nro_fila_excel = fila;
 
                             //1   Tipo de Importación
-                            if (hoja.Cells[fila, 1].Value.ToString() == null)
+                            if (hoja.Cells[fila, 1].Value == null)
                             {
                                 if (fila == 2) vacio = true;
                                 break;
                             }
                             con_Error = false;
                             accion = hoja.Cells[fila, 1].Value.ToString();
-                            conductor.e_tran.ch_accion = accion;
+                            conductor.ch_accion = accion;
                             observacion = "Errores: ";
 
                             //2   Código
                             if (accion == "A")
                             {
                                 if (hoja.Cells[fila, 2].Value != null)
-                                    conductor.me_conductor.e_conductor.vc_cod_conductor = hoja.Cells[fila, 2].Value.ToString();
+                                    conductor.e_conductor.vc_cod_conductor = hoja.Cells[fila, 2].Value.ToString();
                                 else
                                 {
                                     con_Error = true;
@@ -334,109 +365,120 @@ namespace SGC.Areas.Global.Controllers
                             }
                             //3   Apellido Paterno
                             if (hoja.Cells[fila, 3].Value != null)
-                                conductor.me_conductor.e_conductor.vc_apellido_paterno = hoja.Cells[fila, 3].Value.ToString();
+                                conductor.e_conductor.vc_apellido_paterno = hoja.Cells[fila, 3].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el apellido paterno."; }
                             //4   Apellido Materno
                             if (hoja.Cells[fila, 4].Value != null)
-                                conductor.me_conductor.e_conductor.vc_apellido_materno = hoja.Cells[fila, 4].Value.ToString();
+                                conductor.e_conductor.vc_apellido_materno = hoja.Cells[fila, 4].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el apellido materno."; }
                             //5   Nombres
                             if (hoja.Cells[fila, 5].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nombres = hoja.Cells[fila, 5].Value.ToString();
+                                conductor.e_conductor.vc_nombres = hoja.Cells[fila, 5].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el nombre del conductor."; }
                             //6   Tipo Doc. Identidad
                             if (hoja.Cells[fila, 6].Value != null)
-                                conductor.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad = hoja.Cells[fila, 6].Value.ToString();
+                                conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad = hoja.Cells[fila, 6].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el tipo de documento de identidad."; }
                             //7   Nro.Doc.Identidad
                             if (hoja.Cells[fila, 7].Value != null)
-                                conductor.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad = hoja.Cells[fila, 7].Value.ToString();
+                                conductor.e_conductor.vc_nro_doc_identidad = hoja.Cells[fila, 7].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el número de documento de identidad."; }
-                            //8   Fecha Inicio
+                            //8   Empresa de Transporte
                             if (hoja.Cells[fila, 8].Value != null)
-                                if (DateTime.TryParse(hoja.Cells[fila, 8].Value.ToString(), out fecha) == true)
-                                    conductor.me_conductor.e_conductor.dt_fec_inicio = Convert.ToDateTime(fecha);
+                                conductor.e_empresa_trans.vc_desc_empresa_trans = hoja.Cells[fila, 8].Value.ToString();
+                            else
+                            { con_Error = true; observacion += " Debe ingresar la empresa de transporte."; }
+                            //9   Fecha Inicio
+                            if (hoja.Cells[fila, 9].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 9].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_inicio = Convert.ToDateTime(fecha);
                                 else
                                 { con_Error = true; observacion += " La fecha de inicio tiene formato incorrecto."; }
                             else
                             { con_Error = true; observacion += " Debe ingresar la fecha de inicio."; }
-                            //9   Fecha Final
-                            if (hoja.Cells[fila, 9].Value != null)
-                                if (DateTime.TryParse(hoja.Cells[fila, 9].Value.ToString(), out fecha) == true)
-                                    conductor.me_conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
+                            //10   Fecha Final
+                            if (hoja.Cells[fila, 10].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 10].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
                                 else
                                 { con_Error = true; observacion += " La fecha final tiene formato incorrecto."; }
                             else
                             { con_Error = true; observacion += " Debe ingresar la fecha final."; }
-                            //10  Nro.Licencia
-                            if (hoja.Cells[fila, 10].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nro_licencia = hoja.Cells[fila, 10].Value.ToString();
+                            //11  Nro.Licencia
+                            if (hoja.Cells[fila, 11].Value != null)
+                                conductor.e_conductor.vc_nro_licencia = hoja.Cells[fila, 11].Value.ToString();
                             else
                             { con_Error = true; observacion += " Debe ingresar el número de licencia."; }
-                            //11  Fecha Nacimiento
-                            if (hoja.Cells[fila, 11].Value != null)
-                                if (DateTime.TryParse(hoja.Cells[fila, 11].Value.ToString(), out fecha) == true)
-                                    conductor.me_conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
+                            //12  Fecha Nacimiento
+                            if (hoja.Cells[fila, 12].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 12].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
                                 else
                                 { con_Error = true; observacion += " La fecha de nacimiento tiene formato incorrecto."; }
-                            //12  Nro.Padron
-                            if (hoja.Cells[fila, 12].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nro_padron = hoja.Cells[fila, 12].Value.ToString();
-                            //13  Nro.Placa
+                            //13  Nro.Padron
                             if (hoja.Cells[fila, 13].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nro_placa = hoja.Cells[fila, 13].Value.ToString();
-                            //14  Nombre Propietario
+                                conductor.e_conductor.vc_nro_padron = hoja.Cells[fila, 13].Value.ToString();
+                            //14  Nro.Placa
                             if (hoja.Cells[fila, 14].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nombre_propietario = hoja.Cells[fila, 14].Value.ToString();
-                            //15  Telefóno
+                                conductor.e_conductor.vc_nro_placa = hoja.Cells[fila, 14].Value.ToString();
+                            //15  Nombre Propietario
                             if (hoja.Cells[fila, 15].Value != null)
-                                conductor.me_conductor.e_conductor.vc_nro_telefono = hoja.Cells[fila, 15].Value.ToString();
-                            //16  Clase Licencia
+                                conductor.e_conductor.vc_nombre_propietario = hoja.Cells[fila, 15].Value.ToString();
+                            //16  Telefóno
                             if (hoja.Cells[fila, 16].Value != null)
-                                conductor.me_conductor.e_clase_licencia.vc_desc_clase_licencia = hoja.Cells[fila, 16].Value.ToString();
-                            //17  Categoria Licencia
+                                conductor.e_conductor.vc_nro_telefono = hoja.Cells[fila, 16].Value.ToString();
+                            //17  Clase Licencia
                             if (hoja.Cells[fila, 17].Value != null)
-                                conductor.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia = hoja.Cells[fila, 17].Value.ToString();
-                            //18  Tipo Servicio
+                                conductor.e_clase_licencia.vc_desc_clase_licencia = hoja.Cells[fila, 17].Value.ToString();
+                            //18  Categoria Licencia
                             if (hoja.Cells[fila, 18].Value != null)
-                                conductor.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio = hoja.Cells[fila, 18].Value.ToString();
-                            //19  Dirección
+                                conductor.e_categoria_licencia.vc_desc_categoria_licencia = hoja.Cells[fila, 18].Value.ToString();
+                            //19  Tipo Servicio
                             if (hoja.Cells[fila, 19].Value != null)
-                                conductor.me_conductor.e_conductor.vc_direccion = hoja.Cells[fila, 19].Value.ToString();
-                            //20  Grupo Sanguíneo
+                                conductor.e_tipo_servicio.vc_desc_tipo_servicio = hoja.Cells[fila, 19].Value.ToString();
+                            //20  Dirección
                             if (hoja.Cells[fila, 20].Value != null)
-                                conductor.me_conductor.e_grupo_sanguineo.vc_desc_grupo_sanguineo = hoja.Cells[fila, 20].Value.ToString();
-                            //21  Donación de Organo
+                                conductor.e_conductor.vc_direccion = hoja.Cells[fila, 20].Value.ToString();
+                            //21  Grupo Sanguíneo
                             if (hoja.Cells[fila, 21].Value != null)
-                                conductor.me_conductor.e_conductor.ch_donacion_organo = hoja.Cells[fila, 21].Value.ToString();
-                            //22  Restricciones
+                                conductor.e_grupo_sanguineo.vc_desc_grupo_sanguineo = hoja.Cells[fila, 21].Value.ToString();
+                            //22  Donación de Organo
                             if (hoja.Cells[fila, 22].Value != null)
-                                conductor.me_conductor.e_conductor.vc_restricciones = hoja.Cells[fila, 2].Value.ToString();
+                                conductor.e_conductor.ch_donacion_organo = hoja.Cells[fila, 22].Value.ToString();
+                            //23  Restricciones
+                            if (hoja.Cells[fila, 23].Value != null)
+                                conductor.e_conductor.vc_restricciones = hoja.Cells[fila, 23].Value.ToString();
 
-                            conductor.e_tran.nu_cant_procesados++;
+                            M.mme_conductor.e_tran.nu_cant_procesados++;
 
                             if (con_Error)
                             {
-                                conductor.e_tran.nu_cant_error++;
-                                conductor.e_tran.nu_tran_stdo = 0;
-                                conductor.e_tran.tx_tran_mnsg = observacion;
-                                M.mme_conductor.ls_me_errores.Add(conductor.me_conductor);
+                                M.mme_conductor.e_tran.nu_cant_error++;
+                                conductor.nu_tran_stdo = 0;
+                                conductor.tx_tran_mnsg = observacion;
+                                M.mme_conductor.ls_me_errores.Add(conductor);
                             }
                             else
-                                M.mme_conductor.ls_me_conductor.Add(conductor.me_conductor);
+                                M.mme_conductor.ls_me_conductor.Add(conductor);
                         }
 
                         if (vacio)
                             return Json(App.Error("No se puede cargar archivo vacío.", null));
 
                         if (M.mme_conductor.ls_me_conductor.Count > 0)
-                            M.mme_conductor = P_Conductor.Ins(M.mme_conductor);
-
+                        {
+                            M.mme_conductor.e_tran.vc_conexion_origen   = "SQL";
+                            M.mme_conductor.e_tran.vc_tran_usua_regi    = Ssn.vc_usuario;
+                            M.mme_conductor.e_tran.ch_tran_stdo_regi    = "A";
+                            M.mme_conductor.me_conductor.e_proyecto.nu_id_proyecto = Ssn.nu_id_proyecto;
+                            M.mme_conductor = P_Conductor.InsMasivo(M.mme_conductor);
+                        }
+                            
                     }
                 }
             }
@@ -444,7 +486,7 @@ namespace SGC.Areas.Global.Controllers
             {
                 return Json(App.Error(e.Message, null));
             }
-            return PartialView("VP_Conductores", M);
+            return PartialView("VP_Resultados", M);
         }
     }
 }

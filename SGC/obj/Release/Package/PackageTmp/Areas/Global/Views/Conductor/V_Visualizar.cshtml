@@ -1,0 +1,573 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Visualizar Conductor";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>Visualizar Conductor</b></li>
+        </ol>
+    </div>
+
+    <div id="content">
+        <div class="well NoPadding">
+            <button class="btn btn-primary" onclick="document.location = '@Url.RouteUrl("V_Sel_Conductor")';">
+                <i class="fa fa-search"></i> Consultar
+            </button>
+            <button id="btn_registrar" class="btn btn-info" onclick="document.location = '@Url.RouteUrl("V_Ins_Conductor")';">
+                <i class="fa fa-file"></i> Crear
+            </button>
+            <button id="btn_editar" class="btn btn-success" onclick="document.location = '@Url.RouteUrl("V_Upd_Conductor")' + '?id=' + '@Model.mme.me_conductor.e_conductor.nu_id_conductor';">
+                <i class="fa fa-edit"></i> Actualizar
+            </button>
+            @if (Model.mme.e_tran.ch_tran_stdo_regi == "A")
+            {
+                <button title="Deshabilitar" id="btnstdoac_@Model.mme.me_conductor.e_conductor.nu_id_conductor" class="btn btn-danger" onclick="Cambiar_Estado(@Model.mme.me_conductor.e_conductor.nu_id_conductor)"><i class="fa fa-remove"></i> Deshabilitar</button>
+            }
+            else
+            {
+                <button title="Habilitar" id="btnstdoac_@Model.mme.me_conductor.e_conductor.nu_id_conductor" class="btn btn-success" onclick="Cambiar_Estado(@Model.mme.me_conductor.e_conductor.nu_id_conductor)"><i class="fa fa-check"></i> Habilitar</button>
+            }
+        </div>
+
+        <form id="checkout-form" class="well" novalidate="novalidate">
+            <div class="row">
+                @Html.HiddenFor(m => m.mme.me_conductor.e_conductor.nu_id_conductor,
+                new
+                {
+                    atributo = "mme.me_conductor.e_conductor.nu_id_conductor"
+                })
+
+                <big><span id="span_estado" class="label label-danger" style="display:none">DESHABILITADO!</span></big>
+
+                <div class="col-sm-3 col-md-3 col-lg-3">
+                    <div class="well" id="imagen">
+                        <div class="item active">
+                            <img onClick="Ver_Imagen()" class="img-responsive" style="height:400px" src="/Recursos/Img/Transportista/@Model.mme.me_conductor.e_conductor.vc_ruta_foto" alt="@Model.mme.me_conductor.e_conductor.vc_nombre_completo">
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-sm-9 col-md-9 col-lg-9">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <label class="label-margin">
+                                    Empresa
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_empresa_trans.vc_desc_empresa_trans,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_empresa_trans.vc_desc_empresa_trans",
+                                        id          = "vc_desc_empresa_trans",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label class="label-margin">
+                                    Donación Órganos
+                                </label>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label class="toggle" style="float: left">
+                                    <input type="checkbox" name="checkbox-toggle" disabled="disabled" id="ch_afecto_igv" @(Model.mme.me_conductor.e_conductor.ch_donacion_organo == "1" ? "checked=checked" : "")>
+                                    <i data-swchon-text="SI" data-swchoff-text="NO"></i>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Código
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_cod_conductor,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_cod_conductor",
+                                        id          = "vc_cod_conductor",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <label class="label-margin">
+                                    Nombre Completo
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nombre_completo,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nombre_completo",
+                                        id          = "vc_nombre_completo",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Apellido Paterno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_apellido_paterno,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_apellido_paterno",
+                                        id          = "vc_apellido_paterno",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Apellido Materno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_apellido_materno,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_apellido_materno",
+                                        id          = "vc_apellido_materno",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nombres
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nombres,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nombres",
+                                        id          = "vc_nombres",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Tipo Doc. Identidad
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad",
+                                        id          = "vc_desc_tipo_doc_identidad",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Doc. Identidad
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_doc_identidad,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_doc_identidad",
+                                        id          = "vc_nro_doc_identidad",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_licencia,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_licencia",
+                                        id          = "vc_nro_licencia",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Padrón
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_padron,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_padron",
+                                        id          = "vc_nro_padron",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Placa
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_placa,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_placa",
+                                        id          = "vc_nro_placa",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Propietario
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nombre_propietario,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nombre_propietario",
+                                        id          = "vc_nombre_propietario",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Telefóno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_telefono,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_telefono",
+                                        id          = "vc_nro_telefono",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Dirección
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_direccion,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_direccion",
+                                        id          = "vc_direccion",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Grupo Sanguineo
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_grupo_sanguineo.vc_desc_grupo_sanguineo,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_grupo_sanguineo.vc_desc_grupo_sanguineo",
+                                        id          = "vc_desc_grupo_sanguineo",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Restricciones
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_restricciones,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_conductor.vc_restricciones",
+                                        id          = "vc_restricciones",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inicio
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_inicio, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_inicio),
+                                    new
+                                    {
+                                        type        = "text",
+                                        disabled    = "disabled",
+                                        id          = "dt_fec_inicio"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Final
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_final, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_final),
+                                        new
+                                        {
+                                            type        = "text",
+                                            disabled    = "disabled",
+                                            id          = "dt_fec_final"
+                                        })
+                                    </label>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Clase Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_clase_licencia.vc_desc_clase_licencia,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_clase_licencia.vc_desc_clase_licencia",
+                                        id          = "vc_desc_clase_licencia",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Categoria Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia",
+                                        id          = "vc_desc_categoria_licencia",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Tipo Servicio
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio",
+                                        id          = "vc_desc_tipo_servicio",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="well col-sm-12 col-md-12 col-lg-12 text-center">
+        <div class="btn btn-group">
+            <button type="button" class="btn btn-danger btn-lg" onclick="document.location = '@Url.RouteUrl("V_Sel_Conductor")';"><i class="fa fa-remove"></i> Cancelar</button>
+        </div>
+    </div>
+
+    <div hidden="hidden" id="carrusel_img">
+        <div id="myCarousel-ver">
+            <div id="imagenes_ver">
+                <img class="img-responsive" style="height:400px" src="/Recursos/Img/Transportista/@Model.mme.me_conductor.e_conductor.vc_ruta_foto" alt="@Model.mme.me_conductor.e_conductor.vc_nombre_completo">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        if ("@Model.mme.e_tran.ch_tran_stdo_regi" == "I")
+        {
+            $('#span_estado').attr('style', 'display');
+        }
+
+        $.widget("ui.dialog", $.extend({}, $.ui.dialog.prototype, {
+            _title: function (title) {
+                if (!this.options.title) {
+                    title.html("&#160;");
+                } else {
+                    title.html(this.options.title);
+                }
+            }
+        }));
+
+        $('#carrusel_img').dialog({
+            autoOpen: false,
+            width: 800,
+            resizable: false,
+            modal: true,
+            title: "<div class='widget-header'><h4> @Model.mme.me_conductor.e_conductor.vc_nombre_completo </h4></div>"
+        });
+    })
+
+    window.onbeforeunload = function () {
+        if (Peticion) { return "Tiene un proceso ejecutándose no salga de este sitio aún."; }
+    }
+
+    function Ver_Imagen() {
+        $('#carrusel_img').dialog('open');
+    }
+
+    function Cambiar_Estado(id) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        Msg = "Se está cambiando el estado del conductor, espere un momento...";        
+        NuevaPeticion(Msg)
+        Peticion = true;
+        $.ajax({
+            url: '@Url.RouteUrl("AC_UpdEstado_Conductor")',
+            type: "post",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r.std) {
+                    //$('#Transaccion').html(r.trans);
+                    if (r.trans.e_tran.nu_tran_stdo == 0) {
+                        ErrorBase(r.trans.e_tran.tx_tran_mnsg)
+                    }
+                    else {
+                        CambiarEstadoPerfil(id, r.trans.e_tran.tx_tran_mnsg)
+
+                        if ($('#btnstdoac_' + id).attr('title') == "Habilitar")
+                            $('#span_estado').attr('style', 'display:display');
+                        else
+                            $('#span_estado').attr('style', 'display:none');
+                    }
+                }
+                else {
+                    ErrorApp(r.msg)
+                }
+                Peticion = false;
+            }
+        });
+    }
+
+</script>
+

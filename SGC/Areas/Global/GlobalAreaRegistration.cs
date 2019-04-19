@@ -197,6 +197,18 @@ namespace SGC.Areas.Global
                 defaults: new { controller = "Conductor", action = "AC_ImprimirCarneConductor" }
             );
 
+            context.MapRoute(
+                name: "AC_ImprimirFrontalCarneConductor",
+                url: "ImpresionFrontalCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirFrontalCarneConductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_ImprimirPosteriorCarneConductor",
+                url: "ImpresionPosteriorCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirPosteriorCarneConductor" }
+            );
+
             #endregion
         }
 

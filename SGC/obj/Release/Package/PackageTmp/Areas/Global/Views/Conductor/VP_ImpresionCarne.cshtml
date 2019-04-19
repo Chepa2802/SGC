@@ -1,0 +1,28 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+
+<table id="Tabla_Carne" class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Código</th>
+            <th>Nombre</th>
+            <th class="text-center">Tipo doc. Identidad</th>
+            <th class="text-center">Nro. doc. Identidad</th>
+            <th>Empresa Transporte</th>
+            <th class="text-center">Licencia</th>
+        </tr>
+    </thead>
+    <tbody id="ls_carnes">
+        @foreach (var item in Model.ls_mme)
+        {
+            <tr id="@item.me_conductor.e_conductor.nu_id_conductor" class="reg cursorMano">
+                <td class="text-center">@item.me_conductor.e_conductor.vc_cod_conductor</td>
+                <td>@item.me_conductor.e_conductor.vc_nombre_completo</td>
+                <td class="text-center">@item.me_conductor.e_tipo_doc_identidad.vc_desc_tipo_doc_identidad</td>
+                <td class="text-center">@item.me_conductor.e_conductor.vc_nro_doc_identidad</td>
+                <td>@item.me_conductor.e_empresa_trans.vc_desc_empresa_trans</td>
+                <td class="text-center">@item.me_conductor.e_conductor.vc_nro_licencia</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

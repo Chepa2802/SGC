@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="SQL2-Web.config Connection String" description="SQL2 Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=10.56.0.21\MARTBD;Initial Catalog=SGC;user=sa;pwd=MAVILA*1;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="D:\\TISI\\SGC\\Aplicacion\\SGC\\SGC\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQL2']/@connectionString" />
-  </parameter>
-  <parameter name="SQL-Web.config Connection String" description="SQL Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=198.38.92.178;Initial Catalog=SGC;user=sa;pwd=mavila*1;" tags="SqlConnectionString">
+  <parameter name="SQL-Web.config Connection String" description="SQL Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=10.56.0.21\MARTBD;Initial Catalog=SGC;user=sa;pwd=MAVILA*1;" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="D:\\TISI\\SGC\\Aplicacion\\SGC\\SGC\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQL']/@connectionString" />
+  </parameter>
+  <parameter name="SQL2-Web.config Connection String" description="SQL2 Cadena de conexión que usa la aplicación en web.config para obtener acceso a la base de datos." defaultValue="Data Source=198.38.92.178;Initial Catalog=SGC;user=sa;pwd=mavila*1;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="D:\\TISI\\SGC\\Aplicacion\\SGC\\SGC\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='SQL2']/@connectionString" />
   </parameter>
 </parameters>

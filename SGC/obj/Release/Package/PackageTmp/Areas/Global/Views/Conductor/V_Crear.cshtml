@@ -1,0 +1,770 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Crear Conductor";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+<link href="/Content/base/bootstrap-theme.min.css" rel="stylesheet" />
+<link href="/Content/base/jquery.fileupload.css" rel="stylesheet" />
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>Crear Conductor</b></li>
+        </ol>
+    </div>
+
+    <div id="content">
+        <div class="well NoPadding">
+            <button class="btn btn-primary" onclick="Consultar();">
+                <i class="fa fa-search"></i> Consultar
+            </button>
+        </div>
+
+        <form id="checkout-form" class="well" novalidate="novalidate">
+            <div class="row">
+                @Html.HiddenFor(m => m.mme.me_conductor.e_conductor.nu_id_conductor,
+                new
+                {
+                    atributo = "mme.me_conductor.e_conductor.nu_id_conductor"
+                })
+
+                <div class="col-sm-3 col-md-3 col-lg-3 modal-body NoPadding">
+                    <input type="text" id="sesion_imagen" hidden="hidden" />
+                    <span class="btn btn-default fileinput-button">
+                        <i class="glyphicon glyphicon-picture"></i>
+                        <span id="estado"></span>
+                        <input id="FileImagen" type="file" name="files[]" accept="image/jpeg">
+                    </span>
+                    <span class="btn btn-danger btn-sm" onclick="QuitarImagen();"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                    <div class="well" id="imagen">
+                        <div class="item active">
+                            <img id="img_conductor" class="img-responsive" style="height:400px">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-9 col-md-9 col-lg-9">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Empresa
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <div class="form-group">
+                                    <select id="nu_id_empresa_trans" style="width:100%" class="select2 NoPadding">
+                                        <optgroup id="ls_empresa_trans" label="Empresas....">
+                                            <option>-- SELECCIONE --</option>
+                                            @foreach (var item in Model.ls_mme_empresa_trans)
+                                            {
+                                                <option value="@item.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans">@item.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans</option>
+                                            }
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label class="label-margin">
+                                    Donación Órganos
+                                </label>
+                            </div>
+                            <div class="col-sm-6 col-md-6 col-lg-6">
+                                <label class="toggle" style="float: left">
+                                    <input type="checkbox" name="checkbox-toggle" id="ch_donacion_organo">
+                                    <i data-swchon-text="SI" data-swchoff-text="NO"></i>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Código
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <input value="Autogenerado" style="background-color:yellow;font-weight:bold;font-size:120%;text-align:center" readonly="readonly">
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                            <div class="col-sm-2 col-md-2 col-lg-2">
+                                <label class="label-margin">
+                                    Nombre Completo
+                                </label>
+                            </div>
+                            <div class="col-sm-10 col-md-10 col-lg-10">
+                                <label class="input">
+                                    <input id="vc_nombre_completo" readonly="readonly"/>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Apellido Paterno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_apellido_paterno,
+                                    new
+                                    {
+                                        maxLength   = "50",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_apellido_paterno",
+                                        id          = "vc_apellido_paterno",
+                                        placeholder = "Ingresar apellido paterno"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Apellido Materno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_apellido_materno,
+                                    new
+                                    {
+                                        maxLength = "50",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_apellido_materno",
+                                        id          = "vc_apellido_materno",
+                                        placeholder = "Ingresar apellido materno"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Nombres
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nombres,
+                                    new
+                                    {
+                                        maxLength   = "150",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nombres",
+                                        id          = "vc_nombres",
+                                        placeholder = "Ingresar nombres"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Tipo Doc. Identidad
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select">
+                                    @Html.DropDownListFor(m => m.mme.me_conductor.e_tipo_doc_identidad.nu_id_tipo_doc_identidad, Model.cb_tipo_doc_identidad,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_tipo_doc_identidad.nu_id_tipo_doc_identidad",
+                                        id          = "nu_id_tipo_doc_identidad"
+                                    })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Nro. Doc. Identidad
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_doc_identidad,
+                                    new
+                                    {
+                                        maxLength   = "20",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_doc_identidad",
+                                        id          = "vc_nro_doc_identidad",
+                                        placeholder = "Ingrese nro. documento"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Nro. Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_licencia,
+                                    new
+                                    {
+                                        maxLength   = "20",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_licencia",
+                                        id          = "vc_nro_licencia",
+                                        placeholder = "Ingrese licencia"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Padrón
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_padron,
+                                    new
+                                    {
+                                        maxLength   = "5",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_padron",
+                                        id          = "vc_nro_padron",
+                                        placeholder = "Ingrese nro. padrón"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Placa
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_placa,
+                                    new
+                                    {
+                                        maxLength   = "25",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_placa",
+                                        id          = "vc_nro_placa",
+                                        placeholder = "Ingrese nro. placa"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Propietario
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nombre_propietario,
+                                    new
+                                    {
+                                        maxLength   = "200",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nombre_propietario",
+                                        id          = "vc_nombre_propietario",
+                                        placeholder = "Ingrese nombre propietario"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Nro. Telefóno
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_nro_telefono,
+                                    new
+                                    {
+                                        maxLength   = "15",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_nro_telefono",
+                                        id          = "vc_nro_telefono",
+                                        placeholder = "Ingrese telefóno"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Dirección
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_direccion,
+                                    new
+                                    {
+                                        maxLength   = "500",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_direccion",
+                                        id          = "vc_direccion",
+                                        placeholder = "Ingrese dirección"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Grupo Sanguineo
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select">
+                                    @Html.DropDownListFor(m => m.mme.me_conductor.e_grupo_sanguineo.nu_id_grupo_sanguineo, Model.cb_grupo_sanguineo,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_grupo_sanguineo.nu_id_grupo_sanguineo",
+                                        id          = "nu_id_grupo_sanguineo"
+                                    })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Restricciones
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_conductor.vc_restricciones,
+                                    new
+                                    {
+                                        maxLength   = "500",
+                                        atributo    = "mme.me_conductor.e_conductor.vc_restricciones",
+                                        id          = "vc_restricciones",
+                                        placeholder = "Ingresar restricciones"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Fecha Inicio
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_inicio, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_inicio),
+                                    new
+                                    {
+                                        type        = "text",
+                                        @readonly   = "readonly",
+                                        id          = "dt_fec_inicio"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Fecha Final
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-calendar"></i>
+                                        @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_final, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_final),
+                                        new
+                                        {
+                                            type        = "text",
+                                            @readonly   = "readonly",
+                                            id          = "dt_fec_final"
+                                        })
+                                    </label>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Clase Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select">
+                                    @Html.DropDownListFor(m => m.mme.me_conductor.e_clase_licencia.nu_id_clase_licencia, Model.cb_clase_licencia,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_clase_licencia.nu_id_clase_licencia",
+                                        id          = "nu_id_clase_licencia"
+                                    })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Categoria Licencia
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select">
+                                    @Html.DropDownListFor(m => m.mme.me_conductor.e_categoria_licencia.nu_id_categoria_licencia, Model.cb_categoria_licencia,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_categoria_licencia.nu_id_categoria_licencia",
+                                        id          = "nu_id_categoria_licencia"
+                                    })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Tipo Servicio
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select">
+                                    @Html.DropDownListFor(m => m.mme.me_conductor.e_tipo_servicio.nu_id_tipo_servicio, Model.cb_tipo_servicio,
+                                    new
+                                    {
+                                        atributo    = "mme.me_conductor.e_tipo_servicio.nu_id_tipo_servicio",
+                                        id          = "nu_id_tipo_servicio"
+                                    })
+                                    <i></i>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="well col-sm-12 col-md-12 col-lg-12 text-center">
+        <div class="btn btn-group">
+            <button type="button" class="btn btn-danger btn-lg" onclick="document.location = '@Url.RouteUrl("V_Sel_Conductor")';"><i class="fa fa-remove"></i> Cancelar</button>
+            <button type="button" class="btn btn-success btn-lg" onclick="Crear();return false;"><i class="fa fa-pencil"></i> Registrar</button>
+        </div>
+    </div>
+
+    <div hidden="hidden" id="carrusel_img">
+        <div id="myCarousel-ver">
+            <div id="imagenes_ver">
+                <img class="img-responsive" style="height:400px" src="/Recursos/Img/Transportista/@Model.mme.me_conductor.e_conductor.vc_ruta_foto" alt="@Model.mme.me_conductor.e_conductor.vc_nombre_completo">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+    var version = 1;
+    var Peticion = false;
+    var Area = "Almacén";
+    var Msg = "";
+
+    $(document).ready(function () {
+
+        $('#dt_fec_inicio').datepicker({
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>'
+        });
+
+        $('#dt_fec_final').datepicker({
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>'
+        });
+
+    });
+
+    $(document).on('keyup', '#vc_apellido_paterno', function (evt) {
+        CalcularNombreCompleto()
+        return true;
+    });
+
+    $(document).on('keyup', '#vc_apellido_materno', function (evt) {
+        CalcularNombreCompleto()
+        return true;
+    });
+
+    $(document).on('keyup', '#vc_nombres', function (evt) {
+        CalcularNombreCompleto()
+        return true;
+    });
+
+    function CalcularNombreCompleto() {
+        var pat = $('#vc_apellido_paterno').val();
+        var mat = $('#vc_apellido_materno').val();
+        var nom = $('#vc_nombres').val();
+        $('#vc_nombre_completo').val(pat + ' ' + mat + ' ' + nom);
+    }
+    
+    $(document).on('click', '#FileImagen', function () {
+        $('#FileImagen').fileupload({
+            dataType: 'json',
+            url: '@Url.RouteUrl("AC_Conductor_Cargar_Imagen_Temp")',
+                autoUpload: true,
+                success: function (r) {
+                    if (r.std) {
+                        $('#sesion_imagen').html(r.trans.mme.me_conductor.e_conductor.vc_ruta_foto);
+                        $('#estado').html('&nbsp;&nbsp;100% <i class="fa fa-check" style="color:green;"></i>');
+                        document.getElementById("img_conductor").src = "/Recursos/Img/Transportista/Temp/" + r.trans.mme.me_conductor.e_conductor.vc_ruta_foto;
+                    }
+                    else {
+                        ErrorApp(s.msg);
+                    }
+                }
+            }).on('fileuploadprogressall', function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#estado').html('&nbsp;&nbsp;' + progress + '%');
+                $('.progress .progress-bar').css('width', progress + '%');
+            });
+
+    });
+
+    function Consultar() {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("V_Sel_Conductor")";
+    }
+
+    function QuitarImagen() {
+
+        var e_conductor = {
+            vc_ruta_foto: $('#sesion_imagen').text()
+        }
+        var me_conductor = { e_conductor: e_conductor }
+        var mme = { me_conductor: me_conductor }
+        var M = { mme: mme }
+        Msg = "Eliminando archivo, espere un momento...";
+        if (Peticion) { EnProceso(Msg); return false; }
+        NuevaPeticion(Msg)
+        Peticion = true;
+        $.ajax({
+            url: "@Url.RouteUrl("AC_Conductor_Eliminar_Imagen_Temp")",
+            type: "post",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                console.log(r)
+
+                $('#sesion_imagen').val('')
+                document.getElementById("img_conductor").src = "";
+
+                Entiendo();
+                Peticion = false;
+            }
+        });
+        
+    }
+
+    function Crear() {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+    
+        if (!Validaciones()) { return false; }
+
+        var e_empresa_trans = {
+            nu_id_empresa_trans     : $('#nu_id_empresa_trans').val()
+        }
+
+        var e_tipo_doc_identidad = {
+            nu_id_tipo_doc_identidad: $('#nu_id_tipo_doc_identidad').val()
+        }
+
+        var e_grupo_sanguineo = {
+            nu_id_grupo_sanguineo: $('#nu_id_grupo_sanguineo').val()
+        }
+
+        var e_clase_licencia = {
+            nu_id_clase_licencia: $('#nu_id_clase_licencia').val()
+        }
+
+        var e_categoria_licencia = {
+            nu_id_categoria_licencia: $('#nu_id_categoria_licencia').val()
+        }
+
+        var e_tipo_servicio = {
+            nu_id_tipo_servicio: $('#nu_id_tipo_servicio').val()
+        }
+
+        var ch_donacion_organo = '0';
+        if ($('#ch_donacion_organo').is(':checked')) {
+            ch_donacion_organo = '1';
+        }
+
+        var e_conductor = {
+            ch_donacion_organo      : ch_donacion_organo,
+            vc_apellido_paterno     : $('#vc_apellido_paterno').val(),
+            vc_apellido_materno     : $('#vc_apellido_materno').val(),
+            vc_nombres              : $('#vc_nombres').val(),
+            vc_nro_doc_identidad    : $('#vc_nro_doc_identidad').val(),
+            vc_nro_licencia         : $('#vc_nro_licencia').val(),
+            vc_nro_padron           : $('#vc_nro_padron').val(),
+            vc_nro_placa            : $('#vc_nro_placa').val(),
+            vc_nombre_propietario   : $('#vc_nombre_propietario').val(),
+            vc_nro_telefono         : $('#vc_nro_telefono').val(),
+            vc_direccion            : $('#vc_direccion').val(),
+            vc_restricciones        : $('#vc_restricciones').val(),
+            dt_fec_inicio           : $('#dt_fec_inicio').val(),
+            dt_fec_final            : $('#dt_fec_final').val(),
+            vc_ruta_foto            : $('#sesion_imagen').text()
+        }
+
+        var me_conductor = {
+            e_empresa_trans         : e_empresa_trans,
+            e_tipo_doc_identidad    : e_tipo_doc_identidad,
+            e_grupo_sanguineo       : e_grupo_sanguineo,
+            e_clase_licencia        : e_clase_licencia,
+            e_categoria_licencia    : e_categoria_licencia,
+            e_tipo_servicio         : e_tipo_servicio,
+            e_conductor             : e_conductor
+        }
+
+        var mme = {
+            me_conductor: me_conductor
+        }
+
+        var M = { mme: mme}
+
+        console.log(M)
+
+        Msg = "Se está realizando el registro del conductor, espere un momento...";
+        if (Peticion) { EnProceso(Msg); return false; }
+        NuevaPeticion(Msg)
+        Peticion = true;
+
+        $.ajax({
+            url: '@Url.RouteUrl("AC_Ins_Conductor")',
+            type: "post",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                console.log(r)
+                if (r.std) {
+                    if (r.trans.e_tran.nu_tran_stdo == 0) {
+                        ErrorBase(r.trans.e_tran.tx_tran_mnsg);
+                    }
+                    else {
+                        ProcesoTerminado(r.trans.e_tran.tx_tran_mnsg);
+                    }
+                }
+                else {
+                    ErrorApp(r.msg)
+                }
+                Peticion = false;
+            },
+            error: function (e) {
+                console.log(e)
+            }
+        });
+
+    }
+
+    function Validaciones() {
+
+        if ($('#sesion_imagen').text() == '') {
+            Mensaje('Debe seleccionar una imagen.');
+            return false;
+        }
+
+        if ($('#nu_id_empresa_trans').val() == '-- SELECCIONE --') {
+            Mensaje('Debe seleccionar una empresa de transporte.');
+            return false;
+        }
+        
+        if (Vacio('vc_apellido_paterno')) {
+            Mensaje('Debe ingresar un apellido paterno.');
+            return false;
+        }
+
+        if (Vacio('vc_apellido_materno')) {
+            Mensaje('Debe ingresar un apellido materno.');
+            return false;
+        }
+
+        if (Vacio('vc_nombres')) {
+            Mensaje('Debe ingresar el nombre.');
+            return false;
+        }
+
+        if ($('#nu_id_tipo_doc_identidad').val() == '-- SELECCIONE --') {
+            Mensaje('Debe seleccionar un tipo de documento de identidad.');
+            return false;
+        }
+
+        if (Vacio('vc_nro_doc_identidad')) {
+            Mensaje('Debe ingresar un número de documento de identidad.');
+            return false;
+        }
+
+        var id_tdi = $('#nu_id_tipo_doc_identidad').val();
+
+        if (id_tdi == 1) {
+            if (!Longitud('vc_nro_doc_identidad', 8, 1)) {
+                Mensaje('Para el número de documento de identidad, ingresar 8 dígitos.');
+                return false;
+            }
+
+            if (!Numero('vc_nro_doc_identidad')) {
+                Mensaje('Para el número de documento de identidad, sólo ingresar números.');
+                return false;
+            }
+        }
+
+        if (Vacio('vc_nro_licencia')) {
+            Mensaje('Debe ingresar una licencia.');
+            return false;
+        }
+
+        if (Vacio('dt_fec_inicio')) {
+            Mensaje('Debe ingresar una fecha de inicio.');
+            return false;
+        }
+
+        if (Vacio('dt_fec_final')) {
+            Mensaje('Debe ingresar una fecha final.');
+            return false;
+        }
+
+        return true;
+    }
+
+</script>

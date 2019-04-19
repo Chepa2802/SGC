@@ -1,7 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>Error</title>
 </head>
@@ -10,5 +15,11 @@
         <h1>Error.</h1>
         <h2>Error al procesar la solicitud.</h2>
     </hgroup>
+
+    <p>Controller = @Model.ControllerName</p>
+    <p>Action = @Model.ActionName</p>
+    <p>Message = @Model.Exception.Message</p>
+    <p>StackTrace :</p>
+    <pre>@Model.Exception.StackTrace</pre>
 </body>
 </html>

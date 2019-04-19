@@ -93,6 +93,13 @@ D:\TISI\SGC\Aplicacion\SGC\SGC\obj\Debug\SGC.csproj.CoreCompileInputs.cache
 D:\TISI\SGC\Aplicacion\SGC\SGC\obj\Debug\SGC.csproj.CopyComplete
 D:\TISI\SGC\Aplicacion\SGC\SGC\obj\Debug\SGC.dll
 D:\TISI\SGC\Aplicacion\SGC\SGC\obj\Debug\SGC.pdb
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\stdole.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\EPPlus.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OpenXml4Net.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OpenXmlFormats.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OOXML.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\ICSharpCode.SharpZipLib.dll
+D:\TISI\SGC\Aplicacion\SGC\SGC\bin\ICSharpCode.SharpZipLib.xml
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.CrystalReports.Engine.dll
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.ReportSource.dll
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.Shared.dll
@@ -109,8 +116,3 @@ D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.ReportAppServer.CubeDefModel
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.ReportAppServer.CommonObjectModel.dll
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.ReportAppServer.ObjectFactory.dll
 D:\TISI\SGC\Aplicacion\SGC\SGC\bin\CrystalDecisions.ReportAppServer.CommonControls.dll
-D:\TISI\SGC\Aplicacion\SGC\SGC\bin\stdole.dll
-D:\TISI\SGC\Aplicacion\SGC\SGC\bin\EPPlus.dll
-D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OpenXml4Net.dll
-D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OpenXmlFormats.dll
-D:\TISI\SGC\Aplicacion\SGC\SGC\bin\NPOI.OOXML.dll

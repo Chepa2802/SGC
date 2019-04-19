@@ -84,7 +84,7 @@ namespace SGC.Areas.Global.Controllers
 
                 return View("V_VisualizarCarne", M);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //Ssn.vc_master = "~/Areas/Ventas/Views/MPVentas.cshtml";
                 //Ssn.vc_error_vista = e.Message;
@@ -704,7 +704,7 @@ namespace SGC.Areas.Global.Controllers
             ReportDocument Rep = new ReportDocument();
             try
             {
-                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarne " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarne " + Ssn.vc_desc_proyecto + ".rpt";                   
                 Rep.Load(strRptPath);
 
                 string usuario          = ConfigurationManager.AppSettings["UsuarioRpt"];
@@ -726,7 +726,76 @@ namespace SGC.Areas.Global.Controllers
             {
                 Rep.Close();
                 Rep.Dispose();
-                throw;
+                return Json(ex.Message);
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_ImprimirFrontalCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarneFrontal " + Ssn.vc_desc_proyecto + ".rpt";
+                Rep.Load(strRptPath);
+
+                string usuario = ConfigurationManager.AppSettings["UsuarioRpt"];
+                string clave = ConfigurationManager.AppSettings["ClaveRpt"];
+                string servidor = ConfigurationManager.AppSettings["ServidorRpt"];
+                string name_database = ConfigurationManager.AppSettings["DbaseRpt"];
+
+                Rep.SetDatabaseLogon(usuario, clave, servidor, name_database);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, "RepImpresionCarneFrontal " + Ssn.vc_desc_proyecto + ".rpt");
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return Json(ex.Message);
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_ImprimirPosteriorCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarnePosterior " + Ssn.vc_desc_proyecto + ".rpt";
+                Rep.Load(strRptPath);
+                
+                string usuario = ConfigurationManager.AppSettings["UsuarioRpt"];
+                string clave = ConfigurationManager.AppSettings["ClaveRpt"];
+                string servidor = ConfigurationManager.AppSettings["ServidorRpt"];
+                string name_database = ConfigurationManager.AppSettings["DbaseRpt"];
+
+                Rep.SetDatabaseLogon(usuario, clave, servidor, name_database);
+                
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, "RepImpresionCarnePosterior " + Ssn.vc_desc_proyecto + ".rpt");
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return Json(new { estado = ex.Message,
+                    usuario = ConfigurationManager.AppSettings["UsuarioRpt"],
+                    clave = ConfigurationManager.AppSettings["ClaveRpt"],
+                    servidor = ConfigurationManager.AppSettings["ServidorRpt"],
+                    name_database = ConfigurationManager.AppSettings["DbaseRpt"]
+                }, JsonRequestBehavior.AllowGet);
             }
             return Json("true");
         }

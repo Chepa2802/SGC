@@ -77,5 +77,16 @@ namespace Procedimiento
             catch (Exception ex) { throw ex; }
             return M;
         }
+
+        public static MME_Conductor InsMasivo(MME_Conductor M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Conductor.InsMasivo(M);
+            }
+            catch (Exception ex) { throw ex; }
+            return M;
+        }
     }
 }
