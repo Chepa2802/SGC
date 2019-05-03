@@ -27,7 +27,7 @@ namespace Entidad
         [DataMember]public string       vc_nro_telefono         { get; set; }
         [DataMember]public string       vc_direccion            { get; set; }
         [DataMember]public string       ch_donacion_organo      { get; set; }
-        [DataMember] public string      vc_restricciones        { get; set; }
+        [DataMember]public string       vc_restricciones        { get; set; }
 
     }
 }

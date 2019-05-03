@@ -1,5 +1,4 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
-
 @{
     ViewBag.Title = "Error";
 }
@@ -18,6 +17,7 @@
 
     <p>Controller = @Model.ControllerName</p>
     <p>Action = @Model.ActionName</p>
+    <p>Tipo = @Model.Exception.GetType()</p>
     <p>Message = @Model.Exception.Message</p>
     <p>StackTrace :</p>
     <pre>@Model.Exception.StackTrace</pre>

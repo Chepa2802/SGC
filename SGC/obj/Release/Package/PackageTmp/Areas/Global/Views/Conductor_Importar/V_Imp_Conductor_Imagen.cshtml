@@ -1,0 +1,170 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Importar Conductores Imágenes";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+<link href="~/Content/base/bootstrap-themexxx.min.css" rel="stylesheet" />
+<link href="~/Content/base/jquery.fileupload.css" rel="stylesheet" />
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>CARGA MASIVA DE IMÁGENES DE CONDUCTORES</b></li>
+        </ol>
+    </div>
+    <div id="content">
+        <form id="checkout-form" class="well NoMargin" novalidate="novalidate">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <span class="btn btn-default fileinput-button">
+                        <i class="glyphicon glyphicon-file"></i>
+                        <span id="estado">Elegir imágenes </span>
+                        <input id="Imagen" type="file" name="files[]" multiple accept="image/jpeg">
+                    </span>
+                </div>
+                <br />
+                <br />
+                &nbsp
+                &nbsp
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div id="seccion_notificacion" class="col-sm-12 col-md-12 col-lg-12">
+                        <div  class="alert alert-success alert-block">
+                            <a class="close" data-dismiss="alert" href="#"></a>
+                            <h4 class="alert-heading">NOTIFICACIÓN!</h4>
+                            <br />
+                            <div id="notificacion"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p><b>-Los archivos deben tener en su nombre el número de documento de identidad del conductor.<b/></p>
+                    <p><b>-Ejemplo: Pepe Lucho con DNI 12345678, nombre de archivo "12345678.jpg"</b></p>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+    
+    var Peticion = false;
+    var Area = "Global";
+    var Msg = "";
+
+    var ls_msg = [];
+
+    $('#Imagen').on('change', function (e) {
+        var files = e.target.files;
+        
+        if (files.length > 0) {
+            if (window.FormData !== undefined) {
+                var data = new FormData();
+                for (var x = 0; x < files.length; x++) {
+                    data.append("file" + x, files[x]);
+                }
+
+                Msg = "Se está procesando las imágenes, espere un momento...";
+                NuevaPeticion(Msg)
+
+                $.ajax({
+                    type: "post",
+                    url: '@Url.RouteUrl("AC_Imp_Conductor_Imagen")',
+                    contentType: false,
+                    processData: false,
+                    data: data,
+                    success: function (result) {
+                        $('#notificacion').html(result);
+                        $('#seccion_notificacion').removeAttr('hidden');
+                        Entiendo();
+                    },
+                    error: function (result) {
+                        ErrorApp(result);
+                    }
+                });
+            } else {
+                alert("This browser doesn't support HTML5 file uploads!");
+            }
+        }
+        
+    });
+    
+    @*$(document).ready(function () {
+
+        $('#nu_cant_procesados').text('');
+        $('#nu_cant_registrados').text('');
+        $('#nu_cant_errores').text('');
+
+        $('#Imagen').fileupload({
+            dataType: 'json',
+            url: '@Url.RouteUrl("AC_Imp_Conductor_Imagen")',
+            autoUpload: true,
+            success: function (s) {
+                if (s.std) {
+                    console.log(s)
+                    $('#estado').html('&nbsp;&nbsp;100% <i class="fa fa-check" style="color:green;"></i>');
+
+                    //if (s.trans.mme.e_tran.nu_tran_stdo == 0) {
+                    //    var find = false;
+                    //    var cont = 1;
+
+                    //    $('#ls_errores tr').each(function () {
+                    //        if ($(this).find('td').eq(1).text().trim() == s.trans.mme.e_tran.tx_tran_mnsg) {
+                    //            find = true;
+                    //        }
+                    //        cont = parseFloat($(this).find('td').eq(0).text().trim()) + parseFloat(1);
+                    //    });
+                    //    if (find == false) {
+                    //        var fila =
+                    //        '<tr >'
+                    //                + '<td>' + cont + '</td>'
+                    //                + '<td>' + s.trans.mme.e_tran.tx_tran_mnsg + '</td>'
+                    //        '</tr>';
+                    //        $('#ls_errores').append(fila);
+                    //        $('#contador_error').text(cont);
+
+                    //        $('#mensaje_error').removeAttr('hidden')
+                    //    }
+                    //    contador++;
+                    //}
+                    //else if (s.trans.mme.e_tran.nu_tran_stdo == 1) {
+                    //    var find = false;
+                    //    var cont = 1;
+                    //    $('#ls_exito tr').each(function () {
+                    //        if ($(this).find('td').eq(1).text().trim() == s.trans.mme.e_tran.tx_tran_mnsg) {
+                    //            find = true;
+                    //        }
+
+                    //        cont = parseFloat($(this).find('td').eq(0).text().trim()) + parseFloat(1);
+                    //    });
+                    //    if (find == false) {
+                    //        var fila =
+                    //        '<tr >'
+                    //                + '<td>' + cont + '</td>'
+                    //                + '<td>' + s.trans.mme.e_tran.tx_tran_mnsg + '</td>'
+                    //        '</tr>';
+                    //        $('#ls_exito').append(fila);
+                    //        $('#contador').text(cont);
+                    //        $('#mensaje_exito').removeAttr('hidden')
+                    //    }
+                    //    contador++;
+                    //}
+                    //$('#contador_universal').text(contador);
+                    //$('#contador_universal2').text(contador);
+
+                }
+                else {
+                    ErrorApp(s.msg);
+                }
+
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#estado').html('&nbsp;&nbsp;' + progress + '%');
+            $('.progress .progress-bar').css('width', progress + '%');
+        });
+    });*@
+</script>

@@ -82,6 +82,8 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@VC_COD_EMPRESA_TRANS", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans);
                     db.AddInParameter(cmd, "@VC_DESC_EMPRESA_TRANS", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans);
                     db.AddInParameter(cmd, "@VC_RUC", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_ruc);
+                    db.AddInParameter(cmd, "@VC_DIRECCION", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_direccion);
+                    db.AddInParameter(cmd, "@VC_RESOLUCION", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_resolucion);
                     P_Transaccion.iIns(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sIns(db, cmd, m.e_tran);
@@ -109,6 +111,8 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@VC_COD_EMPRESA_TRANS", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans);
                     db.AddInParameter(cmd, "@VC_DESC_EMPRESA_TRANS", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans);
                     db.AddInParameter(cmd, "@VC_RUC", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_ruc);
+                    db.AddInParameter(cmd, "@VC_DIRECCION", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_direccion);
+                    db.AddInParameter(cmd, "@VC_RESOLUCION", DbType.String, m.me_empresa_trans.e_empresa_trans.vc_resolucion);
                     P_Transaccion.iUpd(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sUpd(db, cmd, m.e_tran);
@@ -185,6 +189,10 @@ namespace Transaccion
                 m.e_tran.dt_tran_fech_regi                                  = or["dt_fec_reg"].ToDateTime();
             if (Convertidor.Ec(or, "vc_usr_reg"))
                 m.e_tran.vc_tran_usua_regi                                  = or["vc_usr_reg"].ToText();
+            if (Convertidor.Ec(or, "vc_direccion"))
+                m.me_empresa_trans.e_empresa_trans.vc_direccion             = or["vc_direccion"].ToText();
+            if (Convertidor.Ec(or, "vc_resolucion"))
+                m.me_empresa_trans.e_empresa_trans.vc_resolucion            = or["vc_resolucion"].ToText();
 
             return m;
         }

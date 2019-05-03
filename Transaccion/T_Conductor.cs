@@ -49,6 +49,7 @@ namespace Transaccion
                     cmd.CommandTimeout = int.Parse(ConfigurationManager.AppSettings["Delay"]);
                     db.AddInParameter(cmd, "@NU_ID_PROYECTO", DbType.Decimal, m.me_conductor.e_proyecto.nu_id_proyecto);
                     db.AddInParameter(cmd, "@NU_ID_CONDUCTOR", DbType.Decimal, m.me_conductor.e_conductor.nu_id_conductor);
+                    db.AddInParameter(cmd, "@VC_NRO_DOC_IDENTIDAD", DbType.String, m.me_conductor.e_conductor.vc_nro_doc_identidad);
                     P_Transaccion.iGet(db, cmd, m.e_tran);
                     IDataReader or = db.ExecuteReader(cmd);
                     if (or.Read())
@@ -336,7 +337,8 @@ namespace Transaccion
                 m.e_tran.vc_tran_usua_regi                          = or["vc_usr_reg"].ToText();
             if (Convertidor.Ec(or, "dt_fec_reg"))
                 m.e_tran.dt_tran_fech_regi                          = or["dt_fec_reg"].ToDateTime();
-
+            if (Convertidor.Ec(or, "dt_fec_nacimiento"))
+                m.me_conductor.e_conductor.dt_fec_nacimiento        = or["dt_fec_nacimiento"].ToDateTime();
 
             //Tipo Documento de Identidad
             if (Convertidor.Ec(or, "nu_id_tipo_doc_identidad"))

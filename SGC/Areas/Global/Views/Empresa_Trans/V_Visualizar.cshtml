@@ -41,9 +41,9 @@
                 {
                     atributo = "mme.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans"
                 })
-                
+
                 <big><span id="span_estado" class="label label-danger" style="display:none">DESHABILITADO!</span></big>
-                
+
                 <div class="col-sm-12 col-md-12 col-lg-12">
                     <section class="smart-form col-sm-4 col-md-4 col-lg-4">
                         <div class="col-sm-4 col-md-4 col-lg-4">
@@ -95,6 +95,47 @@
                                     atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_ruc",
                                     id          = "vc_ruc",
                                     disabled    = "disabled"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                Dirección
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input" aria-required="true" aria-describedby="fname-error">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_direccion,
+                                new
+                                {
+                                    maxLength   = "1000",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_direccion",
+                                    id          = "vc_direccion",
+                                    placeholder = "Ejemplo: Calle General 150"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                    <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                Resolución
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_resolucion,
+                                new
+                                {
+                                    maxLength   = "100",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_resolucion",
+                                    id          = "vc_resolucion",
+                                    placeholder = "Ejemplo: RDM-2018-MMD"
                                 })
                             </label>
                         </div>

@@ -99,6 +99,18 @@ namespace SGC.Areas.Global
                 defaults: new { controller = "Conductor_Importar", action = "AC_Leer_Excel_Importar_Conductores" }
             );
 
+            context.MapRoute(
+                name: "V_Imp_Conductor_Imagen",
+                url: "ImportarConductorImagen",
+                defaults: new { controller = "Conductor_Importar", action = "V_Imp_Conductor_Imagen" }
+            );
+
+            context.MapRoute(
+                name: "AC_Imp_Conductor_Imagen",
+                url: "ImportandoConductorImagen",
+                defaults: new { controller = "Conductor_Importar", action = "AC_Imp_Conductor_Imagen" }
+            );
+
             #endregion
 
             #region Consulta de Carné
@@ -189,6 +201,12 @@ namespace SGC.Areas.Global
                 name: "V_Sel_ImpresionCarne",
                 url: "ConsultaDeImpresionCarne",
                 defaults: new { controller = "Conductor", action = "V_Sel_ImpresionCarne" }
+            );
+
+            context.MapRoute(
+                name: "AC_Sel_ImpresionCarne",
+                url: "ConsultarDeImpresionCarne",
+                defaults: new { controller = "Conductor", action = "AC_Sel_ImpresionCarne" }
             );
 
             context.MapRoute(

@@ -42,6 +42,7 @@ namespace SGC.Areas.Global.Models
             ls_mme_categoria_licencia   = new List<MME_Categoria_Licencia>();
             ls_mme_tipo_servicio        = new List<MME_Tipo_Servicio>();
             ls_mme_grupo_sanguineo      = new List<MME_Grupo_Sanguineo>();
+
         }
         
     }

@@ -360,7 +360,6 @@ namespace SGC.Areas.Global.Controllers
                 System.IO.File.Delete(path_temp);
 
                 M.mme.me_conductor.e_conductor.vc_ruta_foto = name_file_final;
-                M.mme.me_conductor.e_conductor.dt_fec_nacimiento = null;
                 M.mme.e_tran.ch_tran_stdo_regi = "A";
                 M.mme = P_Conductor.Ins(M.mme);
             }
@@ -394,7 +393,6 @@ namespace SGC.Areas.Global.Controllers
                 }
 
                 M.mme.me_conductor.e_conductor.vc_ruta_foto = name_file_final;
-                M.mme.me_conductor.e_conductor.dt_fec_nacimiento = null;
                 M.mme.e_tran.ch_tran_stdo_regi = "A";
                 M.mme = P_Conductor.Upd(M.mme);
 
@@ -476,7 +474,8 @@ namespace SGC.Areas.Global.Controllers
                                             "Categoria Licencia",
                                             "Tipo Servicio",
                                             "Fecha registro",
-                                            "Usuario registro"
+                                            "Usuario registro",
+                                            "Fecha de Nacimiento"
                                         };
 
                     ICell Celda;
@@ -560,6 +559,7 @@ namespace SGC.Areas.Global.Controllers
                         Celda = Excel.CeldaText(FilaData, 21, CssCeldaTexto, item.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio);
                         Celda = Excel.CeldaDateTime(FilaData, 22, CssCeldaTexto, item.e_tran.dt_tran_fech_regi);
                         Celda = Excel.CeldaText(FilaData, 23, CssCeldaTexto, item.e_tran.vc_tran_usua_regi);
+                        Celda = Excel.CeldaDateTime(FilaData, 24, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_nacimiento);
                     }
 
 
@@ -676,7 +676,7 @@ namespace SGC.Areas.Global.Controllers
             ConductorModel M = new ConductorModel();
             try
             {
-                M.mme.e_tran.nu_tran_ruta       = 2;
+                M.mme.e_tran.nu_tran_ruta       = 5;
                 M.mme.e_tran.vc_conexion_origen = "SQL";
 
                 M.mme.me_conductor.e_proyecto.nu_id_proyecto            = Ssn.nu_id_proyecto;
@@ -699,26 +699,37 @@ namespace SGC.Areas.Global.Controllers
             }
         }
 
+        public ActionResult AC_Sel_ImpresionCarne(ConductorModel M)
+        {
+            M.mme.e_tran.nu_tran_ruta = 2;
+            M.mme.e_tran.vc_conexion_origen = "SQL";
+
+            M.mme.me_conductor.e_proyecto.nu_id_proyecto = Ssn.nu_id_proyecto;
+            M.mme.me_conductor.e_conductor.nu_id_conductor = null;
+            M.mme.me_conductor.e_empresa_trans.nu_id_empresa_trans = M.mme.me_conductor.e_empresa_trans.nu_id_empresa_trans;
+
+            M.ls_mme = P_Conductor.Sel(M.mme);
+
+            return PartialView("VP_ImpresionCarne", M);
+        }
+
         public ActionResult AC_ImprimirCarneConductor(string ids)
         {
             ReportDocument Rep = new ReportDocument();
             try
             {
-                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarne " + Ssn.vc_desc_proyecto + ".rpt";                   
+                string str_nombre = "RepImpresionCarne " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
                 Rep.Load(strRptPath);
 
-                string usuario          = ConfigurationManager.AppSettings["UsuarioRpt"];
-                string clave            = ConfigurationManager.AppSettings["ClaveRpt"];
-                string servidor         = ConfigurationManager.AppSettings["ServidorRpt"];
-                string name_database    = ConfigurationManager.AppSettings["DbaseRpt"];
-
-                Rep.SetDatabaseLogon(usuario, clave, servidor, name_database);
+                Crystal_Reports.RefrescarConexion(Rep);
 
                 Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
                 Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
                 string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
                 Rep.SetParameterValue("RutaImagen", path);
-                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, "RepImpresionCarne " + Ssn.vc_desc_proyecto + ".rpt");
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
                 Rep.Close();
                 Rep.Dispose();
             }
@@ -726,7 +737,7 @@ namespace SGC.Areas.Global.Controllers
             {
                 Rep.Close();
                 Rep.Dispose();
-                return Json(ex.Message);
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
             }
             return Json("true");
         }
@@ -736,21 +747,18 @@ namespace SGC.Areas.Global.Controllers
             ReportDocument Rep = new ReportDocument();
             try
             {
-                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarneFrontal " + Ssn.vc_desc_proyecto + ".rpt";
+                string str_nombre = "RepImpresionCarneFrontal " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
                 Rep.Load(strRptPath);
 
-                string usuario = ConfigurationManager.AppSettings["UsuarioRpt"];
-                string clave = ConfigurationManager.AppSettings["ClaveRpt"];
-                string servidor = ConfigurationManager.AppSettings["ServidorRpt"];
-                string name_database = ConfigurationManager.AppSettings["DbaseRpt"];
-
-                Rep.SetDatabaseLogon(usuario, clave, servidor, name_database);
+                Crystal_Reports.RefrescarConexion(Rep);
 
                 Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
                 Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
                 string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
                 Rep.SetParameterValue("RutaImagen", path);
-                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, "RepImpresionCarneFrontal " + Ssn.vc_desc_proyecto + ".rpt");
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
                 Rep.Close();
                 Rep.Dispose();
             }
@@ -758,7 +766,7 @@ namespace SGC.Areas.Global.Controllers
             {
                 Rep.Close();
                 Rep.Dispose();
-                return Json(ex.Message);
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
             }
             return Json("true");
         }
@@ -768,21 +776,18 @@ namespace SGC.Areas.Global.Controllers
             ReportDocument Rep = new ReportDocument();
             try
             {
-                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + "RepImpresionCarnePosterior " + Ssn.vc_desc_proyecto + ".rpt";
+                string str_nombre = "RepImpresionCarnePosterior " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
                 Rep.Load(strRptPath);
-                
-                string usuario = ConfigurationManager.AppSettings["UsuarioRpt"];
-                string clave = ConfigurationManager.AppSettings["ClaveRpt"];
-                string servidor = ConfigurationManager.AppSettings["ServidorRpt"];
-                string name_database = ConfigurationManager.AppSettings["DbaseRpt"];
 
-                Rep.SetDatabaseLogon(usuario, clave, servidor, name_database);
-                
+                Crystal_Reports.RefrescarConexion(Rep);
+
                 Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
                 Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
                 string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
                 Rep.SetParameterValue("RutaImagen", path);
-                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, "RepImpresionCarnePosterior " + Ssn.vc_desc_proyecto + ".rpt");
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
                 Rep.Close();
                 Rep.Dispose();
             }
@@ -790,12 +795,7 @@ namespace SGC.Areas.Global.Controllers
             {
                 Rep.Close();
                 Rep.Dispose();
-                return Json(new { estado = ex.Message,
-                    usuario = ConfigurationManager.AppSettings["UsuarioRpt"],
-                    clave = ConfigurationManager.AppSettings["ClaveRpt"],
-                    servidor = ConfigurationManager.AppSettings["ServidorRpt"],
-                    name_database = ConfigurationManager.AppSettings["DbaseRpt"]
-                }, JsonRequestBehavior.AllowGet);
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
             }
             return Json("true");
         }

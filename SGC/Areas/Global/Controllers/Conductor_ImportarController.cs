@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Entidad.Sistema;
+using MacroEntidad;
+using MultiEntidad.Solucion;
 using SGC.Areas.Global.Models;
 using SGC.Areas.Sistema.Controllers.Base;
 using SGC.Areas.Sistema.Models;
@@ -19,7 +21,6 @@ using NPOI.HSSF.Util;
 using OfficeOpenXml;
 
 using SGC.Recursos.Metodos;
-using MacroEntidad;
 
 using CrystalDecisions.Shared;
 using CrystalDecisions.CrystalReports.Engine;
@@ -487,6 +488,111 @@ namespace SGC.Areas.Global.Controllers
                 return Json(App.Error(e.Message, null));
             }
             return PartialView("VP_Resultados", M);
+        }
+
+        public ActionResult V_Imp_Conductor_Imagen()
+        {
+            try
+            {
+
+                return View("V_Imp_Conductor_Imagen");
+            }
+            catch (Exception e)
+            {
+                Ssn.vc_master = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+                Ssn.vc_error_vista = e.Message;
+                return Redirect("/ErrorInterno");
+            }
+        }
+
+        public ActionResult AC_Imp_Conductor_Imagen()
+        {
+            Conductor_ImportarModel M = new Conductor_ImportarModel();
+            MME_Conductor multi = null;
+            ME_Conductor item = null;
+            string[] array;
+            string ruta;
+                        
+            try
+            {
+                foreach (string file in Request.Files)
+                {
+                    HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                    if (hpf.ContentLength == 0)
+                        continue;
+
+                    ruta = Path.Combine(Server.MapPath("~/Recursos/Img/Transportista/Temp/"), hpf.FileName.ToString());
+                    Archivos.EliminarArchivo(ruta);
+                    hpf.SaveAs(ruta);
+
+                    item = new ME_Conductor();
+                    item.e_conductor.vc_ruta_foto = "/Recursos/Img/Transportista/Temp/" + hpf.FileName.ToString();
+                    M.mme_conductor.e_tran.nu_cant_procesados++;
+
+                    //VALIDAR QUE EL ARCHIVO TENGA EXTENSIÓN
+                    if (hpf.FileName.ToString().IndexOf(".") == 0)
+                    {
+                        M.mme_conductor.e_tran.nu_cant_error++;
+                        item.e_conductor.vc_nro_doc_identidad = hpf.FileName.ToString();
+                        item.tx_tran_mnsg = "El archivo no tiene extensión.";
+                        M.mme_conductor.ls_me_conductor.Add(item);
+                        M.mme_conductor.ls_me_errores.Add(item);
+                        continue;
+                    }
+
+                    //VALIDAR QUE EL ARCHIVO TENGA LA EXTENSIÓN CORRECTA
+                    array = hpf.FileName.Split('.');
+                    if (array[array.Length-1] != "jpg")
+                    {
+                        M.mme_conductor.e_tran.nu_cant_error++;
+                        item.e_conductor.vc_nro_doc_identidad = hpf.FileName.ToString();
+                        item.tx_tran_mnsg = "El archivo no tiene la extensión correcta.";
+                        M.mme_conductor.ls_me_conductor.Add(item);
+                        M.mme_conductor.ls_me_errores.Add(item);
+                        continue;
+                    }
+                    
+                    //VALIDAR QUE EL NRO DOC IDENTIDAD EXISTA
+                    item.e_proyecto.nu_id_proyecto         = Ssn.nu_id_proyecto;
+                    item.e_conductor.vc_nro_doc_identidad  = array[0];
+
+                    multi = new MME_Conductor();
+                    multi.e_tran.vc_conexion_origen = "SQL";
+                    multi.e_tran.nu_tran_ruta = 3;
+                    multi.me_conductor = item;
+                    item = P_Conductor.Get(multi).me_conductor;
+                    item.e_conductor.vc_ruta_foto = "/Recursos/Img/Transportista/Temp/" + hpf.FileName.ToString();
+
+                    if (item.e_conductor.nu_id_conductor == null)
+                    {
+                        M.mme_conductor.e_tran.nu_cant_error++;
+                        item.e_conductor.vc_nro_doc_identidad = hpf.FileName.ToString();
+                        item.tx_tran_mnsg = "El número de documento de identidad no existe.";
+                        M.mme_conductor.ls_me_conductor.Add(item);
+                        M.mme_conductor.ls_me_errores.Add(item);
+                        continue;
+                    }
+
+
+                    //GUARDAR EL ARCHIVO
+                    ruta = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/") + hpf.FileName.ToString();
+                    Archivos.EliminarArchivo(ruta);
+                    hpf.SaveAs(ruta);
+                    
+                    M.mme_conductor.ls_me_conductor.Add(item);
+                    M.mme_conductor.ls_me_exito.Add(item);
+                    M.mme_conductor.e_tran.nu_cant_exito++;
+
+                }
+
+                return PartialView("VP_Resultados_Imagenes", M);
+            }
+            catch (Exception e)
+            {
+                Ssn.vc_master = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+                Ssn.vc_error_vista = e.Message;
+                return Redirect("/ErrorInterno");
+            }
         }
     }
 }

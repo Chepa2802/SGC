@@ -482,6 +482,27 @@
                         </section>
                     </div>
 
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha de Nacimiento
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_nacimiento, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_nacimiento),
+                                    new
+                                    {
+                                        type        = "text",
+                                        @readonly   = "readonly",
+                                        id          = "dt_fec_nacimiento"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </form>
@@ -522,6 +543,12 @@
         });
 
         $('#dt_fec_final').datepicker({
+            dateFormat: 'dd/mm/yy',
+            prevText: '<i class="fa fa-chevron-left"></i>',
+            nextText: '<i class="fa fa-chevron-right"></i>'
+        });
+
+        $('#dt_fec_nacimiento').datepicker({
             dateFormat: 'dd/mm/yy',
             prevText: '<i class="fa fa-chevron-left"></i>',
             nextText: '<i class="fa fa-chevron-right"></i>'
@@ -678,9 +705,10 @@
             vc_restricciones        : $('#vc_restricciones').val(),
             dt_fec_inicio           : $('#dt_fec_inicio').val(),
             dt_fec_final            : $('#dt_fec_final').val(),
-            vc_ruta_foto            : $('#sesion_imagen').val()
+            vc_ruta_foto            : $('#sesion_imagen').val(),
+            dt_fec_nacimiento       : $('#dt_fec_nacimiento').val()
         }
-
+        
         var me_conductor = {
             e_empresa_trans         : e_empresa_trans,
             e_tipo_doc_identidad    : e_tipo_doc_identidad,

@@ -196,7 +196,7 @@
         Msg = "Consultando conductores, espere un momento...";
         NuevaPeticion(Msg);
         $.ajax({
-            url: '@Url.RouteUrl("AC_Sel_ConsultaCarne")',
+            url: '@Url.RouteUrl("AC_Sel_ImpresionCarne")',
             type: "POST",
             data: JSON.stringify(M),
             contentType: "application/json; charset=utf-8",

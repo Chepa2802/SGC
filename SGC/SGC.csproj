@@ -201,7 +201,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recursos\Metodos\App.cs" />
+    <Compile Include="Recursos\Metodos\Archivos.cs" />
     <Compile Include="Recursos\Metodos\Combos.cs" />
+    <Compile Include="Recursos\Metodos\Crystal_Reports.cs" />
     <Compile Include="Recursos\Metodos\Excel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +311,8 @@
     <Content Include="Areas\Global\Views\Conductor\VP_ImpresionCarne.cshtml" />
     <Content Include="Areas\Global\Views\Conductor_Importar\V_Imp_Conductor.cshtml" />
     <Content Include="Areas\Global\Views\Conductor_Importar\VP_Resultados.cshtml" />
+    <Content Include="Areas\Global\Views\Conductor_Importar\V_Imp_Conductor_Imagen.cshtml" />
+    <Content Include="Areas\Global\Views\Conductor_Importar\VP_Resultados_Imagenes.cshtml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <None Include="Scripts\JQuery 1.7.1\jquery-1.7.1.intellisense.js" />

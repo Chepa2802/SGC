@@ -2,8 +2,8 @@ D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Debug\Conexiones.dll
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Debug\Conexiones.pdb
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.csprojAssemblyReference.cache
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.csproj.CoreCompileInputs.cache
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.csproj.CopyComplete
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.dll
 D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.pdb
-D:\TISI\SGC\Aplicacion\SGC\Conexiones\obj\Debug\Conexiones.csprojAssemblyReference.cache

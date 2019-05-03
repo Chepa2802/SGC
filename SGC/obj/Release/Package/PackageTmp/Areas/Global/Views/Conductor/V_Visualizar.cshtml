@@ -473,6 +473,28 @@
                         </section>
                     </div>
 
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha de Nacimiento
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_nacimiento, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_nacimiento),
+                                    new
+                                    {
+                                        type        = "text",
+                                        @readonly   = "readonly",
+                                        id          = "dt_fec_nacimiento",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </form>

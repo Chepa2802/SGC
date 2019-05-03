@@ -200,6 +200,8 @@ namespace SGC.Areas.Global.Controllers
                     String[] Cabecera = {   "Código",
                                             "Razón Social",
                                             "RUC",
+                                            "Dirección",
+                                            "Resolución",
                                             "Fecha registro",
                                             "Usuario registro",
                                             "Estado"
@@ -265,9 +267,11 @@ namespace SGC.Areas.Global.Controllers
                         Celda = Excel.CeldaText(FilaData, 0, CssCeldaTexto2, item.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans);
                         Celda = Excel.CeldaText(FilaData, 1, CssCeldaTexto, item.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans);
                         Celda = Excel.CeldaText(FilaData, 2, CssCeldaTexto2, item.me_empresa_trans.e_empresa_trans.vc_ruc);
-                        Celda = Excel.CeldaDateTime(FilaData, 3, CssCeldaTexto, item.e_tran.dt_tran_fech_regi);
-                        Celda = Excel.CeldaText(FilaData, 4, CssCeldaTexto, item.e_tran.vc_tran_usua_regi);
-                        Celda = Excel.CeldaText(FilaData, 5, CssCeldaTexto2, item.e_tran.ch_tran_stdo_regi);
+                        Celda = Excel.CeldaText(FilaData, 3, CssCeldaTexto2, item.me_empresa_trans.e_empresa_trans.vc_direccion);
+                        Celda = Excel.CeldaText(FilaData, 4, CssCeldaTexto2, item.me_empresa_trans.e_empresa_trans.vc_resolucion);
+                        Celda = Excel.CeldaDateTime(FilaData, 5, CssCeldaTexto, item.e_tran.dt_tran_fech_regi);
+                        Celda = Excel.CeldaText(FilaData, 6, CssCeldaTexto, item.e_tran.vc_tran_usua_regi);
+                        Celda = Excel.CeldaText(FilaData, 7, CssCeldaTexto2, item.e_tran.ch_tran_stdo_regi);
                     }
 
 
