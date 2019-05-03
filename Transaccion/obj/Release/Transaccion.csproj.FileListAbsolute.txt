@@ -1,0 +1,17 @@
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Transaccion.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Transaccion.pdb
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Conexiones.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Entidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\MacroEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Microsoft.Practices.EnterpriseLibrary.Data.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\MultiEntidad.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Conexiones.pdb
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\Entidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\MacroEntidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\bin\Release\MultiEntidad.pdb
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\obj\Release\Transaccion.csprojAssemblyReference.cache
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\obj\Release\Transaccion.csproj.CoreCompileInputs.cache
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\obj\Release\Transaccion.csproj.CopyComplete
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\obj\Release\Transaccion.dll
+D:\TISI\SGC\Aplicacion\SGC\Transaccion\obj\Release\Transaccion.pdb

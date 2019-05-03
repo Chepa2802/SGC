@@ -44,5 +44,49 @@ namespace Procedimiento
             finally { cmd.Connection.Close(); }
             return M;
         }
+
+        public static MME_Conductor Ins(MME_Conductor M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Conductor.Ins(M);
+            }
+            catch (Exception ex) { throw ex; }
+            return M;
+        }
+
+        public static MME_Conductor Upd(MME_Conductor M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Conductor.Upd(M);
+            }
+            catch (Exception ex) { throw ex; }
+            return M;
+        }
+
+        public static MME_Conductor UpdEstado(MME_Conductor M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Conductor.UpdEstado(M);
+            }
+            catch (Exception ex) { throw ex; }
+            return M;
+        }
+
+        public static MME_Conductor InsMasivo(MME_Conductor M)
+        {
+            Origen(M.e_tran.vc_conexion_origen);
+            try
+            {
+                M = _T_Conductor.InsMasivo(M);
+            }
+            catch (Exception ex) { throw ex; }
+            return M;
+        }
     }
 }

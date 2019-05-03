@@ -20,14 +20,14 @@ namespace Entidad
         [DataMember]public DateTime?    dt_fec_final            { get; set; }
         [DataMember]public string       vc_nro_licencia         { get; set; }
         [DataMember]public string       vc_ruta_foto            { get; set; }
-        [DataMember]public DateTime     dt_fec_nacimiento       { get; set; }
+        [DataMember]public DateTime?    dt_fec_nacimiento       { get; set; }
         [DataMember]public string       vc_nro_padron           { get; set; }
         [DataMember]public string       vc_nro_placa            { get; set; }
         [DataMember]public string       vc_nombre_propietario   { get; set; }
         [DataMember]public string       vc_nro_telefono         { get; set; }
         [DataMember]public string       vc_direccion            { get; set; }
         [DataMember]public string       ch_donacion_organo      { get; set; }
-        [DataMember] public string      vc_restricciones        { get; set; }
+        [DataMember]public string       vc_restricciones        { get; set; }
 
     }
 }

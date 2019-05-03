@@ -1,0 +1,259 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Consulta Conductores";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>CONSULTA CONDUCTORES</b></li>
+        </ol>
+    </div>
+    <div id="content">
+        <div class="well NoPadding">
+            <button id="btn_buscar" class="btn btn-primary" onclick="Consultar();">
+                <i class="fa fa-search"></i> Consultar
+            </button>
+            <button id="btn_registrar" class="btn btn-info" onclick="Crear();">
+                <i class="fa fa-file"></i> Crear
+            </button>
+            <button id="btn_expotar" class="btn btn-success" onclick="Exportar();">
+                <i class="fa fa-table"></i> Exportar
+            </button>
+
+        </div>
+        <form id="checkout-form" class="smart-form" novalidate="novalidate">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                    <div class="col col-4" style="margin-top:8px">
+                        <label>
+                            Búsqueda
+                        </label>
+                    </div>
+                    <div class="col col-8">
+                        <label class="input">
+                            <i class="icon-append fa fa-search cursorMano" onclick="Consultar();"></i>
+                            <input id="vc_tran_clve_find" type="text" name="vc_tran_clve_find" value="@Model.mme.e_tran.vc_tran_clve_find" placeholder="Por código, nombre y doc. identidad.">
+                        </label>
+                    </div>
+                </section>
+                <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                    <div class="col col-4" style="margin-top:8px">
+                        <label>
+                            Emp. de Transporte
+                        </label>
+                    </div>
+                    <div class="col col-8">
+                        <label class="select">
+                            @Html.DropDownListFor(m => m.mme.me_conductor.e_empresa_trans.nu_id_empresa_trans, Model.cb_empresa_transporte,
+                            new
+                            {
+                                atributo    = "mme.me_conductor.e_empresa_trans.nu_id_empresa_trans",
+                                id          = "nu_id_empresa_trans"
+                            })
+                            <i></i>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+        </form>
+        <div id="ContenedorConductor" class="well col col-12 table-responsive">
+            @Html.Partial("VP_Conductor", Model)
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <span class="label btn-primary">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span> Consultar: Sólo muestra los primeros 50 resultados.
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <span class="label btn-success">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span> Exportar: Muestra todos los resultados sin filtro.
+        </div>
+    </div>
+</div>
+
+
+<input id="nu_id_conductor" type="hidden" />
+<input id="ch_tran_stdo_regi" type="hidden" />
+
+<div class="modal fade" id="Modal_Conductor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Conductor: <b id="vc_nombre_completo"></b></h4>
+            </div>
+            <div class="modal-body">
+                <h3 class="NoMargin"><i class="glyphicon glyphicon-hand-right"></i> Opciones</h3>
+                <br />
+                <button id="btn_ver" style="float:none;display:inline" type="button" class="jarvismetro-tile big-cubes bg-color-blue NoMargin" onclick="Visualizar($('#nu_id_conductor').val());">
+                    <span class="iconbox"><i class="fa fa-desktop fa-4x NoMargin"></i> <span class="text-center">Visualizar</span></span>
+                </button>
+                <button id="btn_editar" style="float:none;display:inline" type="button" class="jarvismetro-tile big-cubes bg-color-greenLight NoMargin" onclick="Actualizar($('#nu_id_conductor').val());">
+                    <span class="iconbox"><i class="fa fa-edit fa-4x NoMargin"></i> <span class="text-center">Actualizar</span></span>
+                </button>
+                <button id="btn_estado" style="float:none;display:inline" type="button" class="jarvismetro-tile big-cubes bg-color-red NoMargin" onclick="Cambiar_Estado($('#nu_id_conductor').val(),$('#ch_tran_stdo_regi').val());">
+                    <span class="iconbox"><i id="icono_estado" class="fa fa-remove fa-4x NoMargin"></i> <span class="text-center">Cambiar estado</span></span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+
+
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+
+    var Peticion = false;
+    var Area = "Global";
+    var Msg = "";
+    var version = 1;
+
+    $(document).ready(function () {
+
+        $("#Tabla_Conductor").DataTable({
+            "order": []
+        });
+
+    });
+
+    $('#vc_tran_clve_find').keypress(function (e) {
+        if (e.which == 13) {
+            Consultar();
+            return false;
+        }
+    });
+
+
+    function Consultar() {
+
+        var e_tran = {
+            vc_tran_clve_find: $('#vc_tran_clve_find').val()
+        }
+        var e_empresa_trans = {
+            nu_id_empresa_trans: parseInt($('#nu_id_empresa_trans').val())
+        }
+        var me_conductor = { e_empresa_trans: e_empresa_trans }
+        var mme = { e_tran: e_tran, me_conductor: me_conductor }
+        var M = { mme: mme }
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        Msg = "Consultando conductores, espere un momento...";
+        NuevaPeticion(Msg);
+        $.ajax({
+            url: '@Url.RouteUrl("AC_Sel_Conductor")',
+            type: "POST",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            success: function (r) {
+                $('#ContenedorConductor').html(r);
+                $("#Tabla_Conductor").DataTable();
+                setTimeout('Entiendo()', 1000);
+            }
+        });
+    }
+
+    function Crear() {
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("V_Ins_Conductor")";
+    }
+
+    function AC_Opciones(nu_id_conductor, vc_nombre_completo, ch_tran_stdo_regi) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        if (ch_tran_stdo_regi == 'I') {
+            $('#btn_estado').removeClass('bg-color-red');
+            $('#btn_estado').addClass('bg-color-green');
+            $('#icono_estado').removeClass('fa-remove');
+            $('#icono_estado').addClass('fa-check');
+        }
+        else {
+            $('#btn_estado').removeClass('bg-color-green');
+            $('#btn_estado').addClass('bg-color-red');
+            $('#icono_estado').removeClass('fa-check');
+            $('#icono_estado').addClass('fa-remove');
+        }
+
+        $('#nu_id_conductor').val(nu_id_conductor);
+        $('#ch_tran_stdo_regi').val(ch_tran_stdo_regi);
+        $('#vc_nombre_completo').text(vc_nombre_completo)
+        $('#Modal_Conductor').modal('show');
+    }
+
+    function Visualizar(id) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("V_Get_Conductor")"+"?id=" + id;
+    }
+
+    function Actualizar(id) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("V_Upd_Conductor")" + "?id=" + id;
+    }
+
+    function Cambiar_Estado(id, estado) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        Msg = "Se está cambiando el estado del conductor, espere un momento...";
+        NuevaPeticion(Msg)
+        Peticion = true;
+        $.ajax({
+            url: '@Url.RouteUrl("AC_UpdEstado_Conductor")',
+            type: "post",
+            data: JSON.stringify({ id: id }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r.std) {
+
+                    if (r.trans.e_tran.nu_tran_stdo == 0) {
+                        ErrorBase(r.trans.e_tran.tx_tran_mnsg);
+                    }
+                    else {
+                        Mensaje(r.trans.e_tran.tx_tran_mnsg);
+                        if (estado == 'I') {
+                            $('#' + id).find('td').eq(0).find('button').eq(0).attr('class', 'btn btn-success');
+                            $('#' + id).find('td').eq(0).find('button').eq(0).html('<i class="fa fa-check"></i>');
+                            $('#' + id).attr('onclick', $('#' + id).attr('onclick').replace("'I'", "'A'"));
+                        }
+                        else {
+                            $('#' + id).find('td').eq(0).find('button').eq(0).attr('class', 'btn btn-danger');
+                            $('#' + id).find('td').eq(0).find('button').eq(0).html('<i class="fa fa-remove"></i>');
+                            $('#' + id).attr('onclick', $('#' + id).attr('onclick').replace("'A'", "'I'"));
+                        }
+                        $('#Modal_Conductor').modal('hide');
+                    }
+                }
+                else {
+                    ErrorApp(r.msg)
+                }
+                Peticion = false;
+            }
+        });
+    }
+
+    function Exportar() {
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("AC_Exportar_Conductor")";
+    }
+
+
+</script>

@@ -1,0 +1,352 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Importar Conductores";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+<link href="~/Content/base/bootstrap-themexxx.min.css" rel="stylesheet" />
+<link href="~/Content/base/jquery.fileupload.css" rel="stylesheet" />
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width:35px" />&nbsp&nbsp
+            <li><b>IMPORTACIÓN DE CONDUCTORES</b></li>
+        </ol>
+    </div>
+    <div id="content">
+        <div class="well">
+            <div class="row">
+                <form id="wizard-1" novalidate="novalidate">
+                    <div id="bootstrap-wizard-1" class="col-sm-12">
+                        <div class="form-bootstrapWizard">
+                            <ul id="Pasos" class="bootstrapWizard form-wizard">
+                                <li class="jq paso1 active" data-target="#step1" style="width:50%">
+                                    <a href="#tab1" data-toggle="tab"> <span class="step">1</span> <span class="title"><i class="fa fa-download"></i> Descargar Plantilla</span> </a>
+                                </li>
+                                <li class="jq paso2" data-target="#step2" style="width:50%">
+                                    <a href="#tab2" data-toggle="tab"> <span class="step">2</span> <span class="title"><i class="fa fa-upload"></i> Cargar Plantilla</span> </a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="tab-content" id="ContenidoPasos" style="padding-left:40px;padding-right:40px">
+                            <div class="tab-pane ct cpaso1 active" id="tab1">
+                                <br>
+                                <h3><strong>Paso Nº 1 </strong> - Descargar plantilla  <span class="btn btn-success" onclick="DescargarPlantilla()"><i class="glyphicon glyphicon-download-alt"></i></span></h3>
+                                <div class="row">
+                                    <input id="paso1" type="hidden" />
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="alert alert-info fade in">
+                                                <i class="fa-fw fa fa-info-circle"></i>
+                                                <strong>Información adicional</strong>
+                                                <ul class="margin-bottom-none padding-left-lg">
+                                                    <li>
+                                                        La plantilla contiene información para apoyarte con el llenado del mismo.
+                                                    </li>
+                                                    <li>
+                                                        Una vez descargado la plantilla dar click en el botón "Siguiente".
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane ct cpaso2" id="tab2">
+                                <br>
+                                <h3><strong>Paso Nº 2</strong> - Subir plantilla de carga <span class="btn btn-success btn-sm fileinput-button"><i class="fa fa-upload"></i> <span id="estado"></span><input id="Excel" type="file" name="files[]"></span></h3>
+
+                                <div class="alert alert-warning fade in">
+                                    <i class="fa-fw fa fa-warning"></i>
+                                    <strong>Advertencia!</strong>
+                                    <ul class="margin-bottom-none padding-left-lg">
+                                        <li>
+                                            Cargar un archivo excel de acuerdo a la plantilla del paso 1.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="ls_resultados">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <ul class="pager wizard no-margin">
+                            <li id="pre" class="previous disabled">
+                                <a class="btn btn-lg btn-default" onclick="AC_Previous()"> Anterior </a>
+                            </li>
+                            <li id="next" class="next">
+                                <a class="btn btn-lg txt-color-darken" onclick="AC_Netx()"> Siguiente </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="Modal_conductor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title"><b id="titulo_mensaje"></b></h4>
+            </div>
+            <div class="modal-body">
+                <div id="Contenedor_resultado" class="table-responsive" style="padding:15px;">
+
+                </div>
+
+                <div id="Contenedor_descarga" hidden="hidden" class="table-responsive" style="padding:15px;">
+
+                </div>
+
+                <div id="exportToExcel" hidden="hidden">
+                    <button type="button" class="btn btn-labeled btn-success" onclick="exportToExcel()">
+                        <span class="btn-label">
+                            <i class="fa fa-file-excel-o"></i>
+                        </span>Exportar
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Salir
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="/Temas/Smart/js/plugin/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+<script src="/Temas/Smart/js/plugin/fuelux/wizard/wizard.min.js"></script>
+
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+    var Peticion = false;
+    var Area = "Global";
+    var Msg = "";
+
+    var tabla = "";
+    var lista_errores = [];
+    var lista_exito = [];
+
+    $(document).ready(function () {
+        $('#Excel').fileupload({
+            url: '/LeerExcelImportarConductores',
+            autoUpload: true,
+            success: function (s) {
+                
+                if (typeof (s.std) == 'undefined') {
+                    lista_errores = [];
+                    lista_exito = [];
+                    $('#estado').html('&nbsp;&nbsp;100% <i class="fa fa-check" style="color:green;"></i>');
+                    $('#Excel').val('');
+                    
+                    Entiendo();
+                    $('#ls_resultados').html(s);
+                }
+                else {
+                    ErrorApp(s.msg)
+                }
+                Peticion = false;
+            }
+        }).on('fileuploadprogressall', function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            if (progress == 100) {
+                NuevaPeticion('Leyendo excel de carga de conductores, espere un momento...');
+            }
+            $('#estado').html('&nbsp;&nbsp;' + progress + '%');
+            $('.progress .progress-bar').css('width', progress + '%');
+        });
+    });
+
+    $(document).on('click', '#Excel', function () {
+        $('#estado').html('');
+        $('.progress .progress-bar').css('width', '0%');
+        $('#lista_errores').html('');
+
+    });
+
+    function DescargarPlantilla() {
+        location.href = "/DescargarPlantillaImportacionConductor";
+        $('#paso1').val("1");
+    }
+
+    function AC_Netx() {
+        var clase = $('#next').hasClass('disabled')
+        if (clase == true) {
+            return false;
+        }
+        var count = 0;
+        var numero = 0;
+        var paso = "";
+        var pasonext = "";
+
+        $('#Pasos .jq').each(function () {
+            count++;
+            if ($(this).hasClass('active') == true) {
+                numero = count;
+                paso = "paso" + count;
+                pasonext = "paso" + (count + 1);
+            }
+        });
+
+        if ($('#' + paso).val() == "1") {
+            $('#Pasos .jq').each(function () {
+                $(this).removeClass('active');
+            });
+            $('#Pasos .' + pasonext).addClass('active');
+            $('#ContenidoPasos .ct').each(function () {
+                $(this).removeClass('active');
+            });
+            $('#ContenidoPasos .c' + pasonext).addClass('active');
+            $('#pre').removeClass('disabled');
+        }
+
+        else {
+            Mensaje('Debe realizar lo que se requiere en el Paso ' + numero)
+            return false;
+        }
+        if (numero + 1 == 2) {
+            $('#next').addClass('disabled');
+        }
+        else {
+            $('#next').removeClass('disabled');
+        }
+    }
+
+    function Ver_Exito() {
+        document.getElementById("exportToExcel").style.display = "none";
+        $('#titulo_mensaje').html('Lista de conductores procesados correctamente.');
+        $('exportToExcel').attr('hidden', 'hidden');
+
+        $('#Contenedor_resultado').html('');
+        tabla = '<table id="Tabla_Cabecera" class="table table-striped table-bordered table-hover" width="100%">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>Fila excel</th>' +
+            '<th>Descripción</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody id="Resultado">' +
+
+            '</tbody>' +
+            '</table>'
+        $('#Contenedor_resultado').html(tabla);
+        for (var i = 0; i < lista_exito.length; i++) {
+            var fs = "";
+            if (lista_exito[i] != "") {
+                fs = '<tr  class="cursorMano">' +
+                    '<td class="text-center">' + lista_exito[i].split('*')[0] + '</td>' +
+                    '<td class="text-center">' + lista_exito[i].split('*')[1] + '</td>' +
+                    '</tr>';
+            }
+            $('#Resultado').append(fs);
+        }
+
+        $('#Modal_conductor').modal('show');
+
+        $(document).ready(function () {
+            $('#Tabla_Cabecera').dataTable({
+                "order": []
+            });
+        });
+
+    }
+
+    function Ver_Errores() {
+        document.getElementById("exportToExcel").style.display = "block";
+        $('#titulo_mensaje').html('Conductores procesados con error.');
+        $('#exportToExcel').removeAttr('hidden');
+
+        $('#Contenedor_resultado').html('');
+        tabla = '<table id="Tabla_Cabecera" class="table table-striped table-bordered table-hover" width="100%">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>Fila excel</th>' +
+            '<th>Descripción</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody id="Resultado">' +
+
+            '</tbody>' +
+            '</table>'
+
+        $('#Contenedor_resultado').html(tabla);
+
+        $('#Contenedor_descarga').html('');
+        tabla2 = '<table id="Tabla_Cabecera_Descarga"  width="100%">' +
+            '<thead>' +
+            '<tr>' +
+            '<th>Fila excel</th>' +
+            '<th>Descripción</th>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody id="Resultado2">' +
+
+            '</tbody>' +
+            '</table>';
+
+        $('#Contenedor_descarga').html(tabla2);
+
+        for (var i = 0; i < lista_errores.length; i++) {
+            var fs = "";
+            console.log(lista_errores[i]);
+            if (lista_errores[i] != "") {
+                fs = '<tr  class="cursorMano" >' +
+                    '<td class="text-center">' + lista_errores[i].split('*')[0] + '</td>' +
+                    '<td class="text-center">' + lista_errores[i].split('*')[1] + '</td>' +
+                    '</tr>';
+            }
+            $('#Resultado').append(fs);
+            $('#Resultado2').append(fs);
+        }
+
+        $('#Modal_conductor').modal('show');
+        $(document).ready(function () {
+            $('#Tabla_Cabecera').dataTable({
+                "order": []
+            });
+        });
+    }
+
+    function exportToExcel() {
+        var htmls = "";
+        var uri = 'data:application/vnd.ms-excel;base64,';
+        var template = '<html xmlns:o="urn:schemas-microsoft-com:office:office"xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>';
+        var base64 = function (s) {
+            return window.btoa(unescape(escape(s)))
+        };
+        var format = function (s, c) {
+            return s.replace(/{(\w+)}/g, function (m, p) {
+                return c[p];
+            })
+        };
+
+        htmls = $('#Tabla_Cabecera_Descarga').html();
+        var ctx = {
+            worksheet: 'Hoja',
+            table: htmls
+        }
+        var link = document.createElement("a");
+        link.download = "Carga_conductores.xls";
+        link.href = uri + base64(format(template, ctx));
+        link.click();
+    }
+
+</script>

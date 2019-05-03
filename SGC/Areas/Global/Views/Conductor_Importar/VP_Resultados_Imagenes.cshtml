@@ -1,0 +1,100 @@
+﻿@model SGC.Areas.Global.Models.Conductor_ImportarModel
+@{ 
+    var lista = Model.mme_conductor.ls_me_conductor;
+    var exitos = Model.mme_conductor.ls_me_exito;
+    var errores = Model.mme_conductor.ls_me_errores;
+}
+<table class="table table-bordered table-hover">
+    <thead >
+        <tr>
+            <th class="text-center" colspan="3" style="background:#3276b1;width:33%"><span style="color:white;font-size:medium">Imágenes procesadas</span></th>
+            <th class="text-center" colspan="3" style="background:#356e35;width:33%"><span style="color:white;font-size:medium">Imágenes registradas</span></th>
+            <th class="text-center" colspan="3" style="background:#b7042d;width:33%"><span style="color:white;font-size:medium">Imágenes con error</span></th>
+        </tr>
+        <tr>
+            <th class="text-center" colspan="3" style="background:#3276b1"><span style="color:white">@Model.mme_conductor.e_tran.nu_cant_procesados</span></th>
+            <th class="text-center" colspan="3" style="background:#356e35"><span style="color:white">@Model.mme_conductor.e_tran.nu_cant_exito</span></th>
+            <th class="text-center" colspan="3" style="background:#b7042d"><span style="color:white">@Model.mme_conductor.e_tran.nu_cant_error</span></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th colspan="3" style="width:33px">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        @for (var i = 0; i < lista.Count; i++)
+                        {
+                            <tr class="reg cursorMano">
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@lista[i].e_conductor.vc_ruta_foto" /><br />
+                                    @lista[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < lista.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@lista[i].e_conductor.vc_ruta_foto" /><br />
+                                    @lista[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < lista.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@lista[i].e_conductor.vc_ruta_foto" /><br />
+                                    @lista[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </th>
+            <th colspan="3" style="width:33px">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        @for (var i = 0; i < exitos.Count; i++)
+                        {
+                            <tr class="reg cursorMano">
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@exitos[i].e_conductor.vc_ruta_foto" /><br />
+                                    @exitos[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < exitos.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@exitos[i].e_conductor.vc_ruta_foto" /><br />
+                                    @exitos[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < exitos.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@exitos[i].e_conductor.vc_ruta_foto" /><br />
+                                    @exitos[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </th>
+            <th colspan="3" style="width:33px">
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        @for (var i = 0; i < errores.Count; i++)
+                        {
+                            <tr class="reg cursorMano">
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@errores[i].e_conductor.vc_ruta_foto" /><br />
+                                    @errores[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < errores.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@errores[i].e_conductor.vc_ruta_foto" /><br />
+                                    @errores[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                                @if (i < errores.Count - 1) { i++; } else { break; }
+                                <td class="text-center" style="width:33px">
+                                    <img style="height:50px;width:50px" src="@errores[i].e_conductor.vc_ruta_foto" /><br />
+                                    @errores[i].e_conductor.vc_nro_doc_identidad
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </th>
+        </tr>
+
+    </tbody>
+</table>

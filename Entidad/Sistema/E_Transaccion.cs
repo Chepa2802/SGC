@@ -49,5 +49,13 @@ namespace Entidad.Sistema
         [DataMember]public decimal?     nu_nro_fila_excel       { get; set; } //> Nro de fila del excel procesado
         [DataMember]public string       ch_estado               { get; set; } //> Conexión
         [DataMember]public string       ch_nivel                { get; set; } //> Conexión
+        [DataMember]public string       ch_accion               { get; set; } //> 
+
+        public E_Transaccion()
+        {
+            nu_cant_procesados  = 0;
+            nu_cant_exito       = 0;
+            nu_cant_error       = 0;
+        }
     }
 }

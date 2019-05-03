@@ -51,9 +51,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recursos\Convertidor.cs" />
     <Compile Include="Recursos\P_Transaccion.cs" />
+    <Compile Include="T_Categoria_Licencia.cs" />
+    <Compile Include="T_Clase_Licencia.cs" />
     <Compile Include="T_Conductor.cs" />
     <Compile Include="T_Empresa_Transp.cs" />
+    <Compile Include="T_Grupo_Sanguineo.cs" />
     <Compile Include="T_Proyecto.cs" />
+    <Compile Include="T_Tipo_Doc_Idendidad.cs" />
+    <Compile Include="T_Tipo_Servicio.cs" />
     <Compile Include="T_Usuario.cs" />
   </ItemGroup>
   <ItemGroup>

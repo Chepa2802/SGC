@@ -1,0 +1,231 @@
+﻿@model SGC.Areas.Global.Models.ConductorModel
+@{
+    ViewBag.Title = "SGC | Impresión Carnés";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>IMPRESIÓN CARNÉS</b></li>
+        </ol>
+    </div>
+    <div id="content">
+        <div class="well NoPadding">
+            <button id="btn_buscar" class="btn btn-primary" onclick="Consultar();">
+                <i class="fa fa-search"></i> Consultar
+            </button>
+            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir();">
+                <i class="fa fa-file"></i> Imprimir
+            </button>
+            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir_Frontal();">
+                <i class="fa fa-file"></i> Imprimir Frontal
+            </button>
+            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir_Posterior();">
+                <i class="fa fa-file"></i> Imprimir Posterior
+            </button>
+        </div>
+        <form id="checkout-form" class="smart-form" novalidate="novalidate">
+            <div class="col-sm-12 col-md-12 col-lg-12">
+                <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                    <div class="col col-4" style="margin-top:8px">
+                        <label>
+                            Búsqueda
+                        </label>
+                    </div>
+                    <div class="col col-8">
+                        <label class="input">
+                            <i class="icon-append fa fa-search cursorMano" onclick="Consultar();"></i>
+                            <input id="vc_tran_clve_find" type="text" name="vc_tran_clve_find" value="@Model.mme.e_tran.vc_tran_clve_find" placeholder="Por código, nombre y doc. identidad.">
+                        </label>
+                    </div>
+                </section>
+                <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                    <div class="col col-4" style="margin-top:8px">
+                        <label>
+                            Emp. de Transporte
+                        </label>
+                    </div>
+                    <div class="col col-8">
+                        <label class="select">
+                            @Html.DropDownListFor(m => m.mme.me_conductor.e_empresa_trans.nu_id_empresa_trans, Model.cb_empresa_transporte,
+                            new
+                            {
+                                atributo    = "mme.me_conductor.e_empresa_trans.nu_id_empresa_trans",
+                                id          = "nu_id_empresa_trans"
+                            })
+                            <i></i>
+                        </label>
+                    </div>
+                </section>
+                <section class="col col-4">
+                    <div class="col col-4">
+                        <label>Seleccionar todo</label>
+                    </div>
+                    <div class="col col-2">
+                        <label class="toggle">
+                            <input type="checkbox" name="checkbox-toggle" id="ch_sel_todo" onchange="AC_Seleccionar()">
+                            <i data-swchon-text="SI" data-swchoff-text="NO"></i>
+                        </label>
+                    </div>
+                    <div class="col col-6">
+                    </div>
+                </section>
+            </div>
+
+        </form>
+        <div id="ContenedorConductor" class="well col col-12 table-responsive SinPadding">
+            @Html.Partial("VP_ImpresionCarne", Model)
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+
+
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+
+    var Peticion = false;
+    var Area = "Global";
+    var Msg = "";
+    var version = 1;
+
+    $(document).ready(function () {
+
+    });
+
+    $('#vc_tran_clve_find').keypress(function (e) {
+        if (e.which == 13) {
+            Consultar();
+            return false;
+        }
+    });
+
+    $(document).on('click', '#ls_carnes tr', function () {
+        if ($(this).hasClass('detalleActivo')) {
+            $(this).removeClass('detalleActivo');
+        }
+        else {
+            $(this).addClass('detalleActivo');
+        }
+    });
+
+    function Imprimir() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        console.log(ids_conductores);
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Imprimir_Frontal() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        console.log(ids_conductores);
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirFrontalCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Imprimir_Posterior() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        console.log(ids_conductores);
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirPosteriorCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Consultar() {
+
+        var e_tran = {
+            vc_tran_clve_find: $('#vc_tran_clve_find').val()
+        }
+        var e_empresa_trans = {
+            nu_id_empresa_trans: parseInt($('#nu_id_empresa_trans').val())
+        }
+        var me_conductor = { e_empresa_trans: e_empresa_trans }
+        var mme = { e_tran: e_tran, me_conductor: me_conductor }
+        var M = { mme: mme }
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        Msg = "Consultando conductores, espere un momento...";
+        NuevaPeticion(Msg);
+        $.ajax({
+            url: '@Url.RouteUrl("AC_Sel_ImpresionCarne")',
+            type: "POST",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            success: function (r) {
+                $('#ContenedorConductor').html(r);
+                setTimeout('Entiendo()', 1000);
+            }
+        });
+    }
+
+    function AC_Seleccionar() {
+        if ($("#ch_sel_todo").is(':checked')) {
+            AC_Seleccionar_Todo()
+        }
+        else {
+            AC_Deseleccionar_Todo()
+        }
+
+    }
+
+    function AC_Seleccionar_Todo() {
+        $('#ls_carnes tr').each(function () {
+            $(this).addClass('detalleActivo')
+        });
+    }
+
+    function AC_Deseleccionar_Todo() {
+        $('#ls_carnes tr').each(function () {
+            $(this).removeClass('detalleActivo')
+        });
+    }
+</script>

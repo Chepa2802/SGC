@@ -1,0 +1,223 @@
+﻿@using SGC.Areas.Sistema.Models
+@model SGC.Areas.Global.Models.Empresa_TransModel
+@{
+    ViewBag.Title = "SGC | Crear Empresa de Transportes";
+    Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+}
+
+
+<div id="main" role="main">
+    <div id="ribbon">
+        <ol class="breadcrumb">
+            <img src="/Recursos/Img/IconoPagina.png" style="width: 35px" />&nbsp&nbsp
+            <li><b>REGISTRAR EMPRESA DE TRANSPORTE</b></li>
+        </ol>
+    </div>
+
+    <div id="content">
+        <div class="well NoPadding">
+            <button id="btn_buscar" class="btn btn-primary" onclick="Consultar();">
+                <i class="fa fa-search"></i> Consultar
+            </button>
+        </div>
+
+        <form id="checkout-form" class="well smart-form" novalidate="novalidate">
+
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Código
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input" aria-required="true" aria-describedby="fname-error">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans,
+                                new
+                                {
+                                    maxLength   = "5",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans",
+                                    id          = "vc_cod_empresa_trans",
+                                    placeholder = "Ejemplo: E01"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                    <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Razón Social
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans,
+                                new
+                                {
+                                    maxLength   = "150",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans",
+                                    id          = "vc_desc_empresa_trans",
+                                    placeholder = "Ejemplo: E.T.S. SERVICIO GENERAL"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                    <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                <img width="15px" src="~/Recursos/Img/Obligatorio.png" /> RUC
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_ruc,
+                                new
+                                {
+                                    maxLength   = "11",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_ruc",
+                                    id          = "vc_ruc",
+                                    placeholder = "Ejemplo: 20123456789"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <section class="smart-form col-sm-8 col-md-8 col-lg-8">
+                        <div class="col-sm-2 col-md-2 col-lg-2">
+                            <label class="label-margin">
+                                Dirección
+                            </label>
+                        </div>
+                        <div class="col-sm-10 col-md-10 col-lg-10">
+                            <label class="input" aria-required="true" aria-describedby="fname-error">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_direccion,
+                                new
+                                {
+                                    maxLength   = "1000",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_direccion",
+                                    id          = "vc_direccion",
+                                    placeholder = "Ejemplo: Calle General 150"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                    <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                        <div class="col-sm-4 col-md-4 col-lg-4">
+                            <label class="label-margin">
+                                Resolución
+                            </label>
+                        </div>
+                        <div class="col-sm-8 col-md-8 col-lg-8">
+                            <label class="input">
+                                @Html.TextBoxFor(m => m.mme.me_empresa_trans.e_empresa_trans.vc_resolucion,
+                                new
+                                {
+                                    maxLength   = "100",
+                                    atributo    = "mme.me_empresa_trans.e_empresa_trans.vc_resolucion",
+                                    id          = "vc_resolucion",
+                                    placeholder = "Ejemplo: RDM-2018-MMD"
+                                })
+                            </label>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="well col-sm-12 col-md-12 col-lg-12 text-center">
+            <div class="btn btn-group">
+                <button type="button" class="btn btn-danger btn-lg" onclick="document.location = '@Url.RouteUrl("V_Sel_ConsultaEmpresaTrans")';"><i class="fa fa-remove"></i> Cancelar</button>
+                <button type="button" class="btn btn-success btn-lg" onclick="Regitrar();"><i class="fa fa-pencil"></i> Registrar</button>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            &nbsp<img width="15px" src="~/Recursos/Img/Obligatorio.png" /> Campos obligatorios.
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script src="/Scripts/Validacion.js"></script>
+<script type="text/javascript">
+
+    var Peticion = false;
+    var Area = "Global";
+    var Msg = "";
+    var version = 1;
+
+    $(document).ready(function () {
+
+        $('#vc_ruc').keypress(KeyNumero);
+
+    });
+
+    window.onbeforeunload = function () {
+        if (Peticion) { return "Tiene un proceso ejecutándose no salga de este sitio aún."; }
+    }
+
+    function Consultar() {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        location.href = "@Url.RouteUrl("V_Sel_ConsultaEmpresaTrans")";
+    }
+
+    function Regitrar() {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        if (Vacio('vc_cod_empresa_trans')) {
+            Mensaje('Debe ingresar el código.');
+            return false;
+        }
+        if (Vacio('vc_desc_empresa_trans')) {
+            Mensaje('Debe ingresar la razón social.');
+            return false;
+        }
+        if (Vacio('vc_ruc')) {
+            Mensaje('Debe ingresar el RUC.');
+            return false;
+        }
+
+        if (!Longitud('vc_ruc', 11, 1)){
+            Mensaje('El RUC debe tener 11 dígitos.');
+            return false;
+        }
+
+        Smodel();
+
+        Msg = "Se está registrando los datos de la empresa " + $('#vc_desc_empresa_trans').val() + ", espere un momento...";
+        NuevaPeticion(Msg)
+        Peticion = true;
+        $.ajax({
+            url: '@Url.RouteUrl("AC_Ins_EmpresaTrans")',
+            type: "post",
+            data: JSON.stringify(M),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+
+                if (r.std) {
+                    if (r.trans.e_tran.nu_tran_stdo == 0) {
+                        ErrorBase(r.trans.e_tran.tx_tran_mnsg);
+                    }
+                    else {
+                        ProcesoTerminado(r.trans.e_tran.tx_tran_mnsg);
+                    }
+                }
+                else {
+                    ErrorApp(r.msg)
+                }
+                Peticion = false;
+            }
+        });
+    }
+
+</script>
+
+

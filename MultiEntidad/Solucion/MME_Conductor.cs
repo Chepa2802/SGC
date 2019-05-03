@@ -10,11 +10,18 @@ namespace MultiEntidad.Solucion
     [DataContract]
     public class MME_Conductor : MME_Transaccion
     {
-        public ME_Conductor me_conductor { get; set; }
+        public ME_Conductor         me_conductor    { get; set; }
+        public List<ME_Conductor>   ls_me_conductor { get; set; }
+        public List<ME_Conductor>   ls_me_exito     { get; set; }
+        public List<ME_Conductor>   ls_me_errores   { get; set; }
+        
 
         public MME_Conductor()
         {
-            me_conductor = new ME_Conductor();
+            me_conductor    = new ME_Conductor();
+            ls_me_conductor = new List<ME_Conductor>();
+            ls_me_exito     = new List<ME_Conductor>();
+            ls_me_errores   = new List<ME_Conductor>();
         }
     }
 }

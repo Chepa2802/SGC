@@ -42,10 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="P_Categoria_Licencia.cs" />
+    <Compile Include="P_Clase_Licencia.cs" />
     <Compile Include="P_Conductor.cs" />
     <Compile Include="P_Empresa_Trans.cs" />
+    <Compile Include="P_Grupo_Sanguineo.cs" />
     <Compile Include="P_Proyecto.cs" />
+    <Compile Include="P_Tipo_Doc_Identidad.cs" />
     <Compile Include="P_Usuario.cs" />
+    <Compile Include="P_Tipo_Servicio.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Conexiones\Conexiones.csproj">

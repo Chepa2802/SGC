@@ -1,0 +1,46 @@
+﻿@model SGC.Areas.Global.Models.Conductor_ImportarModel
+@{
+    string cadenaerror = "";
+    string cadenaexito = "";
+}
+
+@if (Model.mme_conductor.e_tran.nu_cant_exito > 0)
+{
+    <div class="alert alert-success alert-block">
+        <a class="close" data-dismiss="alert" href="#"></a>
+        <h4 class="alert-heading">Correcto!</h4>Se han procesado con éxito @Model.mme_conductor.e_tran.nu_cant_exito conductores de @Model.mme_conductor.e_tran.nu_cant_procesados registros procesados.
+        <p class="text-align-left">
+            <br>
+            <span class="btn btn-default" onclick="Ver_Exito()"><i class="glyphicon glyphicon-list"></i></span>
+        </p>
+        @foreach (var item in Model.mme_conductor.ls_me_exito)
+        {
+            cadenaexito = @item.nu_nro_fila_excel + "*" + @item.e_conductor.vc_cod_conductor + " - " + @item.e_conductor.vc_nombre_completo;
+            <script type="text/javascript">
+                var cadena_exito = "@cadenaexito";
+                lista_exito[lista_exito.length] = cadena_exito;
+            </script>
+        }
+    </div>
+}
+
+@if (Model.mme_conductor.e_tran.nu_cant_error > 0)
+{
+    <div class="alert alert-danger alert-block">
+        <a class="close" data-dismiss="alert" href="#"></a>
+        <h4 class="alert-heading">Error!</h4>Ha ocurrido un error al procesar @Model.mme_conductor.e_tran.nu_cant_error empleados de @Model.mme_conductor.e_tran.nu_cant_procesados registros procesados.
+        <p class="text-align-left">
+            <br>
+            <span class="btn btn-default" onclick="Ver_Errores()"><i class="glyphicon glyphicon-list"></i></span>
+        </p>
+        @foreach (var item in Model.mme_conductor.ls_me_errores)
+        {
+            cadenaerror = @item.nu_nro_fila_excel + "*" + @item.tx_tran_mnsg;
+            <script type="text/javascript">
+                var cadena_error = "@cadenaerror";
+                lista_errores[lista_errores.length] = cadena_error;
+            </script>
+        }
+    </div>
+
+}

@@ -1,0 +1,37 @@
+﻿@model SGC.Areas.Global.Models.Empresa_TransModel
+
+<table id="Tabla_EmpresaTrans" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="text-center" width="50px">Estado</th>
+            <th class="text-center">Código</th>
+            <th>Razón Social</th>
+            <th class="text-center">RUC</th>
+            <th class="text-center">Resolución</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ls_mme)
+        {
+        <tr id="@item.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans"
+            class="reg cursorMano"
+            onclick="AC_Opciones(@item.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans, '@item.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans', '@item.e_tran.ch_tran_stdo_regi');">
+            <td class="text-center">
+                @if (item.e_tran.ch_tran_stdo_regi == "A")
+                {
+                    <button id="btnstdo_@item.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans" title="Habilitado" class="btn btn-success btn-mini"><strong><i class="fa fa-check"></i></strong></button>
+                }
+                else
+                {
+                    <button id="btnstdo_@item.me_empresa_trans.e_empresa_trans.nu_id_empresa_trans" title="Deshabilitado" class="btn btn-danger btn-mini"><strong><i class="fa fa-remove"></i></strong></button>
+                }
+            </td>
+            <td class="text-center">@item.me_empresa_trans.e_empresa_trans.vc_cod_empresa_trans</td>
+            <td>@item.me_empresa_trans.e_empresa_trans.vc_desc_empresa_trans</td>
+            <td class="text-center">@item.me_empresa_trans.e_empresa_trans.vc_ruc</td>
+            <td class="text-center">@item.me_empresa_trans.e_empresa_trans.vc_resolucion</td>
+        </tr>
+        }
+    </tbody>
+</table>
+
