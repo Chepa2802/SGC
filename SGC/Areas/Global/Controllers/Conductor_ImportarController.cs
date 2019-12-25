@@ -542,7 +542,7 @@ namespace SGC.Areas.Global.Controllers
 
                     //VALIDAR QUE EL ARCHIVO TENGA LA EXTENSIÓN CORRECTA
                     array = hpf.FileName.Split('.');
-                    if (array[array.Length-1] != "jpg")
+                    if (array[array.Length-1].ToUpper() != "JPG")
                     {
                         M.mme_conductor.e_tran.nu_cant_error++;
                         item.e_conductor.vc_nro_doc_identidad = hpf.FileName.ToString();

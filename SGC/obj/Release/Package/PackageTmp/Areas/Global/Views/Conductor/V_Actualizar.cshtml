@@ -396,7 +396,6 @@
                                     new
                                     {
                                         type        = "text",
-                                        @readonly   = "readonly",
                                         id          = "dt_fec_inicio"
                                     })
                                 </label>
@@ -416,7 +415,6 @@
                                         new
                                         {
                                             type        = "text",
-                                            @readonly   = "readonly",
                                             id          = "dt_fec_final"
                                         })
                                     </label>
@@ -496,7 +494,6 @@
                                     new
                                     {
                                         type        = "text",
-                                        @readonly   = "readonly",
                                         id          = "dt_fec_nacimiento"
                                     })
                                 </label>
@@ -660,7 +657,7 @@
         if (!Validaciones()) { return false; }
 
         var e_empresa_trans = {
-            nu_id_empresa_trans     : $('#nu_id_empresa_trans').val()
+            nu_id_empresa_trans     : $('#nu_id_empresa_trans_lista').val()
         }
 
         var e_tipo_doc_identidad = {
@@ -767,7 +764,7 @@
             return false;
         }
 
-        if ($('#nu_id_empresa_trans').val() == '-- SELECCIONE --') {
+        if ($('#nu_id_empresa_trans_lista').val() == '-- SELECCIONE --') {
             Mensaje('Debe seleccionar una empresa de transporte.');
             return false;
         }
