@@ -98,6 +98,10 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@NU_ID_GRUPO_SANGUINEO", DbType.Decimal, m.me_conductor.e_grupo_sanguineo.nu_id_grupo_sanguineo);
                     db.AddInParameter(cmd, "@CH_DONACION_ORGANO", DbType.String, m.me_conductor.e_conductor.ch_donacion_organo);
                     db.AddInParameter(cmd, "@VC_RESTRICCIONES", DbType.String, m.me_conductor.e_conductor.vc_restricciones);
+                    db.AddInParameter(cmd, "@dt_fec_inscripcion", DbType.Date, m.me_conductor.e_conductor.dt_fec_inscripcion);
+                    db.AddInParameter(cmd, "@dt_fec_certificado", DbType.Date, m.me_conductor.e_conductor.dt_fec_certificado);
+                    db.AddInParameter(cmd, "@dt_fec_inicio_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_inicio_curso);
+                    db.AddInParameter(cmd, "@dt_fec_final_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_final_curso);
                     P_Transaccion.iIns(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sIns(db, cmd, m.e_tran);
@@ -144,6 +148,10 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@NU_ID_GRUPO_SANGUINEO", DbType.Decimal, m.me_conductor.e_grupo_sanguineo.nu_id_grupo_sanguineo);
                     db.AddInParameter(cmd, "@CH_DONACION_ORGANO", DbType.String, m.me_conductor.e_conductor.ch_donacion_organo);
                     db.AddInParameter(cmd, "@VC_RESTRICCIONES", DbType.String, m.me_conductor.e_conductor.vc_restricciones);
+                    db.AddInParameter(cmd, "@dt_fec_inscripcion", DbType.Date, m.me_conductor.e_conductor.dt_fec_inscripcion);
+                    db.AddInParameter(cmd, "@dt_fec_certificado", DbType.Date, m.me_conductor.e_conductor.dt_fec_certificado);
+                    db.AddInParameter(cmd, "@dt_fec_inicio_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_inicio_curso);
+                    db.AddInParameter(cmd, "@dt_fec_final_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_final_curso);
                     P_Transaccion.iUpd(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sUpd(db, cmd, m.e_tran);
@@ -213,6 +221,10 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@VC_DESC_GRUPO_SANGUINEO", DbType.String, null);
                     db.AddInParameter(cmd, "@CH_DONACION_ORGANO", DbType.String, null);
                     db.AddInParameter(cmd, "@VC_RESTRICCIONES", DbType.String, null);
+                    db.AddInParameter(cmd, "@DT_FEC_INSCRIPCION", DbType.String, null);
+                    db.AddInParameter(cmd, "@DT_FEC_CERTIFICADO", DbType.String, null);
+                    db.AddInParameter(cmd, "@DT_FEC_INICIO_CURSO", DbType.String, null);
+                    db.AddInParameter(cmd, "@DT_FEC_FINAL_CURSO", DbType.String, null);
                     P_Transaccion.iIns(db, cmd, m.e_tran);
 
                     foreach (var item in m.ls_me_conductor)
@@ -240,7 +252,10 @@ namespace Transaccion
                         db.SetParameterValue(cmd, "@VC_DESC_GRUPO_SANGUINEO", item.e_grupo_sanguineo.vc_desc_grupo_sanguineo);
                         db.SetParameterValue(cmd, "@CH_DONACION_ORGANO", item.e_conductor.ch_donacion_organo);
                         db.SetParameterValue(cmd, "@VC_RESTRICCIONES", item.e_conductor.vc_restricciones);
-
+                        db.SetParameterValue(cmd, "@DT_FEC_INSCRIPCION", item.e_conductor.dt_fec_inscripcion);
+                        db.SetParameterValue(cmd, "@DT_FEC_CERTIFICADO", item.e_conductor.dt_fec_certificado);
+                        db.SetParameterValue(cmd, "@DT_FEC_INICIO_CURSO", item.e_conductor.dt_fec_inicio_curso);
+                        db.SetParameterValue(cmd, "@DT_FEC_FINAL_CURSO", item.e_conductor.dt_fec_final_curso);
                         db.ExecuteNonQuery(cmd);
                         P_Transaccion.sIns(db, cmd, m.e_tran);
 
@@ -339,6 +354,15 @@ namespace Transaccion
                 m.e_tran.dt_tran_fech_regi                          = or["dt_fec_reg"].ToDateTime();
             if (Convertidor.Ec(or, "dt_fec_nacimiento"))
                 m.me_conductor.e_conductor.dt_fec_nacimiento        = or["dt_fec_nacimiento"].ToDateTime();
+            if (Convertidor.Ec(or, "dt_fec_inscripcion"))
+                m.me_conductor.e_conductor.dt_fec_inscripcion       = or["dt_fec_inscripcion"].ToDateTime();
+            if (Convertidor.Ec(or, "dt_fec_certificado"))
+                m.me_conductor.e_conductor.dt_fec_certificado       = or["dt_fec_certificado"].ToDateTime();
+            if (Convertidor.Ec(or, "dt_fec_inicio_curso"))
+                m.me_conductor.e_conductor.dt_fec_inicio_curso      = or["dt_fec_inicio_curso"].ToDateTime();
+            if (Convertidor.Ec(or, "dt_fec_final_curso"))
+                m.me_conductor.e_conductor.dt_fec_final_curso       = or["dt_fec_final_curso"].ToDateTime();
+
 
             //Tipo Documento de Identidad
             if (Convertidor.Ec(or, "nu_id_tipo_doc_identidad"))

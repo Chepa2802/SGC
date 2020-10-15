@@ -800,5 +800,206 @@ namespace SGC.Areas.Global.Controllers
             return Json("true");
         }
 
+        public ActionResult AC_ImprimirDeclaracionJuradaCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string str_nombre = "RepImpresionDeclaracionJurada " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
+                Rep.Load(strRptPath);
+
+                Crystal_Reports.RefrescarConexion(Rep);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_ImprimirFichaInscripcionCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string str_nombre = "RepImpresionFichaInscripcion " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
+                Rep.Load(strRptPath);
+
+                Crystal_Reports.RefrescarConexion(Rep);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_ImprimirSolicitudCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string str_nombre = "RepImpresionSolicitud " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
+                Rep.Load(strRptPath);
+
+                Crystal_Reports.RefrescarConexion(Rep);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_ImprimirTarjetaCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string str_nombre = "RepImpresionCarneTarjeta " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
+                Rep.Load(strRptPath);
+
+                Crystal_Reports.RefrescarConexion(Rep);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
+            }
+            return Json("true");
+        }
+
+        public ActionResult AC_Subir_Archivo_Conductor_Adjunto(decimal? id_conductor)
+        {
+            try
+            {
+                foreach (string file in Request.Files)
+                {
+                    HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+
+                    if (hpf.ContentLength > 0)
+                    {
+                        string[] nombre = hpf.FileName.Split('.');
+                        string extension = "";
+                        if (nombre.LongLength > 1)
+                        {
+                            extension = "." + nombre[nombre.LongLength - 1];
+                        }
+
+
+
+                        string SavedFileName = Path.Combine(Server.MapPath("~/Recursos/Img/Conductor/"), Ssn.nu_id_proyecto.ToString() + '_' + id_conductor.ToString() + "_adjunto" + extension);
+
+                        if (!Directory.Exists(Server.MapPath("~/Recursos/Img/Conductor/")))
+                            Directory.CreateDirectory(Server.MapPath("~/Recursos/Img/Conductor/"));
+
+                        if (new FileInfo(SavedFileName).Exists)
+                            System.IO.File.Delete(SavedFileName);
+
+                        hpf.SaveAs(SavedFileName);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                return Json("Upload failed");
+            }
+
+            return Json("El archivo se cargó existosamente.");
+        }
+
+        public ActionResult AC_Eliminar_Archivo_Conductor_Adjunto(decimal? id_conductor)
+        {
+            try
+            {
+                string SavedFileName = Path.Combine(Server.MapPath("~/Recursos/Img/Conductor/"), Ssn.nu_id_proyecto.ToString() + '_' + id_conductor.ToString() + "_adjunto.pdf");
+
+                if (new FileInfo(SavedFileName).Exists)
+                    System.IO.File.Delete(SavedFileName);
+            }
+            catch (Exception)
+            {
+                return Json("Upload failed");
+            }
+
+            return Json("El archivo se elimino existosamente.");
+        }
+        
+        public ActionResult AC_ImprimirDeclaracionPerdidaCarneConductor(string ids)
+        {
+            ReportDocument Rep = new ReportDocument();
+            try
+            {
+                string str_nombre = "RepImpresionDeclaracionPerdida " + Ssn.vc_desc_proyecto + ".rpt";
+                string strRptPath = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Reportes/") + str_nombre;
+                Archivos.ExisteArchivo(strRptPath, str_nombre);
+                Rep.Load(strRptPath);
+
+                Crystal_Reports.RefrescarConexion(Rep);
+
+                Rep.SetParameterValue("@K_NU_ID_PROYECTO", Ssn.nu_id_proyecto);
+                Rep.SetParameterValue("@K_VC_IDS_CONDUCTORES", ids);
+                string path = System.Web.HttpContext.Current.Server.MapPath("~/Recursos/Img/Transportista/");
+                Rep.SetParameterValue("RutaImagen", path);
+                Rep.ExportToHttpResponse(ExportFormatType.PortableDocFormat, System.Web.HttpContext.Current.Response, false, str_nombre);
+                Rep.Close();
+                Rep.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Rep.Close();
+                Rep.Dispose();
+                return View("Error", new HandleErrorInfo(ex, HttpContext.Request.RequestContext.RouteData.Values["controller"].ToString(), HttpContext.Request.RequestContext.RouteData.Values["action"].ToString()));
+            }
+            return Json("true");
+        }
     }
 }

@@ -106,7 +106,11 @@ namespace SGC.Areas.Global.Controllers
                                        {"Dirección", "Máximo 500 caracteres.", "0" },
                                        {"Grupo Sanguíneo", "Según pestaña Grupo Sanguíneo; indicar la descripción.", "0" },
                                        {"Donación de Organo", "Indicar: 'SI' o 'NO'", "0" },
-                                       { "Restricciones", "Máximo 500 caracteres.", "0" }
+                                       {"Restricciones", "Máximo 500 caracteres.", "0" },
+                                       {"Fecha Inscripción", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Certificado", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Inicio Curso", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Final Curso", "Formato DD-MM-AAAA.", "0" }
                                     };
 
                 ICell Celda;
@@ -418,7 +422,7 @@ namespace SGC.Areas.Global.Controllers
                             //12  Fecha Nacimiento
                             if (hoja.Cells[fila, 12].Value != null)
                                 if (DateTime.TryParse(hoja.Cells[fila, 12].Value.ToString(), out fecha) == true)
-                                    conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
+                                    conductor.e_conductor.dt_fec_nacimiento = Convert.ToDateTime(fecha);
                                 else
                                 { con_Error = true; observacion += " La fecha de nacimiento tiene formato incorrecto."; }
                             //13  Nro.Padron
@@ -454,7 +458,30 @@ namespace SGC.Areas.Global.Controllers
                             //23  Restricciones
                             if (hoja.Cells[fila, 23].Value != null)
                                 conductor.e_conductor.vc_restricciones = hoja.Cells[fila, 23].Value.ToString();
-
+                            //24  Fecha Inscripción
+                            if (hoja.Cells[fila, 24].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 24].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_inscripcion = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de inscripción tiene formato incorrecto."; }
+                            //25  Fecha Certificado
+                            if (hoja.Cells[fila, 25].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 25].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_certificado = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de certificado tiene formato incorrecto."; }
+                            //26  Fecha Inicio Curso
+                            if (hoja.Cells[fila, 26].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 26].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_inicio_curso = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de inicio de curso tiene formato incorrecto."; }
+                            //27  Fecha Final Curso
+                            if (hoja.Cells[fila, 27].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 27].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_final_curso = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de final de curso tiene formato incorrecto."; }
                             M.mme_conductor.e_tran.nu_cant_procesados++;
 
                             if (con_Error)

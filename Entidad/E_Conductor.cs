@@ -28,6 +28,9 @@ namespace Entidad
         [DataMember]public string       vc_direccion            { get; set; }
         [DataMember]public string       ch_donacion_organo      { get; set; }
         [DataMember]public string       vc_restricciones        { get; set; }
-
+        [DataMember]public DateTime?    dt_fec_inscripcion      { get; set; }
+        [DataMember]public DateTime?    dt_fec_certificado      { get; set; }
+        [DataMember]public DateTime?    dt_fec_inicio_curso     { get; set; }
+        [DataMember]public DateTime?    dt_fec_final_curso      { get; set; }
     }
 }

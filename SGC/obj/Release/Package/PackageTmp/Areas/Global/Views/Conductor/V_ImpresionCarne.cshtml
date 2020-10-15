@@ -16,14 +16,29 @@
             <button id="btn_buscar" class="btn btn-primary" onclick="Consultar();">
                 <i class="fa fa-search"></i> Consultar
             </button>
-            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir();">
+            <button class="btn btn-warning" onclick="Imprimir();">
                 <i class="fa fa-file"></i> Imprimir
             </button>
-            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir_Frontal();">
+            <button class="btn btn-warning" onclick="Imprimir_Frontal();">
                 <i class="fa fa-file"></i> Imprimir Frontal
             </button>
-            <button id="btn_registrar" class="btn btn-warning" onclick="Imprimir_Posterior();">
+            <button class="btn btn-warning" onclick="Imprimir_Posterior();">
                 <i class="fa fa-file"></i> Imprimir Posterior
+            </button>
+            <button class="btn btn-success" onclick="Imprimir_Declaracion_Jurada();">
+                <i class="fa fa-file"></i> Declaración Jurada
+            </button>
+            <button class="btn btn-success" onclick="Imprimir_Ficha_Inscripcion();">
+                <i class="fa fa-file"></i> Ficha Inscripción
+            </button>
+            <button class="btn btn-success" onclick="Imprimir_Solicitud();">
+                <i class="fa fa-file"></i> Solicitud
+            </button>
+            <button class="btn btn-success" onclick="Imprimir_Tarjeta();">
+                <i class="fa fa-file"></i> Tarjeta
+            </button>
+            <button class="btn btn-success" onclick="Imprimir_Declaracion_Perdida();">
+                <i class="fa fa-file"></i> Declaración Perdida
             </button>
         </div>
         <form id="checkout-form" class="smart-form" novalidate="novalidate">
@@ -177,6 +192,111 @@
         }
 
         var win = window.open('@Url.RouteUrl("AC_ImprimirPosteriorCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Imprimir_Declaracion_Jurada() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        console.log(ids_conductores);
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirDeclaracionJuradaCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Imprimir_Ficha_Inscripcion() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirFichaInscripcionCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+    }
+
+    function Imprimir_Solicitud() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirSolicitudCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+
+    }
+
+    function Imprimir_Tarjeta() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirTarjetaCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+
+    }
+
+    function Imprimir_Declaracion_Perdida() {
+
+        var ids_conductores = "";
+        var id_conductor = "";
+
+        $('#ls_carnes tr').each(function () {
+            if ($(this).hasClass('detalleActivo')) {
+                id_conductor = $(this).attr('id');
+                ids_conductores = ids_conductores + (ids_conductores == "" ? "" : ",") + id_conductor;
+            }
+        });
+
+        if (ids_conductores == "") {
+            Mensaje('Debe seleccionar al menos un conductor.');
+            return false;
+        }
+
+        var win = window.open('@Url.RouteUrl("AC_ImprimirDeclaracionPerdidaCarneConductor")' + '?ids=' + ids_conductores, 'mywindow', 'fullscreen=yes, scrollbars=auto');
+
     }
 
     function Consultar() {

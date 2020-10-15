@@ -1,8 +1,13 @@
 ﻿@model SGC.Areas.Global.Models.ConductorModel
+@using SGC.Areas.Sistema.Models
 @{
     ViewBag.Title = "SGC | Consulta Conductores";
     Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
+
+    var Ssn = (SesionModelo)Session[SesionModelo.SessionName];
 }
+
+<link href="/Content/base/jquery.fileupload.css" rel="stylesheet" />
 
 <div id="main" role="main">
     <div id="ribbon">
@@ -75,6 +80,7 @@
 
 <input id="nu_id_conductor" type="hidden" />
 <input id="ch_tran_stdo_regi" type="hidden" />
+<input id="vc_nombre_conductor" type="hidden" />
 
 <div class="modal fade" id="Modal_Conductor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -97,6 +103,9 @@
                 <button id="btn_estado" style="float:none;display:inline" type="button" class="jarvismetro-tile big-cubes bg-color-red NoMargin" onclick="Cambiar_Estado($('#nu_id_conductor').val(),$('#ch_tran_stdo_regi').val());">
                     <span class="iconbox"><i id="icono_estado" class="fa fa-remove fa-4x NoMargin"></i> <span class="text-center">Cambiar estado</span></span>
                 </button>
+                <button id="btn_adjunto" style="float:none;display:inline" type="button" class="jarvismetro-tile big-cubes btn-warning NoMargin" onclick="AC_Modal_Adjunto();">
+                    <span class="iconbox"><i class="fa fa-file fa-4x NoMargin"></i> <span class="text-center">Agregar adjunto</span></span>
+                </button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -107,6 +116,56 @@
     </div>
 </div>
 
+<div class="modal fade" id="Modal_Adjunto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title">Conductor: <b id="nombre_modal_adjunto"></b></h4>
+            </div>
+            <div class="modal-body">
+                <form class="well NoMargin" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12 smart-form">
+                            <section class="col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group NoMargin">
+                                        Adjuntar imagen
+                                        <span class="btn btn-success btn-sm fileinput-button">
+                                            <i class="glyphicon glyphicon-arrow-up"></i>
+                                            <input id="Archivo_Adjunto" type="file" name="files[]" accept=".pdf">
+                                        </span>
+                                        <span class="btn btn-danger btn-sm" onclick="AC_Borrar_Adjunto();" title="Eliminar archivo">
+                                            <i class="fa fa-remove"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 col-md-8 col-lg-8">
+                                    <label class="input">
+                                        <i class="icon-append fa fa-upload"><a></a></i>
+                                        <input disabled id="file_adjunto" type="text" placeholder="Adjuntar imagen" />
+                                    </label>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-12" style="height:60vh" id="div_archivo_adjunto">
+                            <object id="obj_modal_adjunto" type="application/pdf" style="width:100%;height:100%">
+                                <p>El archivo PDF no se encuentra disponible.</p>
+                            </object>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @Scripts.Render("~/bundles/jquery")
 
@@ -189,6 +248,7 @@
 
         $('#nu_id_conductor').val(nu_id_conductor);
         $('#ch_tran_stdo_regi').val(ch_tran_stdo_regi);
+        $('#vc_nombre_conductor').val(vc_nombre_completo);
         $('#vc_nombre_completo').text(vc_nombre_completo)
         $('#Modal_Conductor').modal('show');
     }
@@ -255,5 +315,91 @@
         location.href = "@Url.RouteUrl("AC_Exportar_Conductor")";
     }
 
+    function AC_Modal_Adjunto() {
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        var id_conductor = $('#nu_id_conductor').val();
+
+        $('#nombre_modal_adjunto').text($('#vc_nombre_conductor').val());
+        @*$('#obj_modal_adjunto').attr('data', '/Recursos/Img/Conductor/' + '@Ssn.nu_id_proyecto'  + '_' + id_conductor + '_adjunto.pdf');*@
+
+        var ruta_pdf = '/Recursos/Img/Conductor/' + '@Ssn.nu_id_proyecto' + '_' + id_conductor + '_adjunto.pdf';
+        $('#div_archivo_adjunto').html('<object id="obj_modal_adjunto" data="' + ruta_pdf + '" type="application/pdf" style="width:100%;height:100%"><p>El archivo PDF no se encuentra disponible.</p></object>');
+
+        $('#Modal_Conductor').modal('hide');
+        $('#Modal_Adjunto').modal('show');
+    }
+
+
+    $('#Archivo_Adjunto').change(function (e) {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        var files = e.target.files[0];
+        var nombre = "";
+        if (files != undefined) {
+            nombre = files.name
+        }
+        $('#file_adjunto').val(nombre);
+
+        var id_conductor = $('#nu_id_conductor').val();
+
+        var pdf = $("#Archivo_Adjunto").prop("files");
+
+        if (pdf.length <= 0) {
+            Mensaje('Debe seleccionar un archivo.');
+            return false;
+        }
+        if (window.FormData !== undefined) {
+            var data = new FormData();
+            for (var x = 0; x < pdf.length; x++) {
+                data.append("pdf" + x, pdf[x]);
+            }
+
+            Peticion = true;
+            $.ajax({
+                type: "POST",
+                url: '@Url.RouteUrl("AC_Subir_Archivo_Conductor_Adjunto")' + "?id_conductor=" + id_conductor,
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (result) {
+                    Mensaje(result);
+                    var ruta_pdf = '/Recursos/Img/Conductor/' + '@Ssn.nu_id_proyecto' + '_' + id_conductor + '_adjunto.pdf';
+                    $('#div_archivo_adjunto').html('<object id="obj_modal_adjunto" data="' + ruta_pdf + '" type="application/pdf" style="width:100%;height:100%"><p>El archivo PDF no se encuentra disponible.</p></object>');
+                },
+                error: function (result) {
+                    Mensaje(result);
+                }
+            });
+            Peticion = false;
+        } else {
+            alert("This browser doesn't support HTML5 file uploads!");
+        }
+    })
+
+    function AC_Borrar_Adjunto() {
+
+        if (Peticion) { EnProceso(Msg); return false; }
+
+        var id_conductor = $('#nu_id_conductor').val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.RouteUrl("AC_Eliminar_Archivo_Conductor_Adjunto")' + "?id_conductor=" + id_conductor,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                Mensaje(result);
+            },
+            error: function () {
+                console.log(err);
+            }
+        });
+
+        $('#Archivo_Adjunto').val('');
+        $('#file_adjunto').val('');
+        $('#obj_modal_adjunto').attr('data', '');
+    }
 
 </script>
