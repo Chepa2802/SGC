@@ -19,6 +19,7 @@ namespace SGC.Areas.Global.Models
         public List<SelectListItem>             cb_clase_licencia       { get; set; }
         public List<SelectListItem>             cb_categoria_licencia   { get; set; }
         public List<SelectListItem>             cb_tipo_servicio        { get; set; }
+        public List<SelectListItem>             cb_centro_medico        { get; set; }
 
         public ConductorModel()
         {
@@ -32,6 +33,7 @@ namespace SGC.Areas.Global.Models
             cb_clase_licencia           = new List<SelectListItem>();
             cb_categoria_licencia       = new List<SelectListItem>();
             cb_tipo_servicio            = new List<SelectListItem>();
+            cb_centro_medico            = new List<SelectListItem>();
         }
 
     }

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="E_Categoria_Licencia.cs" />
+    <Compile Include="E_Centro_Medico.cs" />
     <Compile Include="E_Clase_Licencia.cs" />
     <Compile Include="E_Conductor.cs" />
     <Compile Include="E_Empresa_Trans.cs" />

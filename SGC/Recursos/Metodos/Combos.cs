@@ -213,5 +213,34 @@ namespace SGC.Recursos.Metodos
             }
             return cb_tipo_servicio;
         }
+
+        public static List<SelectListItem> Centro_Medico(string cn, int? nu_tran_ruta, string vc_usuario, int? nu_id_proyecto)
+        {
+            MME_Centro_Medico mme = new MME_Centro_Medico();
+            mme.e_tran = Tran().e_tran;
+            mme.e_tran.vc_conexion_origen = cn;
+            mme.e_tran.vc_tran_usua_ptcn = vc_usuario;
+            mme.e_tran.nu_tran_ruta = nu_tran_ruta;
+            mme.me_centro_medico.e_proyecto.nu_id_proyecto = nu_id_proyecto;
+
+            List<MME_Centro_Medico> ls_mme = P_Centro_Medico.Sel(mme);
+            var combo = new List<SelectListItem>();
+
+            combo.Add(new SelectListItem()
+            {
+                Text = "-- SELECCIONE --",
+                Value = "null"
+            });
+
+            foreach (var item in ls_mme)
+            {
+                combo.Add(new SelectListItem()
+                {
+                    Text = item.me_centro_medico.e_centro_medico.vc_desc_centro_medico,
+                    Value = item.me_centro_medico.e_centro_medico.nu_id_centro_medico.ToString()
+                });
+            }
+            return combo;
+        }
     }
 }

@@ -102,6 +102,8 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@dt_fec_certificado", DbType.Date, m.me_conductor.e_conductor.dt_fec_certificado);
                     db.AddInParameter(cmd, "@dt_fec_inicio_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_inicio_curso);
                     db.AddInParameter(cmd, "@dt_fec_final_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_final_curso);
+                    db.AddInParameter(cmd, "@dt_fec_evaluacion_medica", DbType.Date, m.me_conductor.e_conductor.dt_fec_evaluacion_medica);
+                    db.AddInParameter(cmd, "@nu_id_centro_medico", DbType.Decimal, m.me_conductor.e_centro_medico.nu_id_centro_medico);
                     P_Transaccion.iIns(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sIns(db, cmd, m.e_tran);
@@ -152,6 +154,8 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@dt_fec_certificado", DbType.Date, m.me_conductor.e_conductor.dt_fec_certificado);
                     db.AddInParameter(cmd, "@dt_fec_inicio_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_inicio_curso);
                     db.AddInParameter(cmd, "@dt_fec_final_curso", DbType.Date, m.me_conductor.e_conductor.dt_fec_final_curso);
+                    db.AddInParameter(cmd, "@dt_fec_evaluacion_medica", DbType.Date, m.me_conductor.e_conductor.dt_fec_evaluacion_medica);
+                    db.AddInParameter(cmd, "@nu_id_centro_medico", DbType.Decimal, m.me_conductor.e_centro_medico.nu_id_centro_medico);
                     P_Transaccion.iUpd(db, cmd, m.e_tran);
                     db.ExecuteNonQuery(cmd);
                     P_Transaccion.sUpd(db, cmd, m.e_tran);
@@ -225,6 +229,8 @@ namespace Transaccion
                     db.AddInParameter(cmd, "@DT_FEC_CERTIFICADO", DbType.String, null);
                     db.AddInParameter(cmd, "@DT_FEC_INICIO_CURSO", DbType.String, null);
                     db.AddInParameter(cmd, "@DT_FEC_FINAL_CURSO", DbType.String, null);
+                    db.AddInParameter(cmd, "@DT_FEC_EVALUACION_MEDICA", DbType.Date, null);
+                    db.AddInParameter(cmd, "@VC_DESC_CENTRO_MEDICO", DbType.String, null);
                     P_Transaccion.iIns(db, cmd, m.e_tran);
 
                     foreach (var item in m.ls_me_conductor)
@@ -256,6 +262,8 @@ namespace Transaccion
                         db.SetParameterValue(cmd, "@DT_FEC_CERTIFICADO", item.e_conductor.dt_fec_certificado);
                         db.SetParameterValue(cmd, "@DT_FEC_INICIO_CURSO", item.e_conductor.dt_fec_inicio_curso);
                         db.SetParameterValue(cmd, "@DT_FEC_FINAL_CURSO", item.e_conductor.dt_fec_final_curso);
+                        db.SetParameterValue(cmd, "@DT_FEC_EVALUACION_MEDICA", item.e_conductor.dt_fec_evaluacion_medica);
+                        db.SetParameterValue(cmd, "@VC_DESC_CENTRO_MEDICO", item.e_centro_medico.vc_desc_centro_medico);
                         db.ExecuteNonQuery(cmd);
                         P_Transaccion.sIns(db, cmd, m.e_tran);
 
@@ -275,6 +283,7 @@ namespace Transaccion
                             ME_Conductor me = new ME_Conductor();
                             if (item.ch_accion == "C")
                             {
+                                item.e_conductor.vc_nombre_completo = item.e_conductor.vc_apellido_paterno + " " + item.e_conductor.vc_apellido_materno + " " + item.e_conductor.vc_nombres;
                                 item.e_conductor.vc_cod_conductor = m.e_tran.vc_tran_codi;
                             }
                             m.ls_me_exito.Add(item);
@@ -362,7 +371,8 @@ namespace Transaccion
                 m.me_conductor.e_conductor.dt_fec_inicio_curso      = or["dt_fec_inicio_curso"].ToDateTime();
             if (Convertidor.Ec(or, "dt_fec_final_curso"))
                 m.me_conductor.e_conductor.dt_fec_final_curso       = or["dt_fec_final_curso"].ToDateTime();
-
+            if (Convertidor.Ec(or, "dt_fec_evaluacion_medica"))
+                m.me_conductor.e_conductor.dt_fec_evaluacion_medica = or["dt_fec_evaluacion_medica"].ToDateTime();
 
             //Tipo Documento de Identidad
             if (Convertidor.Ec(or, "nu_id_tipo_doc_identidad"))
@@ -411,6 +421,14 @@ namespace Transaccion
                 m.me_conductor.e_grupo_sanguineo.vc_cod_grupo_sanguineo     = or["vc_cod_grupo_sanguineo"].ToText();
             if (Convertidor.Ec(or, "vc_desc_grupo_sanguineo"))
                 m.me_conductor.e_grupo_sanguineo.vc_desc_grupo_sanguineo    = or["vc_desc_grupo_sanguineo"].ToText();
+
+            //Centro Médico
+            if (Convertidor.Ec(or, "nu_id_centro_medico"))
+                m.me_conductor.e_centro_medico.nu_id_centro_medico          = or["nu_id_centro_medico"].ToInt();
+            if (Convertidor.Ec(or, "vc_cod_centro_medico"))
+                m.me_conductor.e_centro_medico.vc_cod_centro_medico         = or["vc_cod_centro_medico"].ToText();
+            if (Convertidor.Ec(or, "vc_desc_centro_medico"))
+                m.me_conductor.e_centro_medico.vc_desc_centro_medico        = or["vc_desc_centro_medico"].ToText();
 
             return m;
         }

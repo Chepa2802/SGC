@@ -321,14 +321,11 @@ namespace SGC.Areas.Global.Controllers
 
                 
                 M.cb_tipo_doc_identidad = Combos.Tipo_Doc_Identidad("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_grupo_sanguineo = Combos.Grupo_Sanguineo("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_clase_licencia = Combos.Clase_Licencia("SQL", 1, Ssn.vc_usuario);
-
+                M.cb_grupo_sanguineo    = Combos.Grupo_Sanguineo("SQL", 1, Ssn.vc_usuario);
+                M.cb_clase_licencia     = Combos.Clase_Licencia("SQL", 1, Ssn.vc_usuario);
                 M.cb_categoria_licencia = Combos.Categoria_Licencia("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_tipo_servicio = Combos.Tipo_Servicio("SQL", 1, Ssn.vc_usuario);
+                M.cb_tipo_servicio      = Combos.Tipo_Servicio("SQL", 1, Ssn.vc_usuario);
+                M.cb_centro_medico      = Combos.Centro_Medico("SQL", 1, Ssn.vc_usuario, Ssn.nu_id_proyecto);
 
                 return View("V_Crear", M);
             }
@@ -475,7 +472,13 @@ namespace SGC.Areas.Global.Controllers
                                             "Tipo Servicio",
                                             "Fecha registro",
                                             "Usuario registro",
-                                            "Fecha de Nacimiento"
+                                            "Fecha de Nacimiento",
+                                            "Fecha certificado",
+                                            "Fecha inscripción",
+                                            "Fecha inicio curso",
+                                            "Fecha final curso",
+                                            "Fecha evaluación médica",
+                                            "Centro médico"
                                         };
 
                     ICell Celda;
@@ -559,7 +562,13 @@ namespace SGC.Areas.Global.Controllers
                         Celda = Excel.CeldaText(FilaData, 21, CssCeldaTexto, item.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio);
                         Celda = Excel.CeldaDateTime(FilaData, 22, CssCeldaTexto, item.e_tran.dt_tran_fech_regi);
                         Celda = Excel.CeldaText(FilaData, 23, CssCeldaTexto, item.e_tran.vc_tran_usua_regi);
-                        Celda = Excel.CeldaDateTime(FilaData, 24, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_nacimiento);
+                        Celda = Excel.CeldaDate(FilaData, 24, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_nacimiento);
+                        Celda = Excel.CeldaDate(FilaData, 25, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_certificado);
+                        Celda = Excel.CeldaDate(FilaData, 26, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_inscripcion);
+                        Celda = Excel.CeldaDate(FilaData, 27, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_inicio_curso);
+                        Celda = Excel.CeldaDate(FilaData, 28, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_final_curso);
+                        Celda = Excel.CeldaDate(FilaData, 29, CssCeldaTexto, item.me_conductor.e_conductor.dt_fec_evaluacion_medica);
+                        Celda = Excel.CeldaText(FilaData, 30, CssCeldaTexto, item.me_conductor.e_centro_medico.vc_desc_centro_medico);
                     }
 
 
@@ -650,15 +659,12 @@ namespace SGC.Areas.Global.Controllers
                 M.ls_mme_empresa_trans = P_Empresa_Trans.Sel(M.mme_empresa_trans);
 
 
-                M.cb_tipo_doc_identidad = Combos.Tipo_Doc_Identidad("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_grupo_sanguineo = Combos.Grupo_Sanguineo("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_clase_licencia = Combos.Clase_Licencia("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_categoria_licencia = Combos.Categoria_Licencia("SQL", 1, Ssn.vc_usuario);
-
-                M.cb_tipo_servicio = Combos.Tipo_Servicio("SQL", 1, Ssn.vc_usuario);
+                M.cb_tipo_doc_identidad     = Combos.Tipo_Doc_Identidad("SQL", 1, Ssn.vc_usuario);
+                M.cb_grupo_sanguineo        = Combos.Grupo_Sanguineo("SQL", 1, Ssn.vc_usuario);
+                M.cb_clase_licencia         = Combos.Clase_Licencia("SQL", 1, Ssn.vc_usuario);
+                M.cb_categoria_licencia     = Combos.Categoria_Licencia("SQL", 1, Ssn.vc_usuario);
+                M.cb_tipo_servicio          = Combos.Tipo_Servicio("SQL", 1, Ssn.vc_usuario);
+                M.cb_centro_medico          = Combos.Centro_Medico("SQL", 1, Ssn.vc_usuario, Ssn.nu_id_proyecto);
 
                 return View("V_Actualizar", M);
             }

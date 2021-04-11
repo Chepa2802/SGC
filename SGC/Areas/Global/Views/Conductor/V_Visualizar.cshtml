@@ -517,6 +517,43 @@
                                 </label>
                             </div>
                         </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha evaluación médica
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_evaluacion_medica" data-link-format="yyyy-mm-dd">
+
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_evaluacion_medica" disabled value="@(Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.HasValue ? Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.Value.ToShortDateString() : "")">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_evaluacion_medica" value="" />
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Centro médico
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_centro_medico.vc_desc_centro_medico,
+                                    new
+                                    {
+                                        @disabled = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
