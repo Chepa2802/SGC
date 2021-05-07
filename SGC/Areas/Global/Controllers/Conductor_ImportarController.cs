@@ -77,6 +77,10 @@ namespace SGC.Areas.Global.Controllers
                 M.mme_grupo_sanguineo.e_tran = e_tran;
                 M.ls_mme_grupo_sanguineo = P_Grupo_Sanguineo.Sel(M.mme_grupo_sanguineo);
 
+                M.mme_centro_medico.e_tran = e_tran;
+                M.mme_centro_medico.me_centro_medico.e_proyecto.nu_id_proyecto = Ssn.nu_id_proyecto;
+                M.ls_mme_centro_medico = P_Centro_Medico.Sel(M.mme_centro_medico);
+
 
                 var output = new MemoryStream();
                 var writer = new StreamWriter(output);
@@ -106,7 +110,13 @@ namespace SGC.Areas.Global.Controllers
                                        {"Dirección", "Máximo 500 caracteres.", "0" },
                                        {"Grupo Sanguíneo", "Según pestaña Grupo Sanguíneo; indicar la descripción.", "0" },
                                        {"Donación de Organo", "Indicar: 'SI' o 'NO'", "0" },
-                                       { "Restricciones", "Máximo 500 caracteres.", "0" }
+                                       {"Restricciones", "Máximo 500 caracteres.", "0" },
+                                       {"Fecha Inscripción", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Certificado", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Inicio Curso", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Final Curso", "Formato DD-MM-AAAA.", "0" },
+                                       {"Fecha Evaluación Médica", "Formato DD-MM-AAAA.", "0" },
+                                       {"Centro Médico", "Según pestaña Centro Medico; indicar la descripción.", "0" }
                                     };
 
                 ICell Celda;
@@ -299,6 +309,31 @@ namespace SGC.Areas.Global.Controllers
                 Hoja.AutoSizeColumn(0);
                 Hoja.AutoSizeColumn(1);
 
+
+
+
+                Hoja = hssfworkbook.CreateSheet("Centro Medico");
+                int_fila = 0;
+                Fila = Hoja.CreateRow(int_fila);
+                Celda = Excel.CeldaText(Fila, 0, CssCeldaEtiqueta, "Código");
+                Celda = Excel.CeldaText(Fila, 1, CssCeldaEtiqueta, "Descripción");
+
+                if (M.ls_mme_centro_medico.Count > 0)
+                {
+                    for (int i = 0; i < M.ls_mme_centro_medico.Count; i++)
+                    {
+                        int_fila++;
+                        Fila = Hoja.CreateRow(int_fila);
+                        var item = M.ls_mme_centro_medico[i];
+                        Celda = Excel.CeldaText(Fila, 0, CssCeldaValor, item.me_centro_medico.e_centro_medico.vc_cod_centro_medico);
+                        Celda = Excel.CeldaText(Fila, 1, CssCeldaValor, item.me_centro_medico.e_centro_medico.vc_desc_centro_medico);
+                    }
+                }
+                Hoja.AutoSizeColumn(0);
+                Hoja.AutoSizeColumn(1);
+
+
+
                 hssfworkbook.Write(output);
                 writer.Flush();
                 MemoryStream file = new MemoryStream();
@@ -418,7 +453,7 @@ namespace SGC.Areas.Global.Controllers
                             //12  Fecha Nacimiento
                             if (hoja.Cells[fila, 12].Value != null)
                                 if (DateTime.TryParse(hoja.Cells[fila, 12].Value.ToString(), out fecha) == true)
-                                    conductor.e_conductor.dt_fec_final = Convert.ToDateTime(fecha);
+                                    conductor.e_conductor.dt_fec_nacimiento = Convert.ToDateTime(fecha);
                                 else
                                 { con_Error = true; observacion += " La fecha de nacimiento tiene formato incorrecto."; }
                             //13  Nro.Padron
@@ -454,6 +489,39 @@ namespace SGC.Areas.Global.Controllers
                             //23  Restricciones
                             if (hoja.Cells[fila, 23].Value != null)
                                 conductor.e_conductor.vc_restricciones = hoja.Cells[fila, 23].Value.ToString();
+                            //24  Fecha Inscripción
+                            if (hoja.Cells[fila, 24].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 24].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_inscripcion = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de inscripción tiene formato incorrecto."; }
+                            //25  Fecha Certificado
+                            if (hoja.Cells[fila, 25].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 25].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_certificado = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de certificado tiene formato incorrecto."; }
+                            //26  Fecha Inicio Curso
+                            if (hoja.Cells[fila, 26].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 26].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_inicio_curso = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de inicio de curso tiene formato incorrecto."; }
+                            //27  Fecha Final Curso
+                            if (hoja.Cells[fila, 27].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 27].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_final_curso = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de final de curso tiene formato incorrecto."; }
+                            //28  Fecha Evaluación Médica
+                            if (hoja.Cells[fila, 28].Value != null)
+                                if (DateTime.TryParse(hoja.Cells[fila, 28].Value.ToString(), out fecha) == true)
+                                    conductor.e_conductor.dt_fec_evaluacion_medica = Convert.ToDateTime(fecha);
+                                else
+                                { con_Error = true; observacion += " La fecha de evaluación médica tiene formato incorrecto."; }
+                            //29  Centro Médico
+                            if (hoja.Cells[fila, 29].Value != null)
+                                conductor.e_centro_medico.vc_desc_centro_medico = hoja.Cells[fila, 29].Value.ToString();
 
                             M.mme_conductor.e_tran.nu_cant_procesados++;
 
@@ -542,7 +610,7 @@ namespace SGC.Areas.Global.Controllers
 
                     //VALIDAR QUE EL ARCHIVO TENGA LA EXTENSIÓN CORRECTA
                     array = hpf.FileName.Split('.');
-                    if (array[array.Length-1] != "jpg")
+                    if (array[array.Length-1].ToUpper() != "JPG")
                     {
                         M.mme_conductor.e_tran.nu_cant_error++;
                         item.e_conductor.vc_nro_doc_identidad = hpf.FileName.ToString();

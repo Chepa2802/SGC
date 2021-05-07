@@ -20,6 +20,7 @@ namespace MacroEntidad
         [DataMember] public E_Tipo_Servicio             e_tipo_servicio         { get; set; }
         [DataMember] public E_Grupo_Sanguineo           e_grupo_sanguineo       { get; set; }
         [DataMember] public E_Usuario                   e_usuario               { get; set; }
+        [DataMember] public E_Centro_Medico             e_centro_medico         { get; set; }
 
         public ME_Conductor()
         {
@@ -32,6 +33,7 @@ namespace MacroEntidad
             e_tipo_servicio             = new E_Tipo_Servicio();
             e_grupo_sanguineo           = new E_Grupo_Sanguineo();
             e_usuario                   = new E_Usuario();
+            e_centro_medico             = new E_Centro_Medico();
         }
     }
 }

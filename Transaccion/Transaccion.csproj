@@ -52,6 +52,7 @@
     <Compile Include="Recursos\Convertidor.cs" />
     <Compile Include="Recursos\P_Transaccion.cs" />
     <Compile Include="T_Categoria_Licencia.cs" />
+    <Compile Include="T_Centro_Medico.cs" />
     <Compile Include="T_Clase_Licencia.cs" />
     <Compile Include="T_Conductor.cs" />
     <Compile Include="T_Empresa_Transp.cs" />

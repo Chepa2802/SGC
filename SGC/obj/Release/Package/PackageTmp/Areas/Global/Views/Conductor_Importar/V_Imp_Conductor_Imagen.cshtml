@@ -59,14 +59,26 @@
 
     $('#Imagen').on('change', function (e) {
         var files = e.target.files;
-        
+        var cant_files = 0;
+        var bol_excede_files = false;
+
         if (files.length > 0) {
             if (window.FormData !== undefined) {
                 var data = new FormData();
                 for (var x = 0; x < files.length; x++) {
                     data.append("file" + x, files[x]);
+                    cant_files++;
+                    if (cant_files > 150) {
+                        bol_excede_files = true;
+                        break;
+                    }
                 }
-
+                if (bol_excede_files) {
+                    Mensaje('Sólo puede seleccionar un máximo de 150 archivos.')
+                    $('#Imagen').val('');
+                    return false;
+                }
+                
                 Msg = "Se está procesando las imágenes, espere un momento...";
                 NuevaPeticion(Msg)
 
@@ -85,6 +97,7 @@
                         ErrorApp(result);
                     }
                 });
+                $('#Imagen').val('');
             } else {
                 alert("This browser doesn't support HTML5 file uploads!");
             }

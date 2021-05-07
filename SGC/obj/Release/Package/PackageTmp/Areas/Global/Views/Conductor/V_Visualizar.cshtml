@@ -403,13 +403,7 @@
                                 <label class="input">
                                     <label class="input">
                                         <i class="icon-append fa fa-calendar"></i>
-                                        @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_final, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_final),
-                                        new
-                                        {
-                                            type        = "text",
-                                            disabled    = "disabled",
-                                            id          = "dt_fec_final"
-                                        })
+                                        <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_final == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_final.Value.ToShortDateString())" />
                                     </label>
                                 </label>
                             </div>
@@ -425,13 +419,7 @@
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
                                 <label class="input">
-                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_clase_licencia.vc_desc_clase_licencia,
-                                    new
-                                    {
-                                        atributo    = "mme.me_conductor.e_clase_licencia.vc_desc_clase_licencia",
-                                        id          = "vc_desc_clase_licencia",
-                                        disabled    = "disabled"
-                                    })
+                                    <input disabled type="text" value="@Model.mme.me_conductor.e_clase_licencia.vc_desc_clase_licencia" />
                                 </label>
                             </div>
                         </section>
@@ -443,13 +431,7 @@
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
                                 <label class="input">
-                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia,
-                                    new
-                                    {
-                                        atributo    = "mme.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia",
-                                        id          = "vc_desc_categoria_licencia",
-                                        disabled    = "disabled"
-                                    })
+                                    <input disabled type="text" value="@Model.mme.me_conductor.e_categoria_licencia.vc_desc_categoria_licencia" />
                                 </label>
                             </div>
                         </section>
@@ -461,13 +443,7 @@
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
                                 <label class="input">
-                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio,
-                                    new
-                                    {
-                                        atributo    = "mme.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio",
-                                        id          = "vc_desc_tipo_servicio",
-                                        disabled    = "disabled"
-                                    })
+                                    <input disabled type="text" value="@Model.mme.me_conductor.e_tipo_servicio.vc_desc_tipo_servicio" />
                                 </label>
                             </div>
                         </section>
@@ -477,19 +453,103 @@
                         <section class="smart-form col-sm-4 col-md-4 col-lg-4">
                             <div class="col-sm-4 col-md-4 col-lg-4">
                                 <label class="label-margin">
-                                    Fecha de Nacimiento
+                                    Fecha Nacimiento
                                 </label>
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
                                 <label class="input">
                                     <i class="icon-append fa fa-calendar"></i>
-                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_nacimiento, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_nacimiento),
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_nacimiento == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_nacimiento.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inscripcion
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inscripcion == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inscripcion.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Certificado
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_certificado == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_certificado.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inicio Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Final Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_final_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_final_curso.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha evaluación médica
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_evaluacion_medica" data-link-format="yyyy-mm-dd">
+
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_evaluacion_medica" disabled value="@(Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.HasValue ? Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.Value.ToShortDateString() : "")">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_evaluacion_medica" value="" />
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Centro médico
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    @Html.TextBoxFor(m => m.mme.me_conductor.e_centro_medico.vc_desc_centro_medico,
                                     new
                                     {
-                                        type        = "text",
-                                        @readonly   = "readonly",
-                                        id          = "dt_fec_nacimiento",
-                                        disabled    = "disabled"
+                                        @disabled = "disabled"
                                     })
                                 </label>
                             </div>

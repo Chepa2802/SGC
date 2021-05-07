@@ -456,7 +456,82 @@
                         </section>
                     </div>
 
-
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha de Nacimiento
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_nacimiento, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_nacimiento),
+                                    new
+                                    {
+                                        type        = "text",
+                                        @readonly   = "readonly",
+                                        id          = "dt_fec_nacimiento",
+                                        disabled    = "disabled"
+                                    })
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inscripcion
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inscripcion == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inscripcion.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Certificado
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_certificado == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_certificado.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inicio Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Final Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="input">
+                                    <i class="icon-append fa fa-calendar"></i>
+                                    <input disabled type="text" value="@(Model.mme.me_conductor.e_conductor.dt_fec_final_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_final_curso.Value.ToShortDateString())" />
+                                </label>
+                            </div>
+                        </section>
+                    </div>
                 </div>
             </div>
         </form>

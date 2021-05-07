@@ -82,6 +82,18 @@ namespace SGC.Areas.Global
             );
 
             context.MapRoute(
+                name: "AC_Subir_Archivo_Conductor_Adjunto",
+                url: "SubirArchivoConductorAdjunto",
+                defaults: new { controller = "Conductor", action = "AC_Subir_Archivo_Conductor_Adjunto" }
+            );
+
+            context.MapRoute(
+                name: "AC_Eliminar_Archivo_Conductor_Adjunto",
+                url: "EliminarArchivoConductorAdjunto",
+                defaults: new { controller = "Conductor", action = "AC_Eliminar_Archivo_Conductor_Adjunto" }
+            );
+
+            context.MapRoute(
                 name: "V_Imp_Conductor",
                 url: "ImportarConductor",
                 defaults: new { controller = "Conductor_Importar", action = "V_Imp_Conductor" }
@@ -227,6 +239,35 @@ namespace SGC.Areas.Global
                 defaults: new { controller = "Conductor", action = "AC_ImprimirPosteriorCarneConductor" }
             );
 
+            context.MapRoute(
+                name: "AC_ImprimirDeclaracionJuradaCarneConductor",
+                url: "ImpresionDeclaracionJuradaCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirDeclaracionJuradaCarneConductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_ImprimirFichaInscripcionCarneConductor",
+                url: "ImpresionFichaInscripcionCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirFichaInscripcionCarneConductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_ImprimirSolicitudCarneConductor",
+                url: "ImpresionSolicitudCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirSolicitudCarneConductor" }
+            );
+
+            context.MapRoute(
+                name: "AC_ImprimirTarjetaCarneConductor",
+                url: "ImpresionTarjetaCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirTarjetaCarneConductor" }
+            );
+            
+            context.MapRoute(
+                name: "AC_ImprimirDeclaracionPerdidaCarneConductor",
+                url: "ImpresionDeclaracionPerdidaCarneConductor",
+                defaults: new { controller = "Conductor", action = "AC_ImprimirDeclaracionPerdidaCarneConductor" }
+            );
             #endregion
         }
 

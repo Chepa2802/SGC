@@ -4,8 +4,8 @@
     Layout = "~/Areas/Sistema/Views/MP_Vista.cshtml";
 }
 
-<link href="/Content/base/bootstrap-theme.min.css" rel="stylesheet" />
 <link href="/Content/base/jquery.fileupload.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 <div id="main" role="main">
     <div id="ribbon">
         <ol class="breadcrumb">
@@ -390,16 +390,14 @@
                                 </label>
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
-                                <label class="input">
-                                    <i class="icon-append fa fa-calendar"></i>
-                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_inicio, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_inicio),
-                                    new
-                                    {
-                                        type        = "text",
-                                        @readonly   = "readonly",
-                                        id          = "dt_fec_inicio"
-                                    })
-                                </label>
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_inicio" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_inicio" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inicio == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inicio.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_inicio" value="" /><br />
                             </div>
                         </section>
                         <section class="smart-form col-sm-4 col-md-4 col-lg-4">
@@ -409,18 +407,14 @@
                                 </label>
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
-                                <label class="input">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_final" data-link-format="yyyy-mm-dd">
                                     <label class="input">
-                                        <i class="icon-append fa fa-calendar"></i>
-                                        @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_final, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_final),
-                                        new
-                                        {
-                                            type        = "text",
-                                            @readonly   = "readonly",
-                                            id          = "dt_fec_final"
-                                        })
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_final" value="@(Model.mme.me_conductor.e_conductor.dt_fec_final == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_final.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
                                     </label>
-                                </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_final" value="" /><br />
                             </div>
                         </section>
                     </div>
@@ -481,7 +475,6 @@
                             </div>
                         </section>
                     </div>
-
                     <div class="col-sm-12 col-md-12 col-lg-12">
                         <section class="smart-form col-sm-4 col-md-4 col-lg-4">
                             <div class="col-sm-4 col-md-4 col-lg-4">
@@ -490,15 +483,122 @@
                                 </label>
                             </div>
                             <div class="col-sm-8 col-md-8 col-lg-8">
-                                <label class="input">
-                                    <i class="icon-append fa fa-calendar"></i>
-                                    @Html.TextBoxFor(m => Model.mme.me_conductor.e_conductor.dt_fec_nacimiento, String.Format("{0:dd/MM/yyyy}", Model.mme.me_conductor.e_conductor.dt_fec_nacimiento),
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_nacimiento" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_nacimiento" value="@(Model.mme.me_conductor.e_conductor.dt_fec_nacimiento == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_nacimiento.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_nacimiento" value="" /><br />
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inscripción
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_inscripcion" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_inscripcion" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inscripcion == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inscripcion.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_inscripcion" value="" /><br />
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Certificado
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_certificado" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_certificado" value="@(Model.mme.me_conductor.e_conductor.dt_fec_certificado == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_certificado.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_certificado" value="" /><br />
+                            </div>
+                        </section>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Inicio Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_inicio_curso" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_inicio_curso" value="@(Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_inicio_curso.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_inicio_curso" value="" /><br />
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha Final Curso
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_final_curso" data-link-format="yyyy-mm-dd">
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_final_curso" value="@(Model.mme.me_conductor.e_conductor.dt_fec_final_curso == null ? "" : Model.mme.me_conductor.e_conductor.dt_fec_final_curso.Value.ToShortDateString())">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_final_curso" value="" /><br />
+                            </div>
+                        </section>
+                        <section class="smart-form col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Fecha evaluación médica
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <div class="controls input-append date form_date" data-date="" data-date-format="dd/mm/yyyy"
+                                     data-link-field="dtp_input_fec_evaluacion_medica" data-link-format="yyyy-mm-dd">
+
+                                    <label class="input">
+                                        <input type="text" data-mask="99/99/9999" id="dt_fec_evaluacion_medica" readonly value="@(Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.HasValue ? Model.mme.me_conductor.e_conductor.dt_fec_evaluacion_medica.Value.ToShortDateString() : "")">
+                                        <span class="add-on"><i class="icon-append fa fa-calendar"></i></span>
+                                    </label>
+                                </div>
+                                <input type="hidden" id="dtp_input_fec_evaluacion_medica" value="" />
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <section class="col-sm-4 col-md-4 col-lg-4">
+                            <div class="col-sm-4 col-md-4 col-lg-4">
+                                <label class="label-margin">
+                                    Centro médico
+                                </label>
+                            </div>
+                            <div class="col-sm-8 col-md-8 col-lg-8">
+                                <label class="select" style="width:100%">
+                                    @Html.DropDownListFor(m=>m.mme.me_conductor.e_centro_medico.nu_id_centro_medico, Model.cb_centro_medico,
                                     new
                                     {
-                                        type        = "text",
-                                        @readonly   = "readonly",
-                                        id          = "dt_fec_nacimiento"
+                                        id      = "nu_id_centro_medico",
+                                        @class  = "select2"
                                     })
+                                    <i></i>
                                 </label>
                             </div>
                         </section>
@@ -528,6 +628,8 @@
 @Scripts.Render("~/bundles/jquery")
 
 <script src="/Scripts/Validacion.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.es.js"></script>
 <script type="text/javascript">
     var version = 1;
     var Peticion = false;
@@ -536,26 +638,24 @@
 
     $(document).ready(function () {
 
-        $('#dt_fec_inicio').datepicker({
-            dateFormat: 'dd/mm/yy',
-            prevText: '<i class="fa fa-chevron-left"></i>',
-            nextText: '<i class="fa fa-chevron-right"></i>'
+        $('.form_date').datetimepicker({
+            language: 'es',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            minView: 2,
+            fontAwesome: "font-awesome",
+            forceParse: 1
         });
 
-        $('#dt_fec_final').datepicker({
-            dateFormat: 'dd/mm/yy',
-            prevText: '<i class="fa fa-chevron-left"></i>',
-            nextText: '<i class="fa fa-chevron-right"></i>'
-        });
+        $('.form_date').find('.add-on').find('.fa-calendar').remove();
+        $('.form_date').find('.input').append('<i class="icon-append fa fa-calendar"></i>');
 
-        $('#dt_fec_nacimiento').datepicker({
-            dateFormat: 'dd/mm/yy',
-            prevText: '<i class="fa fa-chevron-left"></i>',
-            nextText: '<i class="fa fa-chevron-right"></i>'
-        });
-        
         if ($('#nu_id_empresa_trans').val() != '')
             $('#nu_id_empresa_trans_lista').val($('#nu_id_empresa_trans').val()).change();
+        if ('@Model.mme.me_conductor.e_centro_medico.nu_id_centro_medico' != '')
+            $('#nu_id_centro_medico').val('@Model.mme.me_conductor.e_centro_medico.nu_id_centro_medico').change();
 
         CalcularNombreCompleto()
 
@@ -649,18 +749,18 @@
                 Peticion = false;
             }
         });
-        
+
     }
 
 
     function Actualizar() {
 
         if (Peticion) { EnProceso(Msg); return false; }
-    
+
         if (!Validaciones()) { return false; }
 
         var e_empresa_trans = {
-            nu_id_empresa_trans     : $('#nu_id_empresa_trans').val()
+            nu_id_empresa_trans     : $('#nu_id_empresa_trans_lista').val()
         }
 
         var e_tipo_doc_identidad = {
@@ -706,9 +806,17 @@
             dt_fec_inicio           : $('#dt_fec_inicio').val(),
             dt_fec_final            : $('#dt_fec_final').val(),
             vc_ruta_foto            : $('#sesion_imagen').val(),
-            dt_fec_nacimiento       : $('#dt_fec_nacimiento').val()
+            dt_fec_nacimiento       : $('#dt_fec_nacimiento').val(),
+            dt_fec_inscripcion      : $('#dt_fec_inscripcion').val(),
+            dt_fec_certificado      : $('#dt_fec_certificado').val(),
+            dt_fec_inicio_curso     : $('#dt_fec_inicio_curso').val(),
+            dt_fec_final_curso      : $('#dt_fec_final_curso').val(),
+            dt_fec_evaluacion_medica: $('#dt_fec_evaluacion_medica').val()
         }
-        
+        var e_centro_medico = {
+            nu_id_centro_medico: $('#nu_id_centro_medico').val()
+        }
+
         var me_conductor = {
             e_empresa_trans         : e_empresa_trans,
             e_tipo_doc_identidad    : e_tipo_doc_identidad,
@@ -716,7 +824,8 @@
             e_clase_licencia        : e_clase_licencia,
             e_categoria_licencia    : e_categoria_licencia,
             e_tipo_servicio         : e_tipo_servicio,
-            e_conductor             : e_conductor
+            e_conductor             : e_conductor,
+            e_centro_medico         : e_centro_medico
         }
 
         var mme = {
@@ -767,11 +876,11 @@
             return false;
         }
 
-        if ($('#nu_id_empresa_trans').val() == '-- SELECCIONE --') {
+        if ($('#nu_id_empresa_trans_lista').val() == '-- SELECCIONE --') {
             Mensaje('Debe seleccionar una empresa de transporte.');
             return false;
         }
-        
+
         if (Vacio('vc_apellido_paterno')) {
             Mensaje('Debe ingresar un apellido paterno.');
             return false;
